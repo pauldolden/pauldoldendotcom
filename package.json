@@ -38,6 +38,7 @@
 		"@supabase/supabase-js": "^1.31.1",
 		"@tiptap/core": "^2.0.0-beta.174",
 		"@tiptap/starter-kit": "^2.0.0-beta.183",
-		"axios": "^0.26.1"
+		"axios": "^0.26.1",
+		"lodash.chunk": "^4.2.0"
 	}
 }

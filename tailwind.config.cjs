@@ -46,6 +46,27 @@ module.exports = {
           800: '#009999',
           900: '#008080'
         },
+        editor: {
+          bg: '#151130',
+          sidebar: '#120b27',
+          textIcons: '#393969',
+          active: '#A181FA',
+          scrollBar: '#40346E',
+          tabBar: '#120b27',
+          tabBarAlt: '#151130',
+          tab: '#150F2E',
+          header: '#0C0E14',
+          syntax: {
+            blue: '#00abfb',
+            cyan: '#00e7d5',
+            yellow: '#ffd538',
+            yellowDark: '#ffb458',
+            orange: '#ff6c3c',
+            red: '#ff3e8b',
+            pink: '#da6fd2',
+            green: '#3EDE7F'
+          }
+        },
         background: '#00001E',
         purpleop: 'rgba(36, 0, 87, 0.6)',
         pinkop: 'rgba(237, 1, 122, .6)'
