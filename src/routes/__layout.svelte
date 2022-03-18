@@ -3,9 +3,7 @@
   import '../app.css';
 </script>
 
-<main
-  class="bg-background flex flex-col h-screen w-screen font-rubik px-10 pt-10 bg-no-repeat bg-cover"
->
+<main class="flex flex-col h-screen w-screen font-rubik px-10 pt-10">
   <slot />
   <Footer />
 </main>

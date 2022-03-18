@@ -10,11 +10,13 @@
     <span class="text-editor-syntax-blue">{'<article>'}</span>
     <div class="pl-4 flex flex-col gap-3">
       <div>
-        <p>
-          <span class="text-editor-syntax-blue">{'<h2>'}</span>
-          {project.name}
-          <span class="text-editor-syntax-blue">{'</h2>'}</span>
-        </p>
+        <a href={project.data.href}>
+          <p>
+            <span class="text-editor-syntax-blue">{'<h2>'}</span>
+            {project.name}
+            <span class="text-editor-syntax-blue">{'</h2>'}</span>
+          </p>
+        </a>
       </div>
       <div>
         <p>
