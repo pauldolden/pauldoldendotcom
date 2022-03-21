@@ -9,17 +9,20 @@
 <div class="container mx-auto">
   <section class="flex items-center justify-between gap-10 text-2xl py-10">
     <div class="flex items-center justify-between gap-10">
-      <a href="/" class="flex items-center gap-2 font-extrabold cursor-pointer text-white">
+      <a href="/" class="flex items-center gap-2 font-extrabold cursor-pointer text-tertiary-800">
         <p>home</p>
       </a>
-      <a href="/projects" class="flex items-center gap-2 font-extrabold cursor-pointer text-white">
+      <a
+        href="/projects"
+        class="flex items-center gap-2 font-extrabold cursor-pointer text-tertiary-800"
+      >
         <p>projects</p>
       </a>
     </div>
     <div class="flex items-center justify-between gap-10">
       {#each navigation as item}
         <a
-          class="flex items-center gap-2 font-extrabold cursor-pointer text-white"
+          class="flex items-center gap-2 font-extrabold cursor-pointer text-background"
           href={item.link}
         >
           <img src={item.iconPath} alt={item.name} />

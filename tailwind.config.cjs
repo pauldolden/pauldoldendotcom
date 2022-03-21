@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        background: 'url(/svg/background.svg)'
+        backgroundImage: 'url(/svg/background.svg)'
       },
       fontFamily: {
         rubik: 'Rubik'
