@@ -20,8 +20,8 @@
           <h1 class="font-extrabold text-7xl text-white">Hey, I'm Paul.</h1>
           <div class="pt-4 max-w-lg">
             <p class="text-xl font-medium text-white">
-              A full-stack developer from Essex, UK. I'm currently employed a React Native developer
-              for 2Dmedia, building bespoke mobile applications.
+              A full-stack developer from Essex, UK. I'm currently employed as a React Native
+              developer for 2Dmedia, building bespoke mobile applications.
             </p>
             <p class="text-xl font-medium text-white pt-2">
               My real passion, however, has always been building for the web and I most enjoy
