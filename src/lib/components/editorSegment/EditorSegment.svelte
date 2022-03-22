@@ -23,7 +23,7 @@
   <div class="flex flex-1 flex-col h-full max-h-full">
     <div in:blur={{ delay: 500 }} out:blur>
       <div>
-        <div class="flex text-editor-textIcons text-sm bg-editor-tabBar gap-2">
+        <div class="flex text-editor-textIcons text-sm bg-editor-tabBar gap-2 flex-wrap">
           {#each data as project, i}
             <button
               on:click={() => (active = i)}

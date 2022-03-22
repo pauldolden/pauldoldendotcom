@@ -32,7 +32,7 @@
         </section>
         <section class="flex-1 flex items-center pt-10 md:pt-0 md:items-end flex-col">
           <img
-            src="/images/Paul.png"
+            src="/images/Paul-1.png"
             class="h-[400px] w-[400px]"
             alt="Paul Dolden, sitting in his car feeling barbershop fresh."
           />
