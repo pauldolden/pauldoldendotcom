@@ -22,8 +22,8 @@
   });
 </script>
 
-{#if show}
-  <div class="flex-1">
+<div class="flex-1">
+  {#if show}
     <section
       transition:scale
       class="mx-auto my-auto bg-editor-bg rounded-lg font-fira flex flex-col justify-center w-full relative z-100 flex-1"
@@ -57,5 +57,5 @@
         </div>
       </div>
     </section>
-  </div>
-{/if}
+  {/if}
+</div>
