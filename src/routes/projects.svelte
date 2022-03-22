@@ -39,7 +39,7 @@
             <div class="h-4 w-4 bg-red-600 rounded-full" />
           </div>
         </div>
-        <div class="flex gap-4 px-2 text-xs font-semibold select-non">
+        <div class="flex gap-4 px-2 text-xs font-semibold select-none overflow-hidden">
           {#each vsCodeMenu as menuItem}
             <div class="text-gray-600 font-medium select-none">{menuItem}</div>
           {/each}

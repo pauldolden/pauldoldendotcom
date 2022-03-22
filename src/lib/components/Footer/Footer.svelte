@@ -11,7 +11,9 @@
 </script>
 
 <div class="container mx-auto">
-  <section class="flex flex-col md:flex-row items-center justify-between gap-10 text-2xl py-10">
+  <section
+    class="flex flex-col md:flex-row items-center justify-between gap-10 text-xl md:text-2xl py-10"
+  >
     <div class="flex items-center justify-between gap-10">
       {#each navigation as item}
         <a
