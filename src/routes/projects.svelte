@@ -47,7 +47,7 @@
       </div>
       <div class="flex flex-1 max-h-full">
         <div class="flex flex-col flex-1 max-h-full">
-          <div class="grid grid-cols-1 md:grid-cols-2 flex-1">
+          <div class="grid grid-cols-1 lg:grid-cols-2 flex-1">
             <EditorSegment data={leftProjects} active={activeLeft} />
             <EditorSegment data={rightProjects} active={activeRight} />
           </div>

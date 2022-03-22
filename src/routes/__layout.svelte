@@ -4,7 +4,7 @@
 </script>
 
 <main
-  class="flex flex-col min-h-screen min-w-screen font-rubik px-5 pt-5 md:px-10 md:pt-10 slice-h md:slice-v"
+  class="flex flex-col min-h-screen min-w-screen font-rubik px-3 pt-5 lg:px-10 lg:pt-10 slice-h lg:slice-v"
 >
   <slot />
   <Footer />
