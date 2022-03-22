@@ -18,7 +18,7 @@
       <div class="container mx-auto flex flex-col md:flex-row justify-between">
         <section class="flex-1 flex justify-center items-center md:items-start flex-col">
           <h1 class="font-extrabold text-7xl text-white">Hey, I'm Paul.</h1>
-          <div class="pt-4 max-w-lg">
+          <div class="pt-5 md:pt-10 max-w-lg">
             <p class="text-xl font-medium text-white">
               A full-stack developer from Essex, UK. I'm currently employed as a React Native
               developer for 2Dmedia, building bespoke mobile applications.

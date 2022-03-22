@@ -26,7 +26,7 @@
   <div class="flex-1">
     <section
       transition:scale
-      class="mx-auto bg-editor-bg rounded-lg font-fira flex flex-col justify-center w-full relative z-100"
+      class="mx-auto my-auto bg-editor-bg rounded-lg font-fira flex flex-col justify-center w-full relative z-100 flex-1"
     >
       <div
         class="bg-editor-header text-gray-300 py-1 text-center font-extrabold flex flex-col rounded-t-lg"
