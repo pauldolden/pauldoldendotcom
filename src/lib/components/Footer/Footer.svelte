@@ -24,7 +24,7 @@
         >
           <img src={item.iconPath} alt={item.name} />
 
-          <p>{item.name}</p>
+          <p class="hidden md:block">{item.name}</p>
         </a>
       {/each}
     </div>
