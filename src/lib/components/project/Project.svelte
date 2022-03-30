@@ -10,6 +10,7 @@
     <span class="text-editor-syntax-blue">{'<article>'}</span>
     <div class="pl-4 flex flex-col gap-3">
       <div>
+        <p class="text-editor-textIcons">// Click the title to view site</p>
         <a href={project.data.href}>
           <p>
             <span class="text-editor-syntax-blue">{'<h2>'}</span>
@@ -17,6 +18,18 @@
             <span class="text-editor-syntax-blue">{'</h2>'}</span>
           </p>
         </a>
+      </div>
+      <div>
+        <p>
+          <span class="text-editor-syntax-blue">{'<h3>'}</span>
+          Status
+          <span class="text-editor-syntax-blue">{'</h3>'}</span>
+        </p>
+        <div>
+          <span class="text-editor-syntax-blue">{'<p>'}</span>
+          <p class="pl-4">{project.data.status}</p>
+          <span class="text-editor-syntax-blue">{'</p>'}</span>
+        </div>
       </div>
       <div>
         <p>
@@ -30,6 +43,7 @@
           <span class="text-editor-syntax-blue">{'</p>'}</span>
         </div>
       </div>
+
       <div>
         <p>
           <span class="text-editor-syntax-blue">{'<h3>'}</span>

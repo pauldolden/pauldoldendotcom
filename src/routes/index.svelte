@@ -20,13 +20,12 @@
           <h1 class="font-extrabold text-5xl md:text-6xl lg:text-7xl text-white">Hey, I'm Paul.</h1>
           <div class="pt-5 lg:pt-10 max-w-lg">
             <p class="text-lg lg:text-xl font-medium text-white">
-              A full-stack developer from Essex, UK. I'm currently employed as a React Native
+              A full-stack developer from Essex, UK. I'm currently working as a React Native
               developer for 2Dmedia, building bespoke mobile applications.
             </p>
             <p class="text-lg lg:text-xl font-medium text-white pt-2">
-              My real passion, however, has always been building for the web and I most enjoy
-              working on web applications with modern tools and frameworks like NextJS and
-              SvelteKit.
+              I most enjoy working on web applications with modern tools and frameworks like NextJS
+              and SvelteKit.
             </p>
           </div>
         </section>

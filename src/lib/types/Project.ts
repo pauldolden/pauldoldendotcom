@@ -4,6 +4,7 @@ export interface Project {
   data: {
     desc: string;
     href: string;
+    status: string;
     role: string;
     stack: string[];
   };
