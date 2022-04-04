@@ -16,8 +16,12 @@
   {#if show}
     <div class="flex flex-col flex-1 justify-center" transition:scale>
       <div class="container mx-auto flex flex-col lg:flex-row justify-between">
-        <section class="flex-1 flex justify-center items-start md:items-center flex-col">
-          <h1 class="font-extrabold text-5xl md:text-6xl lg:text-7xl text-white">Hey, I'm Paul.</h1>
+        <section
+          class="flex-1 flex justify-center items-start md:items-center lg:items-start flex-col"
+        >
+          <h1 class="font-extrabold text-5xl md:text-6xl lg:text-7xl  text-[#009999]">
+            Hey, I'm Paul.
+          </h1>
           <div class="pt-5 lg:pt-10 max-w-lg">
             <p class="text-lg lg:text-xl font-medium text-white">
               A full-stack developer from Essex, UK. I'm currently working as a React Native

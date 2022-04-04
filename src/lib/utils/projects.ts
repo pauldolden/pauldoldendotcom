@@ -60,7 +60,7 @@ export const projects: Project[] = [
       status: 'In Development',
       desc: 'A tool for writing and managing large writing projects.',
       role: 'I am working as project lead, and building as a collaborative effort with a UI/UX designer.',
-      href: '',
+      href: '#',
       stack: ['Svelte', 'SvetleKit', 'TailwindCSS', 'Vercel']
     }
   },
@@ -71,7 +71,7 @@ export const projects: Project[] = [
       status: 'In Development',
       desc: 'A pro-bono project, built for a baby loss support group.',
       role: 'I am working as project lead, and building as a collaborative effort with a UI/UX designer.',
-      href: '',
+      href: 'https://three-bs.vercel.app/',
       stack: ['Svelte', 'SvetleKit', 'TailwindCSS', 'Vercel']
     }
   }
