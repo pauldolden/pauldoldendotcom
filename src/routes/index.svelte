@@ -28,8 +28,8 @@
               developer for 2Dmedia, building bespoke mobile applications.
             </p>
             <p class="text-lg lg:text-xl font-medium text-white pt-2">
-              I most enjoy working on web applications with modern tools and frameworks like NextJS
-              and SvelteKit.
+              I most enjoy working on web applications with modern tools and frameworks like NextJS,
+              Gatsby and SvelteKit.
             </p>
           </div>
         </section>
