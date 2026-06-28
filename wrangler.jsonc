@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pauldolden",
+  "compatibility_date": "2025-09-23",
+  // nodejs_compat lets server functions read process.env per-request and use
+  // Node built-ins. Required by TanStack Start on Workers.
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": { "enabled": true },
+
+  // Writing projects for /words. This is a public base URL (not a secret), so
+  // vars is fine — uncomment + set to your R2 bucket / custom domain / CDN.
+  // Unset → /words shows empty states (sample fallback is empty).
+  //   <base>/catalog.json and <base>/<storyId>/<chapterId>.json
+  "vars": {
+    // "STORIES_R2_BASE_URL": "https://stories.pauldolden.com"
+  }
+
+  // If you later bind the R2 bucket directly instead of fetching a public URL:
+  // "r2_buckets": [{ "binding": "STORIES", "bucket_name": "pauldolden-stories" }]
+}

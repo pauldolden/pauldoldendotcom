@@ -89,12 +89,22 @@ tsr.config.json       # TanStack Router generator config
 - No `VITE_`-prefixed vars yet. Rule: client-exposed vars must be `VITE_`; server-only secrets
   stay unprefixed and live only inside `createServerFn` handlers.
 
-## Deployment
+## Deployment — Cloudflare Workers
 
-- Default target is a Node SSR server (`dist/server/server.js` + `dist/client/`).
-- For Cloudflare Workers / Netlify / Vercel / Bun / static / SPA mode, load the
-  `start-core/deployment` skill — deployment preset is configured via `tanstackStart()` in
-  `vite.config.ts`, not assumed here.
+- Configured via **`@cloudflare/vite-plugin`** (`cloudflare({ viteEnvironment: { name: 'ssr' } })`
+  in `vite.config.ts`, after `devtools()`) + **`wrangler.jsonc`** (`main:
+  "@tanstack/react-start/server-entry"`, `nodejs_compat`). `vite build` emits the Worker
+  (`dist/server/index.js`) + client assets (`dist/client/`).
+- **Deploy:** `pnpm deploy` (= `vite build && wrangler deploy`). First time: `wrangler login`.
+  Validate without shipping: `npx wrangler deploy --dry-run`.
+- `pnpm dev` / `pnpm preview` now run in the Workers (workerd) runtime via the plugin.
+- **Env on Workers:** Worker env is per-request — `process.env.X` at module scope is
+  `undefined`. The story layer already reads `process.env.STORIES_R2_BASE_URL` **inside** the
+  server-fn handlers (with `nodejs_compat`), so it works. Set it via `vars` in `wrangler.jsonc`
+  (it's a public URL, not a secret) or `wrangler secret put`. Unset → empty `/words`.
+- To bind the R2 bucket directly instead of fetching a public URL, add an `r2_buckets` binding
+  (stub in `wrangler.jsonc`) and read `env.STORIES` via `cloudflare:workers` in `stories-data.ts`.
+- `.wrangler` / `.output` / `dist` are gitignored. `workerd` is in pnpm `onlyBuiltDependencies`.
 
 ## Key decisions
 
