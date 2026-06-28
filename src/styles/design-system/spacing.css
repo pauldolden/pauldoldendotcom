@@ -1,0 +1,38 @@
+/* ============================================================
+   SPACING — 4px base grid
+   Use --space-* for padding / margin / gap.
+   ============================================================ */
+
+:root {
+  --space-0:   0;
+  --space-px:  1px;
+  --space-1:   0.25rem;  /* 4 */
+  --space-2:   0.5rem;   /* 8 */
+  --space-3:   0.75rem;  /* 12 */
+  --space-4:   1rem;     /* 16 */
+  --space-5:   1.25rem;  /* 20 */
+  --space-6:   1.5rem;   /* 24 */
+  --space-7:   2rem;     /* 32 */
+  --space-8:   2.5rem;   /* 40 */
+  --space-9:   3rem;     /* 48 */
+  --space-10:  4rem;     /* 64 */
+  --space-11:  5rem;     /* 80 */
+  --space-12:  6rem;     /* 96 */
+  --space-14:  8rem;     /* 128 */
+
+  /* --- Layout rhythm --- */
+  --gutter:        var(--space-6);  /* default inner padding */
+  --gutter-lg:     var(--space-9);
+  --section-y:     var(--space-12); /* vertical section spacing */
+  --stack:         var(--space-4);  /* default gap between stacked items */
+
+  /* --- Content widths --- */
+  --width-prose:   38rem;   /* reading column */
+  --width-content: 64rem;   /* standard content */
+  --width-wide:    80rem;   /* wide / library grid */
+  --width-max:     90rem;   /* full shell */
+
+  /* --- Fixed chrome --- */
+  --header-h:      4.5rem;
+  --reader-bar-h:  3.5rem;
+}

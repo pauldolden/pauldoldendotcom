@@ -1,0 +1,124 @@
+/* ============================================================
+   COLORS — Dark-first synthwave
+   Deep night base, neon pink / purple / cyan accents,
+   plus a warm sunset pair for paint-splash variety.
+   Base ramps first, semantic aliases second.
+   ============================================================ */
+
+:root {
+  /* --- NIGHT: the dark base ramp (page → surfaces → borders) --- */
+  --night-950: #07050e; /* deepest void, behind everything */
+  --night-900: #0b0817; /* page base */
+  --night-850: #110b22; /* alt page band */
+  --night-800: #160f2e; /* surface */
+  --night-700: #1d153b; /* raised surface / card */
+  --night-600: #271b4f; /* card hover / inset */
+  --night-500: #352561; /* hairline border */
+  --night-400: #463177; /* strong border */
+  --night-300: #5d4196; /* faint decorative line */
+
+  /* --- PAPER / MIST: text ramp on dark --- */
+  --paper-50:  #f7f3ff; /* max-contrast headings */
+  --paper-100: #efe9ff; /* headings */
+  --paper-200: #ddd3f5; /* body on dark */
+  --mist-300:  #c0b4e6; /* secondary text */
+  --mist-400:  #9d8fcb; /* muted */
+  --mist-500:  #7a6da8; /* faint / placeholder */
+  --mist-600:  #5b507f; /* disabled */
+
+  /* --- MAGENTA / PINK: the primary neon --- */
+  --magenta-600: #e0157f;
+  --magenta-500: #ff2e97; /* PRIMARY accent */
+  --magenta-400: #ff5cb0;
+  --magenta-300: #ff8fc8;
+  --magenta-200: #ffbade;
+
+  /* --- PURPLE / VIOLET: the connective accent --- */
+  --purple-600: #8b3df0;
+  --purple-500: #a855f7;
+  --purple-400: #c084fc;
+  --purple-300: #d4abff;
+
+  /* --- CYAN: the cool electric accent --- */
+  --cyan-600: #0bb6d6;
+  --cyan-500: #22d3ee;
+  --cyan-400: #5ce1f5;
+  --cyan-300: #97edfa;
+
+  /* --- SUNSET: warm paint-splash pair (use sparingly) --- */
+  --sunset-500: #ff6b3d; /* hot orange */
+  --sunset-400: #ff8a5c;
+  --gold-500:   #ffce4f; /* warm highlight */
+
+  /* --- SEMANTIC STATUS --- */
+  --green-500:  #2ee6a0; /* ongoing / success */
+  --amber-500:  #ffce4f; /* hiatus / warning */
+  --red-500:    #ff4d6d; /* danger / error */
+
+  /* ============================================================
+     SEMANTIC ALIASES — reach for these in components
+     ============================================================ */
+
+  /* Backgrounds */
+  --bg-void:     var(--night-950);
+  --bg-base:     var(--night-900);
+  --bg-band:     var(--night-850);
+  --bg-surface:  var(--night-800);
+  --bg-raised:   var(--night-700);
+  --bg-inset:    var(--night-600);
+  --bg-overlay:  rgba(7, 5, 14, 0.72); /* scrim behind dialogs */
+
+  /* Reading surface — slightly warmer near-black for long-form prose */
+  --bg-reader:   #0d0a18;
+
+  /* Text */
+  --text-strong: var(--paper-50);
+  --text-heading:var(--paper-100);
+  --text-body:   var(--paper-200);
+  --text-muted:  var(--mist-400);
+  --text-faint:  var(--mist-500);
+  --text-disabled: var(--mist-600);
+  --text-on-neon: #1a0a14; /* dark ink for text on a bright neon fill */
+
+  /* Reading prose ink (Newsreader on --bg-reader) */
+  --text-prose:  #e4dcf6;
+  --text-prose-muted: #a99ed0;
+
+  /* Accents */
+  --accent:        var(--magenta-500); /* primary brand neon */
+  --accent-hover:  var(--magenta-400);
+  --accent-press:  var(--magenta-600);
+  --accent-2:      var(--cyan-500);    /* secondary / cool */
+  --accent-3:      var(--purple-500);  /* tertiary / connective */
+  --accent-warm:   var(--sunset-500);  /* rare warm pop */
+
+  /* Borders & lines */
+  --border:        var(--night-500);
+  --border-strong: var(--night-400);
+  --border-faint:  rgba(93, 65, 150, 0.28);
+  --border-neon:   rgba(255, 46, 151, 0.45);
+  --border-cyan:   rgba(34, 211, 238, 0.40);
+
+  /* Status semantics */
+  --status-ongoing:  var(--green-500);
+  --status-complete: var(--cyan-500);
+  --status-hiatus:   var(--amber-500);
+  --status-danger:   var(--red-500);
+
+  /* Link */
+  --link:        var(--cyan-400);
+  --link-hover:  var(--cyan-300);
+  --link-visited:var(--purple-400);
+
+  /* ============================================================
+     GRADIENTS — synthwave sunset & aurora washes
+     ============================================================ */
+  --grad-sunset: linear-gradient(135deg, #ff2e97 0%, #a855f7 52%, #22d3ee 100%); /* @kind color */
+  --grad-aurora: linear-gradient(120deg, #22d3ee 0%, #a855f7 50%, #ff2e97 100%); /* @kind color */
+  --grad-dusk:   linear-gradient(180deg, #ff6b3d 0%, #ff2e97 38%, #a855f7 100%); /* @kind color */
+  --grad-night:  linear-gradient(180deg, #160f2e 0%, #0b0817 100%); /* @kind color */
+  --grad-glow:   radial-gradient(120% 120% at 50% 0%, rgba(168,85,247,0.28) 0%, rgba(11,8,23,0) 60%); /* @kind color */
+
+  /* Text-clip gradient (use with -webkit-background-clip:text) */
+  --grad-text:   linear-gradient(92deg, #ff5cb0 0%, #c084fc 45%, #5ce1f5 100%); /* @kind color */
+}

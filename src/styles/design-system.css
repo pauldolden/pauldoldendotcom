@@ -1,0 +1,18 @@
+/* ============================================================
+   Paul Dolden — Synthwave Reading System
+   Root stylesheet. IMPORT LINES ONLY — no rules here.
+   Consumers link THIS file.
+
+   Imported verbatim from the Claude Design project
+   "Paul Dolden — Synthwave Reading System"
+   (d4da682e-2749-4b83-bafd-ad3ac0a0d68b). Re-sync with
+   `DesignSync` / the /design-sync skill — do not hand-edit tokens.
+   ============================================================ */
+
+@import url('./design-system/typography.css');
+@import url('./design-system/colors.css');
+@import url('./design-system/spacing.css');
+@import url('./design-system/effects.css');
+@import url('./design-system/motion.css');
+@import url('./design-system/base.css');
+@import url('./design-system/themes.css');

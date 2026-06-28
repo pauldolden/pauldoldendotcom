@@ -1,0 +1,92 @@
+/* ============================================================
+   BASE — light reset + element defaults on the dark canvas.
+   Opt-in: applies when you put .pd-root on a wrapper, plus a
+   few global niceties (selection, scrollbar, focus).
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.pd-root {
+  background-color: var(--bg-base);
+  color: var(--text-body);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings default to the display face */
+.pd-root h1, .pd-root h2, .pd-root h3 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-heading);
+  margin: 0;
+}
+.pd-root h4, .pd-root h5, .pd-root h6 {
+  font-family: var(--font-ui);
+  font-weight: var(--fw-semibold);
+  margin: 0;
+}
+
+.pd-root a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.pd-root a:hover { color: var(--link-hover); }
+
+/* Reading prose block — drop on the chapter body */
+.pd-prose {
+  font-family: var(--font-prose);
+  font-size: var(--prose-size);
+  line-height: var(--prose-leading);
+  color: var(--text-prose);
+  max-width: var(--width-prose);
+}
+.pd-prose p { margin: 0 0 1.35em; }
+.pd-prose p:first-of-type::first-letter {
+  /* optional drop cap; remove if undesired */
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  float: left;
+  font-size: var(--prose-drop);
+  line-height: 0.86;
+  padding: 0.04em 0.12em 0 0;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.pd-prose em { font-style: italic; }
+.pd-prose strong { font-weight: var(--fw-semibold); color: var(--text-prose); }
+
+/* Selection + scrollbar flavor */
+::selection { background: rgba(255,46,151,0.32); color: var(--paper-50); }
+
+.pd-root ::-webkit-scrollbar { width: 12px; height: 12px; }
+.pd-root ::-webkit-scrollbar-track { background: var(--night-900); }
+.pd-root ::-webkit-scrollbar-thumb {
+  background: var(--night-500);
+  border-radius: var(--r-pill);
+  border: 3px solid var(--night-900);
+}
+.pd-root ::-webkit-scrollbar-thumb:hover { background: var(--night-400); }
+
+/* Focus-visible ring everywhere */
+.pd-root :focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--r-sm);
+}
+
+/* Utility: gradient text */
+.pd-grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}

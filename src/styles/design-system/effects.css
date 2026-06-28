@@ -1,0 +1,47 @@
+/* ============================================================
+   EFFECTS — radius, elevation shadows, neon glows, blur
+   Synthwave leans on GLOW more than soft drop-shadow.
+   ============================================================ */
+
+:root {
+  /* --- Corner radius --- */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   12px;   /* default control / card inner */
+  --r-lg:   18px;   /* cards */
+  --r-xl:   26px;   /* large panels / cover frames */
+  --r-2xl:  36px;
+  --r-pill: 999px;
+
+  /* --- Border widths --- */
+  --bw-hair: 1px;   /* @kind other */
+  --bw:      1.5px; /* @kind other */
+  --bw-bold: 2px;   /* @kind other */
+
+  /* --- Elevation shadows (dark-native: deep, low-spread) --- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md:  0 6px 18px rgba(0,0,0,0.45);
+  --shadow-lg:  0 18px 44px rgba(0,0,0,0.55);
+  --shadow-xl:  0 32px 80px rgba(0,0,0,0.6);
+
+  /* Inset top-light hairline for raised cards on dark */
+  --edge-light: inset 0 1px 0 rgba(255,255,255,0.05); /* @kind shadow */
+
+  /* --- Neon glows (the signature) --- */
+  --glow-magenta: 0 0 0 1px rgba(255,46,151,0.5), 0 0 24px -2px rgba(255,46,151,0.55);
+  --glow-cyan:    0 0 0 1px rgba(34,211,238,0.5), 0 0 24px -2px rgba(34,211,238,0.5);
+  --glow-purple:  0 0 0 1px rgba(168,85,247,0.5), 0 0 26px -2px rgba(168,85,247,0.5);
+  --glow-soft:    0 0 32px -6px rgba(168,85,247,0.45);
+  --glow-text-magenta: 0 0 14px rgba(255,46,151,0.55);
+  --glow-text-cyan:    0 0 14px rgba(34,211,238,0.55);
+
+  /* Focus ring (keyboard) */
+  --ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--cyan-400);
+
+  /* --- Blur (glass panels over gradient/splash backgrounds) --- */
+  --blur-sm: 6px;
+  --blur-md: 14px;
+  --blur-lg: 28px;
+  --glass:   rgba(22, 15, 46, 0.6); /* surface tint behind backdrop-blur */
+  --glass-border: rgba(192, 132, 252, 0.22);
+}

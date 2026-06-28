@@ -1,0 +1,51 @@
+/* ============================================================
+   Responsive overrides. Component layout is authored inline for
+   desktop; these rules collapse the asymmetric two-column grids and
+   let the sticky headers wrap on narrow screens. `!important` is
+   required to beat the components' inline `grid-template-columns`.
+   (Card grids that use repeat(auto-fit, …) inline are already fluid
+   and need nothing here.)
+   ============================================================ */
+
+/* Linked globally in __root after styles.css. Card grids (work, skills,
+   more-to-read) already use repeat(auto-fit, minmax(...)) inline and need
+   nothing. The classes below mark the asymmetric two-column grids + the two
+   sticky headers; verified at 375px (no horizontal overflow). */
+html { overflow-x: hidden; }
+
+/* Two-column layout grids → single column on tablet/mobile */
+@media (max-width: 860px) {
+  .hub-hero,
+  .hub-about,
+  .words-featured,
+  .story-hero,
+  .story-body {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* The story cover is a tall 2:3 poster on desktop; cap it once stacked. */
+  .story-cover {
+    aspect-ratio: auto !important;
+    height: 280px !important;
+    max-width: 360px;
+  }
+}
+
+/* Sticky headers: wrap instead of overflowing; nav drops to its own row */
+@media (max-width: 760px) {
+  .hub-header,
+  .words-header {
+    height: auto !important;
+    flex-wrap: wrap !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    row-gap: 10px !important;
+  }
+  .hub-nav,
+  .words-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0 !important;
+    flex-wrap: wrap;
+  }
+}

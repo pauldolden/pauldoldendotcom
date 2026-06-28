@@ -1,0 +1,14 @@
+/* /words page-level styles. Mirrors the design kit's page <style>:
+   the ember (grimoire) canvas + the <small> caption treatment used in the
+   reader's chapter-nav. Scoped to the .words-app subtree. */
+
+body:has(.words-app) { background: #0f0b09; }
+
+.words-app small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 500;
+}

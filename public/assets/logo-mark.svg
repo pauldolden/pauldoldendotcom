@@ -1,0 +1,26 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Paul Dolden — half node tree (code), half real tree (words), from one inkwell">
+  <defs>
+    <linearGradient id="c" x1="16" y1="84" x2="48" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff2e97"></stop>
+      <stop offset="1" stop-color="#a855f7"></stop>
+    </linearGradient>
+  </defs>
+
+  <path d="M34 71 L34 85 L48 85" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
+  <path d="M62 71 L62 85 L48 85" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
+  <path d="M48 68 A14 3.4 0 0 0 48 74.8 Z" fill="#a855f7"></path>
+  <path d="M48 68 A14 3.4 0 0 1 48 74.8 Z" fill="#9a2f3f"></path>
+
+  <path d="M48 72 V56" stroke="url(#c)" stroke-width="4.6" stroke-linecap="butt"></path>
+
+  <path d="M48 56 H32 M32 56 V44 M25 44 H40 M25 44 V31 M40 44 V31" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
+  <circle cx="48" cy="56" r="2.3" fill="url(#c)"></circle>
+  <circle cx="32" cy="44" r="2" fill="url(#c)"></circle>
+  <g fill="url(#c)">
+    <rect x="22" y="27.4" width="6" height="6"></rect>
+    <rect x="37" y="27.4" width="6" height="6"></rect>
+  </g>
+
+  <path d="M48 54 C51 50 54 48 56 46" stroke="#d4a94e" stroke-width="3.4" stroke-linecap="round" fill="none"></path>
+  <path d="M48 22 C56 19 63 23 63 30 C71 29 74 38 67 42 C72 46 67 53 58 51 C56 52 54 52 52 52" fill="none" stroke="#d4a94e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>

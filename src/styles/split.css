@@ -1,0 +1,121 @@
+/* ============================================================
+   ui_kits/split — "choose a door" front door.
+   Ported from the Claude Design project's ui_kits/split/index.html.
+   Page-level <style> moved here; asset paths rewritten to /assets/*;
+   the original body rules are scoped to :has(.split-screen) so they
+   only apply on the route that renders the split (not /about, etc).
+   ============================================================ */
+
+html:has(.split-screen),
+body:has(.split-screen) { margin: 0; height: 100%; }
+body:has(.split-screen) { background: #000; overflow: hidden; }
+
+.split { display: flex; height: 100vh; width: 100%; position: relative; }
+
+.half {
+  flex: 1 1 50%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: flex-grow var(--dur-slow) var(--ease-out), filter var(--dur) var(--ease-out);
+  will-change: flex-grow;
+}
+/* hover-to-expand (progressive enhancement) */
+.split:has(.code:hover)  .words { flex-grow: 0.72; }
+.split:has(.code:hover)  .words .content { filter: saturate(0.6) brightness(0.7); }
+.split:has(.words:hover) .code  { flex-grow: 0.72; }
+.split:has(.words:hover) .code  .content { filter: saturate(0.6) brightness(0.7); }
+
+/* ---- LEFT: synthwave code ---- */
+.code { background: var(--bg-base); }
+.code .bg {
+  position: absolute; inset: 0;
+  background-image: url('/assets/splash-bg.svg');
+  background-size: cover; background-position: center;
+  opacity: 0.5;
+}
+.code .scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(11,8,23,0.55) 0%, rgba(11,8,23,0.78) 55%, var(--bg-base) 100%);
+}
+
+/* ---- RIGHT: ember words ---- */
+.words { background: var(--bg-base); }
+.words .bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(80% 90% at 80% 30%, rgba(184,132,42,0.16), transparent 60%),
+    radial-gradient(70% 80% at 30% 80%, rgba(154,47,63,0.18), transparent 60%),
+    radial-gradient(60% 70% at 60% 60%, rgba(110,80,30,0.14), transparent 60%);
+}
+.words .scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(270deg, rgba(20,16,16,0.5) 0%, rgba(20,16,16,0.74) 55%, var(--bg-base) 100%);
+}
+
+.content {
+  position: relative; z-index: 2;
+  padding: 0 clamp(28px, 6vw, 92px);
+  max-width: 520px;
+  transition: filter var(--dur) var(--ease-out);
+}
+.code .content  { margin-left: auto; margin-right: clamp(20px, 4vw, 60px); text-align: right; }
+.words .content { margin-right: auto; margin-left: clamp(20px, 4vw, 60px); }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--cyan-400); margin-bottom: 18px;
+}
+.title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(48px, 7vw, 92px); line-height: 1; margin: 0;
+  color: var(--text-strong);
+}
+.words .title { line-height: 1.04; }
+.grad { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.line {
+  margin: 18px 0 30px; font-family: var(--font-ui); font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55; color: var(--text-muted);
+}
+.cta {
+  display: inline-flex; align-items: center; gap: 9px; height: 50px; padding: 0 24px;
+  border-radius: var(--r-pill); font-family: var(--font-ui); font-weight: 700; font-size: 15px;
+  background: var(--grad-sunset); color: var(--text-on-neon);
+  box-shadow: var(--glow-soft);
+}
+.code .cta  { flex-direction: row-reverse; }
+
+/* ---- CENTER BRIDGE ---- */
+.divider {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(192,132,252,0.5), rgba(204,90,110,0.5), transparent);
+  z-index: 3;
+}
+.brand {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 12px;
+  pointer-events: none; text-align: center;
+}
+.brand img { width: 60px; height: 60px; filter: drop-shadow(0 6px 20px rgba(0,0,0,0.6)); }
+.brand .name {
+  font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0;
+  color: #fff; background: rgba(7,5,14,0.55); padding: 8px 18px; border-radius: var(--r-pill);
+  border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+.brand .name b { font-weight: 700; }
+.brand .hint {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+@media (max-width: 760px) {
+  .split { flex-direction: column; height: auto; }
+  .half { flex: 1 1 50vh; min-height: 50vh; }
+  .code .content, .words .content { text-align: left; margin: 0 auto; }
+  .divider { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,132,252,0.5), rgba(204,90,110,0.5), transparent); }
+  .split:has(.code:hover) .words, .split:has(.words:hover) .code { flex-grow: 1; }
+}

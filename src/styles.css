@@ -1,0 +1,7 @@
+/* Tailwind entry. Kept for preflight + the few utility classes used on <body>
+   (antialiased, overflow-wrap). The starter's teal theme + demo component CSS
+   was removed when the demo /about page was deleted — it also defined a
+   conflicting `--bg-base`, which collided with the design-system token and
+   tinted the dark canvas. The brand palette lives in styles/design-system.css. */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";

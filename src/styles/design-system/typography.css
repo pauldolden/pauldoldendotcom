@@ -1,0 +1,84 @@
+/* ============================================================
+   TYPOGRAPHY
+   - Chakra Petch   → display / wordmark (synthwave techy)
+   - Space Grotesk  → UI / interface text (clean techy grotesk)
+   - Newsreader     → reading prose (literary serif, screen-tuned)
+   - Cormorant Garamond → grimoire display (ember theme)
+   - JetBrains Mono → LitRPG "system" voice, stats, code, labels
+
+   NOTE: fonts are served from Google Fonts (no local binaries
+   shipped). Swap the @import for self-hosted @font-face if you
+   need offline / fully-owned hosting.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* --- Families ---
+     Display: Chakra Petch — semi-condensed retro-tech, the synthwave voice.
+     Max weight is 700 (no 800), so --fw-black aliases to 700. */
+  --font-display: 'Chakra Petch', 'Space Grotesk', system-ui, sans-serif;
+  --font-ui:      'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-prose:   'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace;
+
+  /* --- Weights --- */
+  --fw-regular: 400; /* @kind font */
+  --fw-medium:  500; /* @kind font */
+  --fw-semibold:600; /* @kind font */
+  --fw-bold:    700; /* @kind font */
+  --fw-black:   700; /* @kind font */
+
+  /* --- Type scale (px → rem at 16px base) --- */
+  --text-xs:    0.75rem;   /* 12 — micro labels */
+  --text-sm:    0.875rem;  /* 14 — captions, meta */
+  --text-base:  1rem;      /* 16 — UI default */
+  --text-md:    1.125rem;  /* 18 */
+  --text-lg:    1.25rem;   /* 20 */
+  --text-xl:    1.5rem;    /* 24 */
+  --text-2xl:   1.875rem;  /* 30 */
+  --text-3xl:   2.375rem;  /* 38 */
+  --text-4xl:   3rem;      /* 48 */
+  --text-5xl:   4rem;      /* 64 */
+  --text-6xl:   5.25rem;   /* 84 — hero wordmark */
+
+  /* --- Reading prose sizing (Newsreader) --- */
+  --prose-size:      1.1875rem; /* 19 — comfortable long-form */
+  --prose-leading:   1.72;
+  --prose-measure:   38rem;     /* ~66ch ideal line length */
+  --prose-drop:      3.4em;     /* drop-cap height */
+
+  /* --- Line heights --- */
+  --leading-tight:   1.05;  /* @kind font */
+  --leading-snug:    1.18;  /* @kind font */
+  --leading-normal:  1.45;  /* @kind font */
+  --leading-relaxed: 1.6;   /* @kind font */
+
+  /* --- Letter spacing --- */
+  --tracking-tighter: -0.03em; /* @kind font */
+  --tracking-tight:   -0.01em; /* @kind font */
+  --tracking-normal:  0em;     /* @kind font */
+  --tracking-wide:    0.04em;  /* @kind font */
+  --tracking-wider:   0.14em;  /* @kind font */
+  --tracking-widest:  0.28em;  /* @kind font */
+}
+
+/* --- Convenience helper classes (optional; tokens are the source of truth) --- */
+.t-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+}
+.t-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+.t-prose {
+  font-family: var(--font-prose);
+  font-size: var(--prose-size);
+  line-height: var(--prose-leading);
+}

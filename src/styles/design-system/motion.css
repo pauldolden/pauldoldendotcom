@@ -1,0 +1,45 @@
+/* ============================================================
+   MOTION — easing & duration tokens
+   Synthwave motion: confident ease-out glides, the occasional
+   springy overshoot on playful elements. Never bouncy on prose.
+   ============================================================ */
+
+:root {
+  /* --- Durations --- */
+  --dur-instant: 90ms;  /* @kind other */
+  --dur-fast:    140ms; /* @kind other */
+  --dur:         220ms; /* @kind other */
+  --dur-slow:    420ms; /* @kind other */
+  --dur-slower:  680ms; /* @kind other */
+
+  /* --- Easing --- */
+  --ease-out:    cubic-bezier(0.22, 0.7, 0.2, 1);   /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);    /* @kind other */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --ease-glow:   cubic-bezier(0.4, 0, 0.2, 1);      /* @kind other */
+
+  /* --- Composed transitions --- */
+  --t-control: color var(--dur-fast) var(--ease-out),
+               background-color var(--dur-fast) var(--ease-out),
+               border-color var(--dur-fast) var(--ease-out),
+               box-shadow var(--dur) var(--ease-out),
+               transform var(--dur-fast) var(--ease-out); /* @kind other */
+}
+
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.72; }
+}
+
+@keyframes splash-drift {
+  0%   { transform: translate3d(0,0,0) rotate(0deg); }
+  100% { transform: translate3d(0,-14px,0) rotate(6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
