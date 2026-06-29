@@ -88,8 +88,17 @@ export function Shell({ children }) {
           <img src={shell.brand.mark} alt="" style={{ width: 28, height: 28 }} />
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{author.domain}</span>
         </Link>
-        <div style={{ display: 'flex', gap: 18, fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--text-faint)' }}>
-          {shell.footerLinks.map((l) => <span key={l}>{l}</span>)}
+        <div style={{ display: 'flex', gap: 18, alignItems: 'center', fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--text-faint)' }}>
+          {shell.footerLinks.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+              style={{ color: 'var(--text-faint)', textDecoration: 'none' }}
+            >
+              {l.label}
+            </a>
+          ))}
           <span>{shell.copyright}</span>
         </div>
       </footer>

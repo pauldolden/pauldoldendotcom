@@ -1,16 +1,19 @@
-// StoryScreen — serial landing: cover hero, blurb, stat panel, chapter list.
+// StoryScreen — serial landing: cover hero, blurb, chapter list.
 // Copy from content/words; `story` + `chapters` from the route loader.
 import React from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { Badge, Button, ChapterRow, Icon, StatPanel, Tag } from '../../ds/index.js';
+import { Badge, Button, ChapterRow, Icon, Tag } from '../../ds/index.js';
 import { words } from '../../../content/words';
+
+const STATUS_LABEL = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus', drafting: 'Drafting', planned: 'Planned' };
+const STATUS_TONE = { ongoing: 'ongoing', complete: 'complete', hiatus: 'hiatus', drafting: 'hiatus', planned: 'neutral' };
 
 export function StoryScreen({ story, chapters = [] }) {
   const c = words.story;
   const navigate = useNavigate();
   const first = chapters[0];
-  const statusLabel = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus' }[story.status] || story.status;
-  const stat = c.stat;
+  const statusLabel = STATUS_LABEL[story.status] || story.status;
+  const statusTone = STATUS_TONE[story.status] || 'neutral';
 
   return (
     <div>
@@ -25,9 +28,15 @@ export function StoryScreen({ story, chapters = [] }) {
           </div>
           <div style={{ paddingTop: 8 }}>
             <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-              <Badge tone={story.status} dot>{statusLabel}</Badge>
-              <Badge tone="magenta">{story.chapters} chapters</Badge>
-              <Badge tone="neutral">{story.words} words</Badge>
+              <Badge tone={statusTone} dot>{statusLabel}</Badge>
+              {story.chapters > 0 ? (
+                <>
+                  <Badge tone="magenta">{story.chapters} chapters</Badge>
+                  <Badge tone="neutral">{story.words} words</Badge>
+                </>
+              ) : (
+                <Badge tone="neutral">{story.progress || 'In progress'}</Badge>
+              )}
             </div>
             <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 56, letterSpacing: '0', color: 'var(--text-strong)', margin: 0, lineHeight: 1 }}>{story.title}</h1>
             <p style={{ marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 14, letterSpacing: '0.04em', color: 'var(--cyan-400)' }}>{story.logline}</p>
@@ -47,33 +56,21 @@ export function StoryScreen({ story, chapters = [] }) {
         </div>
       </section>
 
-      {/* BODY: TOC + sidebar */}
-      <div className="story-body" style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '56px 28px 0', display: 'grid', gridTemplateColumns: '1fr 320px', gap: 40, alignItems: 'start' }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, color: 'var(--text-heading)', margin: 0 }}>{c.tocTitle}</h2>
-            <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-pill)', padding: '6px 14px', color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontSize: 13 }}>
-              <Icon name="arrow-down-up" size={14} color="var(--text-muted)" /> {c.sort}
-            </button>
-          </div>
-          <div style={{ border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'var(--bg-raised)' }}>
-            {chapters.length ? chapters.map((ch) => (
-              <ChapterRow key={ch.index} index={ch.index} title={ch.title} date={ch.date} words={ch.words} isNew={ch.isNew} read={ch.read} onClick={() => navigate({ to: '/words/$storyId/$chapterId', params: { storyId: story.id, chapterId: String(ch.index) } })} />
-            )) : (
-              <div style={{ padding: '28px 16px', fontFamily: 'var(--font-ui)', color: 'var(--text-faint)' }}>{c.noChapters}</div>
-            )}
-          </div>
+      {/* BODY: TOC */}
+      <div className="story-body" style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '56px 28px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, color: 'var(--text-heading)', margin: 0 }}>{c.tocTitle}</h2>
+          <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-pill)', padding: '6px 14px', color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontSize: 13 }}>
+            <Icon name="arrow-down-up" size={14} color="var(--text-muted)" /> {c.sort}
+          </button>
         </div>
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: 20, position: 'sticky', top: 'calc(var(--header-h) + 20px)' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{c.following}</div>
-          <StatPanel name={stat.name} title={stat.title} level={stat.level}
-            hp={{ label: stat.resolveLabel, value: stat.resolveValue, max: stat.resolveMax }}
-            stats={[
-              { label: stat.chaptersLiveLabel, value: story.chapters },
-              { label: stat.arcLabel, value: stat.arc },
-              { label: stat.wyrdLabel, value: stat.wyrdValue, max: stat.wyrdMax, color: 'var(--magenta-500)' },
-            ]} />
-        </aside>
+        <div style={{ border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'var(--bg-raised)' }}>
+          {chapters.length ? chapters.map((ch) => (
+            <ChapterRow key={ch.index} index={ch.index} title={ch.title} date={ch.date} words={ch.words} isNew={ch.isNew} read={ch.read} onClick={() => navigate({ to: '/words/$storyId/$chapterId', params: { storyId: story.id, chapterId: String(ch.index) } })} />
+          )) : (
+            <div style={{ padding: '28px 16px', fontFamily: 'var(--font-ui)', color: 'var(--text-faint)' }}>{c.noChapters}</div>
+          )}
+        </div>
       </div>
     </div>
   );

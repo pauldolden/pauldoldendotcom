@@ -2,7 +2,7 @@
 // Copy from content/words; `stories` (catalog) from the route loader.
 import React from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { Badge, Button, ChapterRow, FollowSignup, Icon, StoryCard } from '../../ds/index.js';
+import { Badge, Button, ChapterRow, Icon, StoryCard } from '../../ds/index.js';
 import { words } from '../../../content/words';
 
 export function HomeScreen({ stories }) {
@@ -11,6 +11,9 @@ export function HomeScreen({ stories }) {
   const featured = stories[0];
   const latest = featured?.toc ?? [];
   const more = stories.slice(1, 4);
+  const featuredHasChapters = latest.length > 0;
+  const STATUS_LABEL = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus', drafting: 'Drafting', planned: 'Planned' };
+  const STATUS_TONE = { ongoing: 'ongoing', complete: 'complete', hiatus: 'hiatus', drafting: 'hiatus', planned: 'neutral' };
 
   return (
     <div>
@@ -28,7 +31,7 @@ export function HomeScreen({ stories }) {
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
             {featured && (
-              <Button as={Link} to="/words/$storyId" params={{ storyId: featured.id }} variant="neon" size="lg" iconRight={<Icon name="arrow-right" size={18} color="#1a0a14" />}>{c.hero.ctaPrimary} {featured.title}</Button>
+              <Button as={Link} to="/words/$storyId" params={{ storyId: featured.id }} variant="neon" size="lg" iconRight={<Icon name="arrow-right" size={18} color="#1a0a14" />}>{(featuredHasChapters ? c.hero.ctaPrimary : c.hero.ctaPreview)} {featured.title}</Button>
             )}
             <Button as={Link} to="/words/library" variant="outline" size="lg">{c.hero.ctaSecondary}</Button>
           </div>
@@ -48,14 +51,21 @@ export function HomeScreen({ stories }) {
               <article style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)' }}>
                 <div style={{ height: 260, background: featured.coverColor, position: 'relative' }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 40%, rgba(7,5,14,0.7))' }} />
-                  <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone="ongoing" dot>Ongoing</Badge></div>
+                  <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
                 </div>
               </article>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 40, letterSpacing: '0', color: 'var(--text-strong)', margin: 0 }}>{featured.title}</h3>
                 <p style={{ marginTop: 14, fontFamily: 'var(--font-prose)', fontSize: 19, lineHeight: 1.6, color: 'var(--text-prose)' }}>{featured.blurb}</p>
                 <div style={{ display: 'flex', gap: 18, marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
-                  <span>{featured.chapters} chapters</span><span>{featured.words} words</span><span style={{ color: 'var(--cyan-400)' }}>{featured.updated}</span>
+                  {featuredHasChapters ? (
+                    <>
+                      <span>{featured.chapters} chapters</span><span>{featured.words} words</span>
+                      {featured.updated && <span style={{ color: 'var(--cyan-400)' }}>{featured.updated}</span>}
+                    </>
+                  ) : (
+                    <span style={{ color: 'var(--cyan-400)' }}>{featured.progress || 'In progress'}</span>
+                  )}
                 </div>
                 <div style={{ marginTop: 24 }}>
                   <Button as={Link} to="/words/$storyId" params={{ storyId: featured.id }} variant="solid" iconRight={<Icon name="chevron-right" size={16} color="#1a0a14" />}>{c.featured.cta}</Button>
@@ -71,7 +81,7 @@ export function HomeScreen({ stories }) {
             <SectionHead eyebrow={c.shelf.eyebrow} title={c.shelf.title} action={<Link to="/words/library" style={linkBtn}>{c.shelf.allWorks}</Link>} />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22, marginTop: 28 }}>
               {more.map((s) => (
-                <StoryCard key={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={`${s.chapters} ch · ${s.words}`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
+                <StoryCard key={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
               ))}
             </div>
           </section>
@@ -89,10 +99,7 @@ export function HomeScreen({ stories }) {
           </section>
         )}
 
-        {/* FOLLOW */}
-        <section style={{ paddingTop: 'var(--space-11)' }}>
-          <FollowSignup title={words.follow.title} blurb={words.follow.blurb} cta={words.follow.cta} onSubmit={() => {}} />
-        </section>
+        {/* (newsletter signup removed — no provider yet) */}
       </div>
     </div>
   );

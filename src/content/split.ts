@@ -27,7 +27,7 @@ export const split = {
       eyebrow: '§ the words',
       titleLead: 'I ',
       titleAccent: 'write.',
-      line: 'Neon-lit dark fantasy and quiet short fiction. Free to read, new chapters most weeks. The calm half — ',
+      line: 'Fantasy mysteries and real-world satire, free to read. New chapters most weeks. The calm half — ',
       highlight: 'pauldolden.com/words',
       highlightColor: 'var(--gold-500)',
       lineEnd: '.',

@@ -3,11 +3,16 @@
 // All the grimoire-site UI copy. Story + chapter CONTENT is NOT
 // here — that comes from R2 (see src/server/stories.ts), with a
 // local sample in src/content/stories.sample.ts.
+//
+// Voice: laconic, warm under the wit — fantasy mysteries + real-world
+// satire (Pratchett-adjacent). "The premise is absurd, the stakes are
+// real." NOT LitRPG. Keep copy short; observation over explanation.
 // ============================================================
 export const words = {
   author: {
     name: 'Paul Dolden',
-    tagline: 'I write neon-lit dark fantasy and the occasional quiet short story.',
+    tagline:
+      'Fantasy mysteries and real-world satire — gods who mean well, systems that don’t, and the people caught in the gears.',
     domain: 'pauldolden.com/words',
   },
 
@@ -20,23 +25,29 @@ export const words = {
     ],
     follow: 'Follow',
     codeHref: '/code',
-    footerLinks: ['RSS', 'Newsletter', 'Patreon'],
+    // Footer links. RSS is the live feed route; Patreon is the support link.
+    // (No newsletter for now — re-add a signup link here when there's a provider.)
+    footerLinks: [
+      { label: 'RSS', href: '/words/rss.xml' },
+      { label: 'Patreon', href: 'https://www.patreon.com/pauldolden', external: true },
+    ],
     copyright: '© 2026 Paul Dolden',
   },
 
   home: {
     meta: 'Paul Dolden — words.pauldolden.com',
     hero: {
-      eyebrow: '§ Writer · dark fantasy & short fiction',
-      titleLead: 'Stories that level up ',
-      titleAccent: 'in the dark.',
-      taglineSuffix: ' New chapters most weeks. Free to read, start to finish.',
+      eyebrow: '§ Writer · fantasy, mystery & quiet satire',
+      titleLead: 'The premise is absurd. ',
+      titleAccent: 'The stakes are real.',
+      taglineSuffix: ' Warm under the wit. Free to read, start to finish.',
       ctaPrimary: 'Start reading', // featured story title is appended in markup
+      ctaPreview: 'Read about', // used when the featured work has no chapters yet
       ctaSecondary: 'Browse the library',
-      empty: 'No stories are posted yet — check back soon.',
+      empty: 'No stories are posted yet — follow along and you’ll get chapter one when it lands.',
     },
-    featured: { eyebrow: 'Currently writing', title: 'The latest story', cta: 'Open the table of contents' },
-    shelf: { eyebrow: 'The shelf', title: 'More to read', allWorks: 'All works →' },
+    featured: { eyebrow: 'Currently writing', title: 'What I’m writing now', cta: 'Read the premise' },
+    shelf: { eyebrow: 'The shelf', title: 'Also in the works', allWorks: 'All works →' },
     latest: { eyebrow: 'Hot off the press', title: 'Latest chapters' },
   },
 
@@ -45,8 +56,9 @@ export const words = {
     eyebrow: '§ The Library',
     titleLead: 'Everything, ',
     titleAccent: 'all at once.',
-    intro: 'Every story is free to read from chapter one. New novels and short fiction go up here as they’re written.',
-    filters: ['All', 'LitRPG', 'Fantasy', 'Sci-fi', 'Horror', 'Complete'],
+    intro:
+      'Free to read from chapter one — when there’s a chapter one. Most of these are still being written; here’s the whole shelf, finished or not.',
+    allLabel: 'All',
     empty: 'Nothing under that tag — yet.',
   },
 
@@ -56,23 +68,7 @@ export const words = {
     start: 'Start from chapter 1',
     noChaptersBtn: 'No chapters yet',
     addToLibrary: 'Add to library',
-    noChapters: 'Chapters for this story aren’t posted here yet.',
-    following: "§ Who you're following",
-    // sidebar character panel (placeholder; swap per-story later)
-    stat: {
-      name: 'Rue Ashe',
-      title: 'Protagonist · Runecaster',
-      level: 24,
-      resolveLabel: 'Resolve',
-      resolveValue: 180,
-      resolveMax: 240,
-      arc: 'III of V',
-      chaptersLiveLabel: 'Chapters live',
-      arcLabel: 'Arc',
-      wyrdLabel: 'Wyrd',
-      wyrdValue: 38,
-      wyrdMax: 100,
-    },
+    noChapters: 'This one’s still being written. Follow along and you’ll get chapter one when it lands.',
   },
 
   about: {
@@ -81,16 +77,10 @@ export const words = {
     titleLead: "Hi, I'm ",
     titleAccent: 'Paul.',
     paragraphs: [
-      'I write stories where the menus are real and the stakes still hurt — novels and the occasional quiet short. Mostly LitRPG: neon towers, broken Systems, people trying to level out of grief.',
-      'Everything here is free to read. If you want to keep me writing, you can follow by email or back the work on Patreon. That’s the whole business model: write the next chapter, post the next chapter.',
+      'I wanted to be a writer before I wanted to be anything else. I write fantasy mysteries and real-world satire — fair-play whodunits, and stories where the gods mean well and the systems don’t. The premise is usually absurd. The stakes are always real.',
+      'By day I build software, and the two halves feed each other: code and prose scratch the same itch — precision, clarity, the quiet satisfaction of making a thing that works. Pratchett taught me the rest — warmth under the wit, and a narrator who loves its characters even while it laughs at them.',
+      'Everything here is free to read. If you want to keep me writing, follow by email or back the work on Patreon. That’s the whole business model: write the next chapter, post the next chapter.',
     ],
-  },
-
-  follow: {
-    title: 'Never miss a chapter',
-    blurb: 'New chapters land most weeks. Drop your email and I’ll send each one straight to your inbox — no spam, unsubscribe anytime.',
-    cta: 'Follow',
-    placeholder: 'you@domain.com',
   },
 
   notFound: {
@@ -102,7 +92,7 @@ export const words = {
 
   search: {
     placeholder: 'Search stories…',
-    hint: 'Search by title, blurb, or tag',
+    hint: 'Search by title, premise, or tag',
     empty: 'No stories match that.',
   },
 
@@ -120,6 +110,6 @@ export const words = {
   // RSS feed metadata (/words/rss.xml)
   feed: {
     title: 'Paul Dolden — words',
-    description: 'Neon-lit dark fantasy and short fiction. New chapters most weeks.',
+    description: 'Fantasy mysteries and real-world satire. New chapters most weeks.',
   },
 } as const

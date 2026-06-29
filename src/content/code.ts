@@ -17,7 +17,7 @@ export const code = {
   ],
 
   wordsLink: { label: '/words', href: '/words' },
-  resume: { label: 'Résumé', href: '#' },
+  resume: { label: 'CV', href: '#' },
 
   dev: {
     name: 'Paul Dolden',
@@ -140,7 +140,7 @@ export const code = {
     headingLead: 'Building something that needs a ',
     headingAccent: 'careful pair of hands?',
     blurb: "I'm always happy to talk about interesting work. The fastest way to reach me is email, or find me on LinkedIn.",
-    resumeLabel: 'Download résumé',
+    resumeLabel: 'Download CV',
   },
 
   footer: {

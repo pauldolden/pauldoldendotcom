@@ -6,18 +6,22 @@ import { Tag } from '../core/Tag.jsx';
  * StoryCard — a serial/work cover card for library grids and featured rails.
  * Cover art goes in the `cover` slot (an <img> or a gradient placeholder).
  */
+const STATUS_LABEL = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus', drafting: 'Drafting', planned: 'Planned' };
+const STATUS_TONE = { ongoing: 'ongoing', complete: 'complete', hiatus: 'hiatus', drafting: 'hiatus', planned: 'neutral' };
+
 export function StoryCard({
   title,
   blurb,
   cover = null,
-  coverColor = 'var(--grad-sunset)',
+  coverColor = 'var(--accent)',
   status = 'ongoing',
   statusLabel,
   tags = [],
   meta,
   onClick,
 }) {
-  const statusText = statusLabel || ({ ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus' }[status] || status);
+  const statusText = statusLabel || STATUS_LABEL[status] || status;
+  const statusTone = STATUS_TONE[status] || 'neutral';
   return (
     <article
       onClick={onClick}
@@ -37,7 +41,7 @@ export function StoryCard({
         {cover}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 45%, rgba(7,5,14,0.78) 100%)' }} />
         <div style={{ position: 'absolute', top: 12, left: 12 }}>
-          <Badge tone={status} dot>{statusText}</Badge>
+          <Badge tone={statusTone} dot>{statusText}</Badge>
         </div>
       </div>
       <div style={{ padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 10 }}>

@@ -7,14 +7,18 @@ import { words } from '../../../content/words';
 
 export function LibraryScreen({ stories }) {
   const c = words.library;
+  const all = c.allLabel;
   const navigate = useNavigate();
-  const [active, setActive] = useState('All');
+  const [active, setActive] = useState(all);
 
-  const shown = stories.filter((s) => {
-    if (active === 'All') return true;
-    if (active === 'Complete') return s.status === 'complete';
-    return s.tags.includes(active);
-  });
+  // Smart tags: derive the filter chips from what's actually on the shelf.
+  // Count each genre tag across the catalog, sort by frequency, hide empties.
+  const counts = {};
+  for (const s of stories) for (const t of s.tags || []) counts[t] = (counts[t] || 0) + 1;
+  const genres = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+  const filters = [all, ...genres];
+
+  const shown = active === all ? stories : stories.filter((s) => (s.tags || []).includes(active));
 
   return (
     <div style={{ maxWidth: 'var(--width-wide)', margin: '0 auto', padding: '56px 28px 0' }}>
@@ -27,14 +31,16 @@ export function LibraryScreen({ stories }) {
       </p>
 
       <div style={{ display: 'flex', gap: 9, marginTop: 32, flexWrap: 'wrap' }}>
-        {c.filters.map((f) => (
-          <Tag key={f} active={active === f} accent="cyan" onClick={() => setActive(f)}>{f}</Tag>
+        {filters.map((f) => (
+          <Tag key={f} active={active === f} accent="cyan" onClick={() => setActive(f)}>
+            {f} · {f === all ? stories.length : counts[f]}
+          </Tag>
         ))}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, marginTop: 32 }}>
         {shown.map((s) => (
-          <StoryCard key={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={`${s.chapters} ch · ${s.words}`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
+          <StoryCard key={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
         ))}
       </div>
       {shown.length === 0 && (
