@@ -98,12 +98,12 @@ tsr.config.json       # TanStack Router generator config
 - **Deploy:** `pnpm deploy` (= `vite build && wrangler deploy`). First time: `wrangler login`.
   Validate without shipping: `npx wrangler deploy --dry-run`.
 - `pnpm dev` / `pnpm preview` now run in the Workers (workerd) runtime via the plugin.
-- **Env on Workers:** Worker env is per-request — `process.env.X` at module scope is
-  `undefined`. The story layer already reads `process.env.STORIES_R2_BASE_URL` **inside** the
-  server-fn handlers (with `nodejs_compat`), so it works. Set it via `vars` in `wrangler.jsonc`
-  (it's a public URL, not a secret) or `wrangler secret put`. Unset → empty `/words`.
-- To bind the R2 bucket directly instead of fetching a public URL, add an `r2_buckets` binding
-  (stub in `wrangler.jsonc`) and read `env.STORIES` via `cloudflare:workers` in `stories-data.ts`.
+- **Story content = R2 binding.** `wrangler.jsonc` binds `STORIES` → bucket
+  **`pauldoldendotcom-cdn`**; `src/server/stories-data.ts` reads it via a guarded dynamic
+  `import('cloudflare:workers')` (so dev-node / tests fall back gracefully). No public URL, no
+  secret. `STORIES_R2_BASE_URL` is an optional fetch fallback for non-Workers hosts.
+- **Env on Workers:** per-request — `process.env.X` at module scope is `undefined`. Anything
+  env-dependent is read **inside** server-fn handlers (`nodejs_compat` on).
 - `.wrangler` / `.output` / `dist` are gitignored. `workerd` is in pnpm `onlyBuiltDependencies`.
 
 ## Key decisions
@@ -226,21 +226,22 @@ All user-facing copy is collocated in **`src/content/`** — edit text here, not
 
 - `src/server/stories.ts` exposes three `createServerFn`s — `getCatalog`, `getStoryBundle`,
   `getChapter` — called from the `/words` route loaders (thin wrappers over the pure loaders in
-  `src/server/stories-data.ts`). They read `STORIES_R2_BASE_URL` **inside the handler** and
-  `fetch()` from R2; on any miss they fall back to the sample. R2 access stays server-side even
-  though loaders are isomorphic.
-- R2 object layout (see `.env.example`): `<base>/catalog.json` → `{ stories: [...] }` (each
-  story carries metadata + a `toc`); `<base>/<storyId>/<chapterId>.md` → the chapter, authored
-  in **Markdown**.
+  `src/server/stories-data.ts`). The loaders read R2 **inside the handler** via the `STORIES`
+  binding (or the URL fallback); on any miss they fall back to the sample. R2 access stays
+  server-side even though loaders are isomorphic.
+- R2 object layout (bucket `pauldoldendotcom-cdn`, see `.env.example`): `catalog.json` →
+  `{ stories: [...] }` (each story carries metadata + a `toc`); `<storyId>/<chapterId>.md` →
+  the chapter, authored in **Markdown**.
 - **Chapters are Markdown with `:::` directives.** `src/server/markdown.ts` (`mdToBlocks`,
   dependency-free, Workers-safe, unit-tested in `markdown.test.ts`) parses md → the reader's
   block model, so `ChapterBody.jsx` is unchanged. Supported: paragraphs (first gets a drop
   cap), `**bold**` / `*italic*` / `` `code` `` / `[links](url)`, and `:::system` / `:::quote` /
   `:::skill` directives for the LitRPG interludes (syntax in `.env.example`). The `catalog.json`
   index stays JSON (a `fetch`-able bucket can't be listed, so the chapter list lives there).
-- **Going live with R2:** set `STORIES_R2_BASE_URL` to a public bucket / custom domain / CDN
-  (or a signing proxy for a private bucket); upload `catalog.json` + per-chapter `.md`. No code
-  change needed.
+- **Going live with R2:** upload `catalog.json` + per-chapter `.md` to the `pauldoldendotcom-cdn`
+  bucket (`wrangler r2 object put pauldoldendotcom-cdn/catalog.json --file …`, or the dashboard).
+  The binding is already wired — deploy and `/words` reads it. No code change. (Local `pnpm dev`
+  hits the *local* emulated bucket — empty unless you `wrangler dev --remote`.)
 - **XSS note:** `ChapterBody` and the `/code` about bio use `dangerouslySetInnerHTML` on
   block/bio HTML. That content is **author-owned** (your repo + your R2 bucket), not user
   input. If chapters ever become multi-author, sanitize (DOMPurify) in `ChapterBody` first.
