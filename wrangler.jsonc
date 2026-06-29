@@ -11,7 +11,7 @@
   // Writing projects for /words. This is a public base URL (not a secret), so
   // vars is fine — uncomment + set to your R2 bucket / custom domain / CDN.
   // Unset → /words shows empty states (sample fallback is empty).
-  //   <base>/catalog.json and <base>/<storyId>/<chapterId>.json
+  //   <base>/catalog.json and <base>/<storyId>/<chapterId>.md  (Markdown + ::: directives)
   "vars": {
     // "STORIES_R2_BASE_URL": "https://stories.pauldolden.com"
   }

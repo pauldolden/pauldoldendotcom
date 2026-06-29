@@ -4,15 +4,16 @@
 // nothing is shipped in the repo.
 //
 // R2 shape this mirrors:
-//   <STORIES_R2_BASE_URL>/catalog.json               -> { stories: [...] }
-//   <STORIES_R2_BASE_URL>/<storyId>/<chapterId>.json -> { blocks: [...] }
+//   <STORIES_R2_BASE_URL>/catalog.json             -> { stories: [...] }
+//   <STORIES_R2_BASE_URL>/<storyId>/<chapterId>.md -> Markdown (+ ::: directives)
 //
-// A "story" carries display metadata + a `toc` (chapter list).
-// A chapter body is a list of typed blocks rendered by ChapterBody:
-//   { type: 'p', dropcap?, dropLetter?, html }
-//   { type: 'system', title, tone, icon, html }
-//   { type: 'pullquote', cite, text }
-//   { type: 'skill', name, kind, rarity, tier, description, cost, cooldown }
+// A "story" carries display metadata + a `toc` (chapter list). Chapter
+// Markdown is parsed into the reader's block model by src/server/markdown.ts.
+// This sample fallback returns those blocks directly:
+//   { type: 'p', dropcap?, dropLetter?, html }   ← paragraph
+//   { type: 'system', title, tone, icon, html }  ← :::system
+//   { type: 'pullquote', cite, text }            ← :::quote
+//   { type: 'skill', name, kind, rarity, tier, description, cost, cooldown } ← :::skill
 // ============================================================
 
 // No sample stories — the catalog is served from R2. With

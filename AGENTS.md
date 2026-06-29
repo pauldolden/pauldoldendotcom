@@ -216,24 +216,31 @@ All user-facing copy is collocated in **`src/content/`** — edit text here, not
   about bio + contact + footer).
 - `content/words.ts` — all `/words` static copy (shell nav/footer, home/library/about copy,
   story-page + reader chrome labels, follow block, notFound messages).
-- `content/stories.sample.ts` — **sample story catalog + chapter block-docs** (the local
-  fallback that mirrors what R2 serves).
+- `content/stories.sample.ts` — sample story catalog + a placeholder chapter-body fallback
+  (currently empty; R2 is the real source).
 - `content/index.ts` — barrel.
+- `src/server/markdown.ts` — chapter Markdown → block model (`mdToBlocks`); tested in
+  `src/server/markdown.test.ts` (run `pnpm test`, node env via `vitest.config.ts`).
 
 **Story/chapter content is R2-backed**, because it grows too large for the repo:
 
 - `src/server/stories.ts` exposes three `createServerFn`s — `getCatalog`, `getStoryBundle`,
-  `getChapter` — called from the `/words` route loaders. They read `STORIES_R2_BASE_URL`
-  **inside the handler** and `fetch()` JSON from R2; on any miss they fall back to the sample.
-  R2 access stays server-side even though loaders are isomorphic.
+  `getChapter` — called from the `/words` route loaders (thin wrappers over the pure loaders in
+  `src/server/stories-data.ts`). They read `STORIES_R2_BASE_URL` **inside the handler** and
+  `fetch()` from R2; on any miss they fall back to the sample. R2 access stays server-side even
+  though loaders are isomorphic.
 - R2 object layout (see `.env.example`): `<base>/catalog.json` → `{ stories: [...] }` (each
-  story carries metadata + a `toc`); `<base>/<storyId>/<chapterId>.json` → `{ blocks: [...] }`.
-- A **chapter body is a JSON block document** (`p` / `system` / `pullquote` / `skill` blocks)
-  rendered by `components/site/words/ChapterBody.jsx` → ds components. This keeps the rich
-  LitRPG interludes while letting the bulk text live in storage.
+  story carries metadata + a `toc`); `<base>/<storyId>/<chapterId>.md` → the chapter, authored
+  in **Markdown**.
+- **Chapters are Markdown with `:::` directives.** `src/server/markdown.ts` (`mdToBlocks`,
+  dependency-free, Workers-safe, unit-tested in `markdown.test.ts`) parses md → the reader's
+  block model, so `ChapterBody.jsx` is unchanged. Supported: paragraphs (first gets a drop
+  cap), `**bold**` / `*italic*` / `` `code` `` / `[links](url)`, and `:::system` / `:::quote` /
+  `:::skill` directives for the LitRPG interludes (syntax in `.env.example`). The `catalog.json`
+  index stays JSON (a `fetch`-able bucket can't be listed, so the chapter list lives there).
 - **Going live with R2:** set `STORIES_R2_BASE_URL` to a public bucket / custom domain / CDN
-  (or a signing proxy for a private bucket); upload `catalog.json` + per-chapter JSON in the
-  shape above. No code change needed — the sample is structurally identical.
+  (or a signing proxy for a private bucket); upload `catalog.json` + per-chapter `.md`. No code
+  change needed.
 - **XSS note:** `ChapterBody` and the `/code` about bio use `dangerouslySetInnerHTML` on
   block/bio HTML. That content is **author-owned** (your repo + your R2 bucket), not user
   input. If chapters ever become multi-author, sanitize (DOMPurify) in `ChapterBody` first.
