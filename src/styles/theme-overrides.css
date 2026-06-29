@@ -1,0 +1,31 @@
+/* ============================================================
+   LOCAL theme overrides — NOT synced from the Claude Design project.
+   Loaded after design-system.css so these win the cascade.
+
+   Purpose: keep the refreshed button/badge styling (the angular "prism"
+   chamfer + neon glow) on the CODE / synthwave side ONLY. The WORDS side
+   renders under .theme-ember (grimoire: squared, matte, no glow), so here
+   we revert the chamfer to the theme's radius and drop the neon glow.
+
+   The Button/Badge core components carry the .pd-btn / .pd-badge hook
+   classes for exactly this. (Mirror these hooks into the design system on
+   the next /design-sync so the carve-out round-trips.)
+   ============================================================ */
+
+.theme-ember .pd-btn {
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  border-radius: var(--r-md) !important; /* grimoire: squared (4px), not chamfered */
+  filter: none !important;               /* grimoire: matte — no neon drop-shadow */
+}
+
+.theme-ember .pd-badge {
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  border-radius: var(--r-pill) !important; /* grimoire --r-pill = 4px crisp rectangle */
+}
+
+/* Matte status dot — kill the neon halo on the page side. */
+.theme-ember .pd-badge span {
+  box-shadow: none !important;
+}

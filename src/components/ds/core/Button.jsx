@@ -2,8 +2,14 @@ import React from 'react';
 
 /**
  * Button — the primary interactive control.
- * Variants: neon (filled gradient), solid (flat magenta), outline (neon ring),
+ * Variants: neon (filled pink), solid (flat magenta), outline (neon ring),
  * ghost (text only), cyan (cool alt). Sizes: sm | md | lg.
+ * Hard-edged "prism" silhouette: corners are chamfered, never rounded.
+ * Pass `tech` for the uppercase display-font treatment used on the /code side.
+ *
+ * Carries the `pd-btn` hook class so the .theme-ember (words / grimoire) side
+ * can revert the chamfer + neon glow to its matte squared treatment — see
+ * styles/theme-overrides.css. The button restyle is a CODE-side change only.
  */
 export function Button({
   children,
@@ -13,15 +19,21 @@ export function Button({
   iconRight = null,
   disabled = false,
   full = false,
+  tech = false,
   as = 'button',
+  className = '',
+  style: styleOverride,
   ...rest
 }) {
   const sizes = {
-    sm: { padding: '0 14px', height: 34, fontSize: 'var(--text-sm)', gap: 6, radius: 'var(--r-sm)' },
-    md: { padding: '0 20px', height: 44, fontSize: 'var(--text-base)', gap: 8, radius: 'var(--r-md)' },
-    lg: { padding: '0 30px', height: 54, fontSize: 'var(--text-md)', gap: 10, radius: 'var(--r-md)' },
+    sm: { padding: '0 16px', height: 34, fontSize: 'var(--text-sm)', gap: 6, chamfer: 8 },
+    md: { padding: '0 22px', height: 44, fontSize: 'var(--text-base)', gap: 8, chamfer: 10 },
+    lg: { padding: '0 32px', height: 54, fontSize: 'var(--text-md)', gap: 10, chamfer: 12 },
   };
   const s = sizes[size] || sizes.md;
+  const c = s.chamfer;
+  // Chamfer top-left + bottom-right for an angular, tech silhouette.
+  const clip = `polygon(${c}px 0, 100% 0, 100% calc(100% - ${c}px), calc(100% - ${c}px) 100%, 0 100%, 0 ${c}px)`;
 
   const base = {
     display: full ? 'flex' : 'inline-flex',
@@ -31,11 +43,13 @@ export function Button({
     gap: s.gap,
     height: s.height,
     padding: s.padding,
-    borderRadius: s.radius,
-    fontFamily: 'var(--font-ui)',
+    clipPath: clip,
+    WebkitClipPath: clip,
+    fontFamily: tech ? 'var(--font-display)' : 'var(--font-ui)',
     fontSize: s.fontSize,
     fontWeight: 'var(--fw-semibold)',
-    letterSpacing: '0.01em',
+    letterSpacing: tech ? '0.09em' : '0.01em',
+    textTransform: tech ? 'uppercase' : 'none',
     lineHeight: 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
     border: '1.5px solid transparent',
@@ -45,22 +59,24 @@ export function Button({
     userSelect: 'none',
   };
 
+  // Glow rides on `filter` (drop-shadow), not box-shadow — clip-path would
+  // otherwise crop a box-shadow to the chamfered silhouette.
   const variants = {
     neon: {
       background: 'var(--grad-sunset)',
       color: 'var(--text-on-neon)',
-      boxShadow: '0 0 22px -4px rgba(255,46,151,0.6)',
+      filter: 'drop-shadow(0 0 16px rgba(255,46,151,0.55))',
       fontWeight: 'var(--fw-bold)',
     },
     solid: {
       background: 'var(--magenta-500)',
       color: 'var(--text-on-neon)',
-      boxShadow: '0 0 18px -6px rgba(255,46,151,0.55)',
+      filter: 'drop-shadow(0 0 13px rgba(255,46,151,0.45))',
     },
     cyan: {
       background: 'var(--cyan-500)',
       color: '#062028',
-      boxShadow: '0 0 18px -6px rgba(34,211,238,0.55)',
+      filter: 'drop-shadow(0 0 13px rgba(34,211,238,0.45))',
     },
     outline: {
       background: 'rgba(255,46,151,0.06)',
@@ -77,7 +93,8 @@ export function Button({
   const Tag = as;
   return (
     <Tag
-      style={{ ...base, ...(variants[variant] || variants.neon) }}
+      className={['pd-btn', className].filter(Boolean).join(' ')}
+      style={{ ...base, ...(variants[variant] || variants.neon), ...styleOverride }}
       disabled={as === 'button' ? disabled : undefined}
       {...rest}
     >

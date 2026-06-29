@@ -1,26 +1,19 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Paul Dolden — half node tree (code), half real tree (words), from one inkwell">
-  <defs>
-    <linearGradient id="c" x1="16" y1="84" x2="48" y2="28" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ff2e97"></stop>
-      <stop offset="1" stop-color="#a855f7"></stop>
-    </linearGradient>
-  </defs>
-
-  <!-- inkwell, split down the middle: code (gradient) | words (gold) -->
-  <path d="M40 71 C 39 73, 29 76, 29 81 C 29 84.5, 31 86.5, 35 86.5 L 48 86.5" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M56 71 C 57 73, 67 76, 67 81 C 67 84.5, 65 86.5, 61 86.5 L 48 86.5" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- inkwell, split down the middle: code (flat pink) | words (gold) -->
+  <path d="M34 71 L34 85 L48 85" fill="none" stroke="#ff2e97" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
+  <path d="M62 71 L62 85 L48 85" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
   <!-- two-tone ink surface at the mouth -->
-  <path d="M48 67.9 A8.5 2.6 0 0 0 48 73.1 Z" fill="#a855f7"></path>
-  <path d="M48 67.9 A8.5 2.6 0 0 1 48 73.1 Z" fill="#9a2f3f"></path>
+  <path d="M48 68 A14 3.4 0 0 0 48 74.8 Z" fill="#ff2e97"></path>
+  <path d="M48 68 A14 3.4 0 0 1 48 74.8 Z" fill="#9a2f3f"></path>
 
   <!-- stem rising out of the ink -->
-  <path d="M48 68.5 V56" stroke="url(#c)" stroke-width="4.6" stroke-linecap="butt"></path>
+  <path d="M48 72 V56" stroke="#ff2e97" stroke-width="4.6" stroke-linecap="butt"></path>
 
   <!-- code branch (left): node / bracket tree -->
-  <path d="M48 56 H32 M32 56 V44 M25 44 H40 M25 44 V31 M40 44 V31" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
-  <circle cx="48" cy="56" r="2.3" fill="url(#c)"></circle>
-  <circle cx="32" cy="44" r="2" fill="url(#c)"></circle>
-  <g fill="url(#c)">
+  <path d="M48 56 H32 M32 56 V44 M25 44 H40 M25 44 V31 M40 44 V31" fill="none" stroke="#ff2e97" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
+  <circle cx="48" cy="56" r="2.3" fill="#ff2e97"></circle>
+  <circle cx="32" cy="44" r="2" fill="#ff2e97"></circle>
+  <g fill="#ff2e97">
     <rect x="22" y="27.4" width="6" height="6"></rect>
     <rect x="37" y="27.4" width="6" height="6"></rect>
   </g>

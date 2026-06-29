@@ -51,8 +51,11 @@ export function Shell({ children }) {
       }}>
         <Link to="/words" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
           <img src={shell.brand.mark} alt="" style={{ width: 34, height: 34 }} />
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, letterSpacing: '0', color: 'var(--text-strong)', whiteSpace: 'nowrap' }}>
-            {shell.brand.name} <span className="pd-grad-text">{shell.brand.nameBold}</span>
+          {/* Dual-voice wordmark (brand mark): mono "paul" + serif-italic "dolden".
+              --accent resolves to oxblood here under .theme-ember. */}
+          <span style={{ display: 'inline-flex', alignItems: 'baseline', whiteSpace: 'nowrap' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 17, letterSpacing: '-0.01em', color: 'var(--text-strong)' }}>{shell.brand.codeWord}</span>
+            <span style={{ fontFamily: 'var(--font-prose)', fontStyle: 'italic', fontWeight: 500, fontSize: 21, color: 'var(--accent)', marginLeft: 1 }}>{shell.brand.wordsWord}</span>
           </span>
         </Link>
         <nav className="words-nav" style={{ display: 'flex', gap: 4, marginLeft: 8 }}>

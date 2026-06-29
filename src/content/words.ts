@@ -12,7 +12,7 @@ export const words = {
   },
 
   shell: {
-    brand: { name: 'Paul', nameBold: 'Dolden', mark: '/assets/mark-words.svg' },
+    brand: { codeWord: 'paul', wordsWord: 'dolden', mark: '/assets/mark-words.svg' },
     nav: [
       { to: '/words', label: 'Home', exact: true },
       { to: '/words/library', label: 'Library' },

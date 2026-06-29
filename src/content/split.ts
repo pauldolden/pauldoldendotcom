@@ -5,8 +5,9 @@
 export const split = {
   meta: { title: 'Paul Dolden — choose a door' },
   brand: {
-    name: 'Paul',
-    nameBold: 'Dolden',
+    // Dual-voice wordmark: "paul" in mono (code), "dolden" in serif-italic (words).
+    codeWord: 'paul',
+    wordsWord: 'dolden',
     hint: 'choose a door',
     logo: '/assets/logo-mark.svg',
   },

@@ -45,7 +45,8 @@ function SplitFrontDoor() {
       <div className="brand">
         <img src={brand.logo} alt="" />
         <div className="name">
-          {brand.name} <b>{brand.nameBold}</b>
+          <span className="b-code">{brand.codeWord}</span>
+          <span className="b-words">{brand.wordsWord}</span>
         </div>
         <div className="hint">{brand.hint}</div>
       </div>

@@ -1,9 +1,19 @@
 /* ============================================================
    ui_kits/split — "choose a door" front door.
    Ported from the Claude Design project's ui_kits/split/index.html.
-   Page-level <style> moved here; asset paths rewritten to /assets/*;
-   the original body rules are scoped to :has(.split-screen) so they
-   only apply on the route that renders the split (not /about, etc).
+
+   Pink-primary refresh:
+   - Flat-pink accent throughout (no multi-color gradients). The title
+     accent and CTA fill resolve to solid pink via the retired --grad-*
+     / --accent tokens.
+   - Dual-voice wordmark: mono "paul" + serif-italic "dolden" (--accent).
+   - The angular neon "prism" CTA is the CODE side only; the WORDS half
+     keeps the matte grimoire button (squared, no neon glow) under
+     .theme-ember.
+   - The center divider is a single-hue pink fade (was a purple→oxblood
+     multi-color gradient).
+   The image/ember background scrims are single-hue legibility fades to
+   the page base — kept (they are not accent gradients).
    ============================================================ */
 
 html:has(.split-screen),
@@ -36,6 +46,7 @@ body:has(.split-screen) { background: #000; overflow: hidden; }
   background-size: cover; background-position: center;
   opacity: 0.5;
 }
+/* legibility scrim — single-hue fade to the page base (not an accent gradient) */
 .code .scrim {
   position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(11,8,23,0.55) 0%, rgba(11,8,23,0.78) 55%, var(--bg-base) 100%);
@@ -74,23 +85,38 @@ body:has(.split-screen) { background: #000; overflow: hidden; }
   color: var(--text-strong);
 }
 .words .title { line-height: 1.04; }
+/* flat pink (code) / flat gold (ember) accent via --grad-text — no rainbow gradient */
 .grad { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .line {
   margin: 18px 0 30px; font-family: var(--font-ui); font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.55; color: var(--text-muted);
 }
+
+/* ---- CTA: matte base — used as-is by the WORDS half (grimoire under .theme-ember) ---- */
 .cta {
-  display: inline-flex; align-items: center; gap: 9px; height: 50px; padding: 0 24px;
-  border-radius: var(--r-pill); font-family: var(--font-ui); font-weight: 700; font-size: 15px;
-  background: var(--grad-sunset); color: var(--text-on-neon);
-  box-shadow: var(--glow-soft);
+  display: inline-flex; align-items: center; gap: 9px; height: 50px; padding: 0 28px;
+  border-radius: var(--r-pill); font-family: var(--font-ui); font-weight: 700;
+  font-size: 15px; letter-spacing: 0.01em;
+  background: var(--accent); color: var(--text-on-neon);
 }
-.code .cta  { flex-direction: row-reverse; }
+.words .cta { box-shadow: var(--glow-soft); }
+
+/* ---- CTA: CODE side only — angular neon "prism" with flat-pink glow ---- */
+.code .cta {
+  flex-direction: row-reverse;
+  border-radius: 0;
+  clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+  -webkit-clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
+  filter: drop-shadow(0 0 18px rgba(255,46,151,0.55));
+  font-family: var(--font-display); text-transform: uppercase;
+  font-weight: 700; letter-spacing: 0.09em;
+}
 
 /* ---- CENTER BRIDGE ---- */
+/* single-hue pink fade (was a purple→oxblood multi-color gradient) */
 .divider {
   position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(192,132,252,0.5), rgba(204,90,110,0.5), transparent);
+  background: linear-gradient(180deg, transparent, rgba(255,46,151,0.5), transparent);
   z-index: 3;
 }
 .brand {
@@ -100,12 +126,19 @@ body:has(.split-screen) { background: #000; overflow: hidden; }
 }
 .brand img { width: 60px; height: 60px; filter: drop-shadow(0 6px 20px rgba(0,0,0,0.6)); }
 .brand .name {
-  font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0;
-  color: #fff; background: rgba(7,5,14,0.55); padding: 8px 18px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: baseline;
+  background: rgba(7,5,14,0.55); padding: 9px 20px; border-radius: var(--r-pill);
   border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   white-space: nowrap;
 }
-.brand .name b { font-weight: 700; }
+.brand .name .b-code {
+  font-family: var(--font-mono); font-weight: 500; font-size: 24px;
+  letter-spacing: -0.01em; color: var(--text-strong);
+}
+.brand .name .b-words {
+  font-family: var(--font-prose); font-style: italic; font-weight: 500; font-size: 30px;
+  letter-spacing: 0; color: var(--accent); margin-left: 1px;
+}
 .brand .hint {
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
   color: rgba(255,255,255,0.55);
@@ -116,6 +149,6 @@ body:has(.split-screen) { background: #000; overflow: hidden; }
   .half { flex: 1 1 50vh; min-height: 50vh; }
   .code .content, .words .content { text-align: left; margin: 0 auto; }
   .divider { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(192,132,252,0.5), rgba(204,90,110,0.5), transparent); }
+    background: linear-gradient(90deg, transparent, rgba(255,46,151,0.5), transparent); }
   .split:has(.code:hover) .words, .split:has(.words:hover) .code { flex-grow: 1; }
 }

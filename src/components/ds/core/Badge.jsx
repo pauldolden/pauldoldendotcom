@@ -4,8 +4,12 @@ import React from 'react';
  * Badge — a small status pill. Tuned for serial states:
  * ongoing, complete, hiatus, plus neutral / neon tones.
  * Set `dot` for a leading status dot.
+ *
+ * Carries the `pd-badge` hook class so the .theme-ember (words / grimoire)
+ * side can revert the chamfer to its squared treatment — see
+ * styles/theme-overrides.css. The badge restyle is a CODE-side change only.
  */
-export function Badge({ children, tone = 'neutral', dot = false, size = 'md', ...rest }) {
+export function Badge({ children, tone = 'neutral', dot = false, size = 'md', className = '', ...rest }) {
   const tones = {
     ongoing:  { fg: 'var(--status-ongoing)',  bg: 'rgba(46,230,160,0.12)',  bd: 'rgba(46,230,160,0.4)' },
     complete: { fg: 'var(--status-complete)', bg: 'rgba(34,211,238,0.12)',  bd: 'rgba(34,211,238,0.4)' },
@@ -17,16 +21,20 @@ export function Badge({ children, tone = 'neutral', dot = false, size = 'md', ..
   };
   const t = tones[tone] || tones.neutral;
   const sm = size === 'sm';
+  const ch = sm ? 5 : 6;
+  const clip = `polygon(${ch}px 0, 100% 0, 100% calc(100% - ${ch}px), calc(100% - ${ch}px) 100%, 0 100%, 0 ${ch}px)`;
 
   return (
     <span
+      className={['pd-badge', className].filter(Boolean).join(' ')}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: sm ? 5 : 6,
         height: sm ? 20 : 24,
-        padding: sm ? '0 8px' : '0 10px',
-        borderRadius: 'var(--r-pill)',
+        padding: sm ? '0 9px' : '0 11px',
+        clipPath: clip,
+        WebkitClipPath: clip,
         border: `1px solid ${t.bd}`,
         background: t.bg,
         color: t.fg,

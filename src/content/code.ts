@@ -6,7 +6,7 @@
 export const code = {
   meta: { title: 'Paul Dolden — pauldolden.com/code' },
 
-  brand: { name: 'Paul', nameBold: 'Dolden', tag: '/code', mark: '/assets/mark-code.svg' },
+  brand: { codeWord: 'paul', wordsWord: 'dolden', tag: '/code', mark: '/assets/mark-code.svg' },
 
   nav: [
     ['About', 'about'],

@@ -3,6 +3,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import dsCss from '../styles/design-system.css?url'
+import themeOverridesCss from '../styles/theme-overrides.css?url'
 import appCss from '../styles.css?url'
 import responsiveCss from '../styles/responsive.css?url'
 
@@ -26,6 +27,12 @@ export const Route = createRootRoute({
       {
         rel: 'stylesheet',
         href: dsCss,
+      },
+      // Local-only carve-out: keeps the button/badge restyle on the code side
+      // (reverts chamfer + neon glow under .theme-ember). Must load after dsCss.
+      {
+        rel: 'stylesheet',
+        href: themeOverridesCss,
       },
       {
         rel: 'stylesheet',

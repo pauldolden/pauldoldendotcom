@@ -25,7 +25,11 @@ export function HubLanding() {
       <header className="hub-header" style={{ position: 'sticky', top: 0, zIndex: 20, height: 'var(--header-h)', display: 'flex', alignItems: 'center', padding: '0 28px', gap: 22, background: 'rgba(11,8,23,0.72)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderBottom: '1px solid var(--border-faint)' }}>
         <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
           <img src={brand.mark} alt="" style={{ width: 34, height: 34 }} />
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, color: 'var(--text-strong)' }}>{brand.name} <span className="pd-grad-text">{brand.nameBold}</span></span>
+          {/* Dual-voice wordmark (brand mark): mono "paul" + serif-italic "dolden" in --accent (pink). */}
+          <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 17, letterSpacing: '-0.01em', color: 'var(--text-strong)' }}>{brand.codeWord}</span>
+            <span style={{ fontFamily: 'var(--font-prose)', fontStyle: 'italic', fontWeight: 500, fontSize: 21, color: 'var(--accent)', marginLeft: 1 }}>{brand.wordsWord}</span>
+          </span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', color: 'var(--text-faint)' }}>{brand.tag}</span>
         </a>
         <nav className="hub-nav" style={{ display: 'flex', gap: 2, marginLeft: 10 }}>
@@ -37,7 +41,7 @@ export function HubLanding() {
           <a href={wordsLink.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
             <HubIcon name="feather" size={14} color="var(--text-muted)" /> {wordsLink.label}
           </a>
-          <a href={resume.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, height: 38, padding: '0 16px', borderRadius: 'var(--r-pill)', background: 'var(--grad-sunset)', color: 'var(--text-on-neon)', fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 700, textDecoration: 'none', boxShadow: '0 0 20px -6px rgba(255,46,151,0.6)' }}>
+          <a href={resume.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, height: 38, padding: '0 18px', clipPath: 'polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)', WebkitClipPath: 'polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)', background: 'var(--grad-sunset)', color: 'var(--text-on-neon)', fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', textDecoration: 'none', filter: 'drop-shadow(0 0 16px rgba(255,46,151,0.55))' }}>
             <HubIcon name="download" size={15} color="#1a0a14" /> {resume.label}
           </a>
         </div>
@@ -55,8 +59,8 @@ export function HubLanding() {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(16px,2vw,20px)', color: 'var(--cyan-400)', marginTop: 12, letterSpacing: '0.02em' }}>{dev.role}</div>
               <p style={{ marginTop: 20, maxWidth: 520, fontFamily: 'var(--font-ui)', fontSize: 18, lineHeight: 1.55, color: 'var(--text-muted)' }}>{dev.tagline}</p>
               <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-                <Button variant="neon" as="a" href="#work" iconRight={<HubIcon name="arrow-down" size={17} color="#1a0a14" />}>{hero.ctaPrimary}</Button>
-                <Button variant="outline" as="a" href="#contact">{hero.ctaSecondary}</Button>
+                <Button variant="neon" tech as="a" href="#work" iconRight={<HubIcon name="arrow-down" size={17} color="#1a0a14" />}>{hero.ctaPrimary}</Button>
+                <Button variant="outline" tech as="a" href="#contact">{hero.ctaSecondary}</Button>
               </div>
               <div style={{ display: 'flex', gap: 18, marginTop: 26, flexWrap: 'wrap' }}>
                 {socials.map((s) => (
@@ -87,7 +91,7 @@ export function HubLanding() {
             <Eyebrow color="var(--cyan-400)">{experience.eyebrow}</Eyebrow>
             <SectionTitle>{experience.title}</SectionTitle>
             <div style={{ marginTop: 32, position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 7, top: 6, bottom: 6, width: 2, background: 'linear-gradient(180deg, var(--magenta-500), var(--purple-500), var(--cyan-500))', borderRadius: 2 }} />
+              <div style={{ position: 'absolute', left: 7, top: 6, bottom: 6, width: 2, background: 'var(--accent)', borderRadius: 2 }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
                 {experience.roles.map((job, i) => <Role key={i} job={job} bullet={experience.bullet} />)}
               </div>
@@ -131,7 +135,7 @@ export function HubLanding() {
                 <p style={{ margin: '0 auto 26px', maxWidth: 460, fontFamily: 'var(--font-ui)', fontSize: 17, color: 'var(--text-muted)' }}>{contact.blurb}</p>
                 <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
                   <Button variant="neon" as="a" href={`mailto:${dev.email}`} iconLeft={<HubIcon name="mail" size={16} color="#1a0a14" />}>{dev.email}</Button>
-                  <Button variant="outline" as="a" href={resume.href}>{contact.resumeLabel}</Button>
+                  <Button variant="outline" tech as="a" href={resume.href}>{contact.resumeLabel}</Button>
                 </div>
               </div>
             </div>

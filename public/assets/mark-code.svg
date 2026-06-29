@@ -1,30 +1,22 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="software from code — a bracket tree growing from an inkwell">
-  <defs>
-    <linearGradient id="c" x1="22" y1="86" x2="74" y2="24" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ff2e97"></stop>
-      <stop offset="0.5" stop-color="#a855f7"></stop>
-      <stop offset="1" stop-color="#22d3ee"></stop>
-    </linearGradient>
-  </defs>
-
   <!-- inkwell: squat ink bottle — narrow neck, bulged belly, flat base -->
-  <path d="M40 71 C 39 73, 29 76, 29 81 C 29 84.5, 31 86.5, 35 86.5 L 61 86.5 C 65 86.5, 67 84.5, 67 81 C 67 76, 57 73, 56 71" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M40 71 C 39 73, 29 76, 29 81 C 29 84.5, 31 86.5, 35 86.5 L 61 86.5 C 65 86.5, 67 84.5, 67 81 C 67 76, 57 73, 56 71" fill="none" stroke="#ff2e97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
   <!-- ink surface at the mouth -->
-  <ellipse cx="48" cy="70.5" rx="8.5" ry="2.6" fill="url(#c)"></ellipse>
+  <ellipse cx="48" cy="70.5" rx="8.5" ry="2.6" fill="#ff2e97"></ellipse>
 
   <!-- stem rising out of the ink -->
-  <path d="M48 68.5 V58" stroke="url(#c)" stroke-width="4.6" stroke-linecap="butt"></path>
+  <path d="M48 68.5 V58" stroke="#ff2e97" stroke-width="4.6" stroke-linecap="butt"></path>
 
   <!-- bracket tree -->
-  <path d="M34 58 H62 M34 58 V46 M62 58 V46 M26 46 H42 M54 46 H70 M26 46 V34 M42 46 V34 M54 46 V34 M70 46 V34" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
+  <path d="M34 58 H62 M34 58 V46 M62 58 V46 M26 46 H42 M54 46 H70 M26 46 V34 M42 46 V34 M54 46 V34 M70 46 V34" fill="none" stroke="#ff2e97" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
 
-  <g fill="url(#c)">
+  <g fill="#ff2e97">
     <circle cx="48" cy="58" r="2.2"></circle>
     <circle cx="34" cy="46" r="1.9"></circle>
     <circle cx="62" cy="46" r="1.9"></circle>
   </g>
 
-  <g fill="url(#c)">
+  <g fill="#ff2e97">
     <rect x="23" y="30.4" width="6" height="6"></rect>
     <rect x="39" y="30.4" width="6" height="6"></rect>
     <rect x="51" y="30.4" width="6" height="6"></rect>
