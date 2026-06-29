@@ -6,13 +6,17 @@
     </linearGradient>
   </defs>
 
-  <path d="M34 71 L34 85 L48 85" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
-  <path d="M62 71 L62 85 L48 85" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
-  <path d="M48 68 A14 3.4 0 0 0 48 74.8 Z" fill="#a855f7"></path>
-  <path d="M48 68 A14 3.4 0 0 1 48 74.8 Z" fill="#9a2f3f"></path>
+  <!-- inkwell, split down the middle: code (gradient) | words (gold) -->
+  <path d="M40 71 C 39 73, 29 76, 29 81 C 29 84.5, 31 86.5, 35 86.5 L 48 86.5" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M56 71 C 57 73, 67 76, 67 81 C 67 84.5, 65 86.5, 61 86.5 L 48 86.5" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- two-tone ink surface at the mouth -->
+  <path d="M48 67.9 A8.5 2.6 0 0 0 48 73.1 Z" fill="#a855f7"></path>
+  <path d="M48 67.9 A8.5 2.6 0 0 1 48 73.1 Z" fill="#9a2f3f"></path>
 
-  <path d="M48 72 V56" stroke="url(#c)" stroke-width="4.6" stroke-linecap="butt"></path>
+  <!-- stem rising out of the ink -->
+  <path d="M48 68.5 V56" stroke="url(#c)" stroke-width="4.6" stroke-linecap="butt"></path>
 
+  <!-- code branch (left): node / bracket tree -->
   <path d="M48 56 H32 M32 56 V44 M25 44 H40 M25 44 V31 M40 44 V31" fill="none" stroke="url(#c)" stroke-width="3" stroke-linecap="butt" stroke-linejoin="miter"></path>
   <circle cx="48" cy="56" r="2.3" fill="url(#c)"></circle>
   <circle cx="32" cy="44" r="2" fill="url(#c)"></circle>
@@ -21,6 +25,7 @@
     <rect x="37" y="27.4" width="6" height="6"></rect>
   </g>
 
+  <!-- words branch (right): organic leaf -->
   <path d="M48 54 C51 50 54 48 56 46" stroke="#d4a94e" stroke-width="3.4" stroke-linecap="round" fill="none"></path>
   <path d="M48 22 C56 19 63 23 63 30 C71 29 74 38 67 42 C72 46 67 53 58 51 C56 52 54 52 52 52" fill="none" stroke="#d4a94e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>

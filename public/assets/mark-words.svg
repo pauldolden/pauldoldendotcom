@@ -1,9 +1,11 @@
-<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="words from ink">
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="words from ink — a tree growing from an inkwell">
+  <!-- inkwell: squat ink bottle — narrow neck, bulged belly, flat base -->
+  <path d="M40 71 C 39 73, 29 76, 29 81 C 29 84.5, 31 86.5, 35 86.5 L 61 86.5 C 65 86.5, 67 84.5, 67 81 C 67 76, 57 73, 56 71" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- ink surface at the mouth -->
+  <ellipse cx="48" cy="70.5" rx="8.5" ry="2.6" fill="#9a2f3f"></ellipse>
 
-  <path d="M34 71 L34 85 L62 85 L62 71" fill="none" stroke="#d4a94e" stroke-width="3" stroke-linecap="round" stroke-linejoin="miter"></path>
-  <ellipse cx="48" cy="71" rx="14" ry="3.4" fill="#9a2f3f"></ellipse>
-
-  <path d="M48 72 V50" stroke="#d4a94e" stroke-width="4.4" stroke-linecap="round"></path>
+  <!-- stem + leaves rising out of the ink -->
+  <path d="M48 68.5 V50" stroke="#d4a94e" stroke-width="4.4" stroke-linecap="round"></path>
   <path d="M48 52 L41 45 M48 52 L55 45" stroke="#d4a94e" stroke-width="3.4" stroke-linecap="round"></path>
 
   <path d="M48 22 C40 19 33 23 33 30 C25 29 22 38 29 42 C24 46 29 53 38 51 C40 52 56 52 58 51 C67 53 72 46 67 42 C74 38 71 29 63 30 C63 23 56 19 48 22 Z" fill="none" stroke="#d4a94e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
