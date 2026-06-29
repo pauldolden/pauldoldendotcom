@@ -8,14 +8,13 @@
   "main": "@tanstack/react-start/server-entry",
   "observability": { "enabled": true },
 
-  // Writing projects for /words. This is a public base URL (not a secret), so
-  // vars is fine — uncomment + set to your R2 bucket / custom domain / CDN.
-  // Unset → /words shows empty states (sample fallback is empty).
-  //   <base>/catalog.json and <base>/<storyId>/<chapterId>.md  (Markdown + ::: directives)
-  "vars": {
-    // "STORIES_R2_BASE_URL": "https://stories.pauldolden.com"
-  }
+  // Writing projects for /words, served from R2 (private — read via this
+  // binding in src/server/stories-data.ts; no public URL).
+  //   catalog.json  and  <storyId>/<chapterId>.md  (Markdown + ::: directives)
+  "r2_buckets": [
+    { "binding": "STORIES", "bucket_name": "pauldoldendotcom-cdn" }
+  ]
 
-  // If you later bind the R2 bucket directly instead of fetching a public URL:
-  // "r2_buckets": [{ "binding": "STORIES", "bucket_name": "pauldolden-stories" }]
+  // Alternative to the binding: serve the bucket over a public URL and set
+  // "vars": { "STORIES_R2_BASE_URL": "https://…" } — the loader falls back to it.
 }

@@ -18,6 +18,10 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
+        name: 'theme-color',
+        content: '#0b0817',
+      },
+      {
         title: 'Paul Dolden',
       },
     ],
@@ -42,6 +46,11 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: responsiveCss,
       },
+      // Brand favicons + PWA manifest (icons live in /public).
+      { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      { rel: 'manifest', href: '/manifest.json' },
     ],
   }),
   shellComponent: RootDocument,
