@@ -16,7 +16,10 @@ import { Route as WordsIndexRouteImport } from './routes/words/index'
 import { Route as WordsRssDotxmlRouteImport } from './routes/words/rss[.]xml'
 import { Route as WordsLibraryRouteImport } from './routes/words/library'
 import { Route as WordsAboutRouteImport } from './routes/words/about'
+import { Route as WordsAdminRouteRouteImport } from './routes/words/admin/route'
+import { Route as WordsAdminIndexRouteImport } from './routes/words/admin/index'
 import { Route as WordsStoryIdIndexRouteImport } from './routes/words/$storyId/index'
+import { Route as WordsAdminStoryIdRouteImport } from './routes/words/admin/$storyId'
 import { Route as WordsStoryIdChapterIdRouteImport } from './routes/words/$storyId/$chapterId'
 
 const CodeRoute = CodeRouteImport.update({
@@ -54,10 +57,25 @@ const WordsAboutRoute = WordsAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => WordsRouteRoute,
 } as any)
+const WordsAdminRouteRoute = WordsAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => WordsRouteRoute,
+} as any)
+const WordsAdminIndexRoute = WordsAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WordsAdminRouteRoute,
+} as any)
 const WordsStoryIdIndexRoute = WordsStoryIdIndexRouteImport.update({
   id: '/$storyId/',
   path: '/$storyId/',
   getParentRoute: () => WordsRouteRoute,
+} as any)
+const WordsAdminStoryIdRoute = WordsAdminStoryIdRouteImport.update({
+  id: '/$storyId',
+  path: '/$storyId',
+  getParentRoute: () => WordsAdminRouteRoute,
 } as any)
 const WordsStoryIdChapterIdRoute = WordsStoryIdChapterIdRouteImport.update({
   id: '/$storyId/$chapterId',
@@ -69,12 +87,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/words': typeof WordsRouteRouteWithChildren
   '/code': typeof CodeRoute
+  '/words/admin': typeof WordsAdminRouteRouteWithChildren
   '/words/about': typeof WordsAboutRoute
   '/words/library': typeof WordsLibraryRoute
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words/': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
+  '/words/admin/': typeof WordsAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,19 +105,24 @@ export interface FileRoutesByTo {
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId': typeof WordsStoryIdIndexRoute
+  '/words/admin': typeof WordsAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/words': typeof WordsRouteRouteWithChildren
   '/code': typeof CodeRoute
+  '/words/admin': typeof WordsAdminRouteRouteWithChildren
   '/words/about': typeof WordsAboutRoute
   '/words/library': typeof WordsLibraryRoute
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words/': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
+  '/words/admin/': typeof WordsAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,12 +130,15 @@ export interface FileRouteTypes {
     | '/'
     | '/words'
     | '/code'
+    | '/words/admin'
     | '/words/about'
     | '/words/library'
     | '/words/rss.xml'
     | '/words/'
     | '/words/$storyId/$chapterId'
+    | '/words/admin/$storyId'
     | '/words/$storyId/'
+    | '/words/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,18 +148,23 @@ export interface FileRouteTypes {
     | '/words/rss.xml'
     | '/words'
     | '/words/$storyId/$chapterId'
+    | '/words/admin/$storyId'
     | '/words/$storyId'
+    | '/words/admin'
   id:
     | '__root__'
     | '/'
     | '/words'
     | '/code'
+    | '/words/admin'
     | '/words/about'
     | '/words/library'
     | '/words/rss.xml'
     | '/words/'
     | '/words/$storyId/$chapterId'
+    | '/words/admin/$storyId'
     | '/words/$storyId/'
+    | '/words/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -190,12 +224,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WordsAboutRouteImport
       parentRoute: typeof WordsRouteRoute
     }
+    '/words/admin': {
+      id: '/words/admin'
+      path: '/admin'
+      fullPath: '/words/admin'
+      preLoaderRoute: typeof WordsAdminRouteRouteImport
+      parentRoute: typeof WordsRouteRoute
+    }
+    '/words/admin/': {
+      id: '/words/admin/'
+      path: '/'
+      fullPath: '/words/admin/'
+      preLoaderRoute: typeof WordsAdminIndexRouteImport
+      parentRoute: typeof WordsAdminRouteRoute
+    }
     '/words/$storyId/': {
       id: '/words/$storyId/'
       path: '/$storyId'
       fullPath: '/words/$storyId/'
       preLoaderRoute: typeof WordsStoryIdIndexRouteImport
       parentRoute: typeof WordsRouteRoute
+    }
+    '/words/admin/$storyId': {
+      id: '/words/admin/$storyId'
+      path: '/$storyId'
+      fullPath: '/words/admin/$storyId'
+      preLoaderRoute: typeof WordsAdminStoryIdRouteImport
+      parentRoute: typeof WordsAdminRouteRoute
     }
     '/words/$storyId/$chapterId': {
       id: '/words/$storyId/$chapterId'
@@ -207,7 +262,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface WordsAdminRouteRouteChildren {
+  WordsAdminStoryIdRoute: typeof WordsAdminStoryIdRoute
+  WordsAdminIndexRoute: typeof WordsAdminIndexRoute
+}
+
+const WordsAdminRouteRouteChildren: WordsAdminRouteRouteChildren = {
+  WordsAdminStoryIdRoute: WordsAdminStoryIdRoute,
+  WordsAdminIndexRoute: WordsAdminIndexRoute,
+}
+
+const WordsAdminRouteRouteWithChildren = WordsAdminRouteRoute._addFileChildren(
+  WordsAdminRouteRouteChildren,
+)
+
 interface WordsRouteRouteChildren {
+  WordsAdminRouteRoute: typeof WordsAdminRouteRouteWithChildren
   WordsAboutRoute: typeof WordsAboutRoute
   WordsLibraryRoute: typeof WordsLibraryRoute
   WordsRssDotxmlRoute: typeof WordsRssDotxmlRoute
@@ -217,6 +287,7 @@ interface WordsRouteRouteChildren {
 }
 
 const WordsRouteRouteChildren: WordsRouteRouteChildren = {
+  WordsAdminRouteRoute: WordsAdminRouteRouteWithChildren,
   WordsAboutRoute: WordsAboutRoute,
   WordsLibraryRoute: WordsLibraryRoute,
   WordsRssDotxmlRoute: WordsRssDotxmlRoute,

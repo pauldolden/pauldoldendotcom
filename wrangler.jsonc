@@ -13,8 +13,20 @@
   //   catalog.json  and  <storyId>/<chapterId>.md  (Markdown + ::: directives)
   "r2_buckets": [
     { "binding": "STORIES", "bucket_name": "pauldoldendotcom-cdn" }
-  ]
+  ],
 
-  // Alternative to the binding: serve the bucket over a public URL and set
-  // "vars": { "STORIES_R2_BASE_URL": "https://…" } — the loader falls back to it.
+  // Cloudflare Access config for the /words/admin uploader (NON-secret — these
+  // are public identifiers, safe to commit). Fill in after creating the Access
+  // application (see README "Admin / content uploads"). Until set, the admin
+  // write API denies everything in production. Localhost dev bypasses Access.
+  //   CF_ACCESS_TEAM_DOMAIN — team domain, e.g. https://<team>.cloudflareaccess.com
+  //   CF_ACCESS_AUD         — the Access application's Audience (AUD) tag
+  //   ADMIN_EMAILS          — comma-separated allowlist of editor emails
+  // (Optional alternative to the R2 binding for non-Workers hosts: a public
+  //  read URL — add "STORIES_R2_BASE_URL": "https://…" here.)
+  "vars": {
+    "CF_ACCESS_TEAM_DOMAIN": "",
+    "CF_ACCESS_AUD": "",
+    "ADMIN_EMAILS": "pauldolden@gmail.com"
+  }
 }
