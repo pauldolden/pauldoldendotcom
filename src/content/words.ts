@@ -5,14 +5,14 @@
 // local sample in src/content/stories.sample.ts.
 //
 // Voice: laconic, warm under the wit — fantasy mysteries + real-world
-// satire (Pratchett-adjacent). "The premise is absurd, the stakes are
-// real." NOT LitRPG. Keep copy short; observation over explanation.
+// satire (Pratchett-adjacent). "The gods mean well, the systems don’t."
+// NOT LitRPG. Keep copy short; observation over explanation.
 // ============================================================
 export const words = {
   author: {
     name: 'Paul Dolden',
     tagline:
-      'Fantasy mysteries and real-world satire — gods who mean well, systems that don’t, and the people caught in the gears.',
+      'Fantasy mysteries and real-world satire — the people caught in the gears.',
     domain: 'pauldolden.com/words',
   },
 
@@ -38,8 +38,8 @@ export const words = {
     meta: 'Paul Dolden — words.pauldolden.com',
     hero: {
       eyebrow: '§ Writer · fantasy, mystery & quiet satire',
-      titleLead: 'The premise is absurd. ',
-      titleAccent: 'The stakes are real.',
+      titleLead: 'The gods mean well. ',
+      titleAccent: 'The systems don’t.',
       taglineSuffix: ' Warm under the wit. Free to read, start to finish.',
       ctaPrimary: 'Start reading', // featured story title is appended in markup
       ctaPreview: 'Read about', // used when the featured work has no chapters yet
@@ -77,7 +77,7 @@ export const words = {
     titleLead: "Hi, I'm ",
     titleAccent: 'Paul.',
     paragraphs: [
-      'I wanted to be a writer before I wanted to be anything else. I write fantasy mysteries and real-world satire — fair-play whodunits, and stories where the gods mean well and the systems don’t. The premise is usually absurd. The stakes are always real.',
+      'I wanted to be a writer before I wanted to be anything else. I write fantasy mysteries and real-world satire — fair-play whodunits, and stories where the gods mean well and the systems don’t — and the stakes are always real.',
       'By day I build software, and the two halves feed each other: code and prose scratch the same itch — precision, clarity, the quiet satisfaction of making a thing that works. Pratchett taught me the rest — warmth under the wit, and a narrator who loves its characters even while it laughs at them.',
       'Everything here is free to read. If you want to keep me writing, follow by email or back the work on Patreon. That’s the whole business model: write the next chapter, post the next chapter.',
     ],
