@@ -34,7 +34,7 @@ function NavLink({ to, params, exact, children }) {
   );
 }
 
-export function Shell({ children }) {
+export function Shell({ children, isAdmin = false }) {
   const { shell, author } = words;
   const [searchOpen, setSearchOpen] = useState(false);
   return (
@@ -89,6 +89,9 @@ export function Shell({ children }) {
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{author.domain}</span>
         </Link>
         <div style={{ display: 'flex', gap: 18, alignItems: 'center', fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--text-faint)' }}>
+          {isAdmin && (
+            <Link to="/words/admin" style={{ color: 'var(--cyan-400)', textDecoration: 'none', fontWeight: 600 }}>Admin</Link>
+          )}
           {shell.footerLinks.map((l) => (
             <a
               key={l.label}

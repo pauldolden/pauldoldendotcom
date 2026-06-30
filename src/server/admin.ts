@@ -67,6 +67,20 @@ function cleanChapterMeta(input: any) {
   }
 }
 
+/**
+ * Soft auth probe for UI gating (e.g. showing an Admin link). Never throws —
+ * returns { admin: false } for anonymous visitors. Cheap: requireAdmin bails
+ * before any JWKS fetch when no Access token/cookie is present.
+ */
+export const amIAdmin = createServerFn().handler(async () => {
+  try {
+    await requireAdmin()
+    return { admin: true }
+  } catch {
+    return { admin: false }
+  }
+})
+
 /** Full catalog incl. drafts. */
 export const adminGetCatalog = createServerFn({ method: 'POST' }).handler(async () => {
   await requireAdmin()
