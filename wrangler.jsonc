@@ -25,8 +25,8 @@
   // (Optional alternative to the R2 binding for non-Workers hosts: a public
   //  read URL — add "STORIES_R2_BASE_URL": "https://…" here.)
   "vars": {
-    "CF_ACCESS_TEAM_DOMAIN": "",
-    "CF_ACCESS_AUD": "",
-    "ADMIN_EMAILS": "pauldolden@gmail.com"
+    "CF_ACCESS_TEAM_DOMAIN": "https://pauldolden.cloudflareaccess.com",
+    "CF_ACCESS_AUD": "d36b12a4b03c96b3f104a9c3c46bd62279936c3bc4dfb09b94e98e26df93a5d7",
+    "ADMIN_EMAILS": "S9gpxnfwn8@privaterelay.appleid.com"
   }
 }
