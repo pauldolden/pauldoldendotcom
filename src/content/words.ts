@@ -77,9 +77,8 @@ export const words = {
     titleLead: "Hi, I'm ",
     titleAccent: 'Paul.',
     paragraphs: [
-      'I wanted to be a writer before I wanted to be anything else. I write fantasy mysteries and real-world satire — fair-play whodunits, and stories where the gods mean well and the systems don’t — and the stakes are always real.',
-      'By day I build software, and the two halves feed each other: code and prose scratch the same itch — precision, clarity, the quiet satisfaction of making a thing that works. Pratchett taught me the rest — warmth under the wit, and a narrator who loves its characters even while it laughs at them.',
-      'Everything here is free to read. If you want to keep me writing, follow by email or back the work on Patreon. That’s the whole business model: write the next chapter, post the next chapter.',
+      'I wanted to be a writer before anything else. I studied it at UEA; I’ve spent my career writing code. Turns out they’re the same craft in different clothes: make it work, make it clear, make it land.',
+      'So this is where I write the fiction. Free to read.',
     ],
   },
 
