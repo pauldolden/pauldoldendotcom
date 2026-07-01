@@ -40,7 +40,7 @@ export function LibraryScreen({ stories }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, marginTop: 32 }}>
         {shown.map((s) => (
-          <StoryCard key={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
+          <StoryCard key={s.id} id={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
         ))}
       </div>
       {shown.length === 0 && (

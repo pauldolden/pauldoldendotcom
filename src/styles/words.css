@@ -4,6 +4,13 @@
 
 body:has(.words-app) { background: #0f0b09; }
 
+/* StoryCover foil shimmer — one keyframe shared by every procedural cover
+   (see components/ds/reading/StoryCover.jsx). Matte-safe: a slow light sweep,
+   not a glow. */
+@keyframes pdFoilShimmer { 0% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+.pd-foil-sheen { animation: pdFoilShimmer 9s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .pd-foil-sheen { animation: none; } }
+
 .words-app small {
   font-family: var(--font-mono);
   font-size: 11px;

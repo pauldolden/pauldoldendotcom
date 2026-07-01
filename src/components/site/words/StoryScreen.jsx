@@ -2,7 +2,7 @@
 // Copy from content/words; `story` + `chapters` from the route loader.
 import React from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { Badge, Button, ChapterRow, Icon, Tag } from '../../ds/index.js';
+import { Badge, Button, ChapterRow, Icon, Tag, StoryCover } from '../../ds/index.js';
 import { words } from '../../../content/words';
 
 const STATUS_LABEL = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus', drafting: 'Drafting', planned: 'Planned' };
@@ -26,7 +26,8 @@ export function StoryScreen({ story, chapters = [], world = null }) {
         <div style={{ position: 'absolute', inset: 0, background: story.coverColor, opacity: 0.32 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(11,8,23,0.5), var(--bg-base) 92%)' }} />
         <div className="story-hero" style={{ position: 'relative', maxWidth: 'var(--width-content)', margin: '0 auto', padding: '64px 28px 0', display: 'grid', gridTemplateColumns: '300px 1fr', gap: 40 }}>
-          <div className="story-cover" style={{ aspectRatio: '2 / 3', borderRadius: 'var(--r-xl)', background: story.coverColor, boxShadow: 'var(--shadow-xl), var(--glow-purple)', position: 'relative', overflow: 'hidden' }}>
+          <div className="story-cover" style={{ aspectRatio: '2 / 3', borderRadius: 'var(--r-xl)', background: 'var(--night-800)', boxShadow: 'var(--shadow-xl), var(--glow-purple)', position: 'relative', overflow: 'hidden' }}>
+            <StoryCover id={story.id} title={story.title} tags={story.tags} coverColor={story.coverColor} status={story.status} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 55%, rgba(7,5,14,0.7))' }} />
             <div style={{ position: 'absolute', left: 18, bottom: 18, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 30, color: '#fff', letterSpacing: '0', textShadow: '0 2px 14px rgba(0,0,0,0.5)' }}>{story.title}</div>
           </div>

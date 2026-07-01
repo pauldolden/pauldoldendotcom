@@ -1,6 +1,7 @@
 import React from 'react';
 import { Badge } from '../core/Badge.jsx';
 import { Tag } from '../core/Tag.jsx';
+import { StoryCover } from './StoryCover.jsx';
 
 /**
  * StoryCard — a serial/work cover card for library grids and featured rails.
@@ -10,6 +11,7 @@ const STATUS_LABEL = { ongoing: 'Ongoing', complete: 'Complete', hiatus: 'Hiatus
 const STATUS_TONE = { ongoing: 'ongoing', complete: 'complete', hiatus: 'hiatus', drafting: 'hiatus', planned: 'neutral' };
 
 export function StoryCard({
+  id,
   title,
   blurb,
   cover = null,
@@ -37,8 +39,8 @@ export function StoryCard({
         transition: 'var(--t-control)',
       }}
     >
-      <div style={{ position: 'relative', aspectRatio: '3 / 2', background: cover ? 'var(--night-800)' : coverColor }}>
-        {cover}
+      <div style={{ position: 'relative', aspectRatio: '3 / 2', background: 'var(--night-800)' }}>
+        {cover || <StoryCover id={id} title={title} tags={tags} coverColor={coverColor} status={status} />}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 45%, rgba(7,5,14,0.78) 100%)' }} />
         <div style={{ position: 'absolute', top: 12, left: 12 }}>
           <Badge tone={statusTone} dot>{statusText}</Badge>

@@ -7,6 +7,7 @@ export { Tag } from './core/Tag.jsx';
 export { Card } from './core/Card.jsx';
 export { Input } from './core/Input.jsx';
 export { StoryCard } from './reading/StoryCard.jsx';
+export { StoryCover } from './reading/StoryCover.jsx';
 export { ChapterRow } from './reading/ChapterRow.jsx';
 export { ReadingProgress } from './reading/ReadingProgress.jsx';
 export { PullQuote } from './reading/PullQuote.jsx';
