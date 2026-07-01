@@ -41,6 +41,10 @@ export const useSpoilers = () => useContext(Ctx)
 export function Spoiler({ active, children, label = 'Spoiler', inline = false }) {
   const { show } = useSpoilers()
   const [revealed, setRevealed] = useState(false)
+  // A global "hide spoilers" must also re-hide anything revealed one-at-a-time.
+  useEffect(() => {
+    if (!show) setRevealed(false)
+  }, [show])
   if (!active) return children
 
   const hidden = !show && !revealed
