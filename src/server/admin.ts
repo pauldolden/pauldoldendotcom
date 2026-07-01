@@ -22,7 +22,7 @@ import { loadWorld, putWorld, deleteWorld } from './world-data'
 
 const STATUSES = ['ongoing', 'complete', 'hiatus', 'drafting', 'planned']
 // Procedural cover looks (see components/ds/reading/StoryCover.jsx). Keep in sync.
-const COVER_STYLES = ['foil', 'monogram', 'isobar', 'sigil', 'riso', 'deco']
+const COVER_STYLES = ['foil', 'monogram', 'isobar', 'sigil', 'riso', 'deco', 'circus', 'wreck']
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 function assertSlug(id: string): string {

@@ -5,6 +5,8 @@ import { Isobar } from './covers/Isobar.jsx';
 import { Astrolabe } from './covers/Astrolabe.jsx';
 import { Riso } from './covers/Riso.jsx';
 import { Deco } from './covers/Deco.jsx';
+import { BigTop } from './covers/BigTop.jsx';
+import { Salvage } from './covers/Salvage.jsx';
 
 /**
  * StoryCover — procedural placeholder cover, selectable per story.
@@ -24,6 +26,8 @@ const VARIANTS = {
   sigil: Astrolabe,
   riso: Riso,
   deco: Deco,
+  circus: BigTop,
+  wreck: Salvage,
 };
 
 export const DEFAULT_COVER_STYLE = 'sigil';
@@ -35,6 +39,8 @@ export const COVER_STYLES = [
   { key: 'isobar', label: 'Isobar — contour lines' },
   { key: 'riso', label: 'Misregister — halftone print' },
   { key: 'deco', label: 'Radiant — art-deco poster' },
+  { key: 'circus', label: 'Big Top — circus tent' },
+  { key: 'wreck', label: 'Salvage — sea & witch-light' },
 ];
 
 export function StoryCover({ coverStyle, ...props }) {
