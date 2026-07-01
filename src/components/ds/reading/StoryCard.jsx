@@ -16,6 +16,7 @@ export function StoryCard({
   blurb,
   cover = null,
   coverColor = 'var(--accent)',
+  coverStyle,
   status = 'ongoing',
   statusLabel,
   tags = [],
@@ -40,10 +41,10 @@ export function StoryCard({
       }}
     >
       <div style={{ position: 'relative', aspectRatio: '3 / 2', background: 'var(--night-800)' }}>
-        {cover || <StoryCover id={id} title={title} tags={tags} coverColor={coverColor} status={status} />}
+        {cover || <StoryCover coverStyle={coverStyle} id={id} title={title} tags={tags} coverColor={coverColor} status={status} />}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 45%, rgba(7,5,14,0.78) 100%)' }} />
         <div style={{ position: 'absolute', top: 12, left: 12 }}>
-          <Badge tone={statusTone} dot>{statusText}</Badge>
+          <Badge tone={statusTone} dot overlay>{statusText}</Badge>
         </div>
       </div>
       <div style={{ padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 10 }}>

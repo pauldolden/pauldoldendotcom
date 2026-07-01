@@ -2,7 +2,7 @@
 // `id` is locked after creation: it's the R2 key prefix for chapter bodies, so
 // renaming would orphan them.
 import React from 'react';
-import { Button, Input } from '../../../ds/index.js';
+import { Button, Input, COVER_STYLES, DEFAULT_COVER_STYLE } from '../../../ds/index.js';
 
 const STATUSES = ['drafting', 'planned', 'ongoing', 'hiatus', 'complete'];
 const COVERS = [
@@ -36,6 +36,7 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
     logline: initial?.logline ?? '',
     blurb: initial?.blurb ?? '',
     coverColor: initial?.coverColor ?? 'var(--accent)',
+    coverStyle: initial?.coverStyle ?? DEFAULT_COVER_STYLE,
     status: initial?.status ?? 'drafting',
     tags: (initial?.tags ?? []).join(', '),
     words: initial?.words ?? '',
@@ -102,12 +103,18 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
         <Input label="Progress line" value={f.progress} onChange={set('progress')} placeholder="Drafting · Act II" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 14 }}>
         <Input label="Tags (comma-separated)" value={f.tags} onChange={set('tags')} placeholder="Mystery, Fantasy" />
         <div>
           <span style={label}>Cover colour</span>
           <select style={{ ...control, color: f.coverColor }} value={f.coverColor} onChange={set('coverColor')}>
             {COVERS.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+        <div>
+          <span style={label}>Cover style</span>
+          <select style={control} value={f.coverStyle} onChange={set('coverStyle')}>
+            {COVER_STYLES.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
           </select>
         </div>
       </div>

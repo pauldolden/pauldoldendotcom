@@ -50,9 +50,9 @@ export function HomeScreen({ stories }) {
             <div className="words-featured" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 28, alignItems: 'center', marginTop: 28 }}>
               <article style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)' }}>
                 <div style={{ height: 260, background: 'var(--night-800)', position: 'relative', overflow: 'hidden' }}>
-                  <StoryCover id={featured.id} title={featured.title} tags={featured.tags} coverColor={featured.coverColor} status={featured.status} />
+                  <StoryCover coverStyle={featured.coverStyle} id={featured.id} title={featured.title} tags={featured.tags} coverColor={featured.coverColor} status={featured.status} />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 40%, rgba(7,5,14,0.7))' }} />
-                  <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
+                  <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot overlay>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
                 </div>
               </article>
               <div>
@@ -82,7 +82,7 @@ export function HomeScreen({ stories }) {
             <SectionHead eyebrow={c.shelf.eyebrow} title={c.shelf.title} action={<Link to="/words/library" style={linkBtn}>{c.shelf.allWorks}</Link>} />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22, marginTop: 28 }}>
               {more.map((s) => (
-                <StoryCard key={s.id} id={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
+                <StoryCard key={s.id} id={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} coverStyle={s.coverStyle} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
               ))}
             </div>
           </section>

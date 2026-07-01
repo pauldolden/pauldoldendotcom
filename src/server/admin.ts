@@ -21,6 +21,8 @@ import { buildWorld } from './trove-parse'
 import { loadWorld, putWorld, deleteWorld } from './world-data'
 
 const STATUSES = ['ongoing', 'complete', 'hiatus', 'drafting', 'planned']
+// Procedural cover looks (see components/ds/reading/StoryCover.jsx). Keep in sync.
+const COVER_STYLES = ['foil', 'monogram', 'isobar', 'sigil', 'riso', 'deco']
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 function assertSlug(id: string): string {
@@ -47,6 +49,7 @@ function cleanStoryMeta(input: any) {
     logline: str(input?.logline, 400),
     blurb: str(input?.blurb, 4000),
     coverColor: str(input?.coverColor || 'var(--accent)', 100),
+    coverStyle: COVER_STYLES.includes(input?.coverStyle) ? input.coverStyle : 'sigil',
     status: STATUSES.includes(input?.status) ? input.status : 'drafting',
     tags: Array.isArray(input?.tags)
       ? input.tags.map((t: unknown) => str(t, 40)).filter(Boolean).slice(0, 12)

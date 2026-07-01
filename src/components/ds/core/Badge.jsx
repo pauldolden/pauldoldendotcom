@@ -9,7 +9,7 @@ import React from 'react';
  * side can revert the chamfer to its squared treatment — see
  * styles/theme-overrides.css. The badge restyle is a CODE-side change only.
  */
-export function Badge({ children, tone = 'neutral', dot = false, size = 'md', className = '', ...rest }) {
+export function Badge({ children, tone = 'neutral', dot = false, size = 'md', overlay = false, className = '', ...rest }) {
   const tones = {
     ongoing:  { fg: 'var(--status-ongoing)',  bg: 'rgba(46,230,160,0.12)',  bd: 'rgba(46,230,160,0.4)' },
     complete: { fg: 'var(--status-complete)', bg: 'rgba(34,211,238,0.12)',  bd: 'rgba(34,211,238,0.4)' },
@@ -24,6 +24,11 @@ export function Badge({ children, tone = 'neutral', dot = false, size = 'md', cl
   const ch = sm ? 5 : 6;
   const clip = `polygon(${ch}px 0, 100% 0, 100% calc(100% - ${ch}px), calc(100% - ${ch}px) 100%, 0 100%, 0 ${ch}px)`;
 
+  // `overlay`: sitting on top of a procedural cover of unknown brightness. Swap the
+  // translucent tone wash for a dark scrim pill so the status stays legible on any
+  // art, while keeping the tone's colour on text + border + dot.
+  const bg = overlay ? 'rgba(8,5,16,0.72)' : t.bg;
+
   return (
     <span
       className={['pd-badge', className].filter(Boolean).join(' ')}
@@ -36,7 +41,8 @@ export function Badge({ children, tone = 'neutral', dot = false, size = 'md', cl
         clipPath: clip,
         WebkitClipPath: clip,
         border: `1px solid ${t.bd}`,
-        background: t.bg,
+        background: bg,
+        ...(overlay ? { backdropFilter: 'blur(3px)', WebkitBackdropFilter: 'blur(3px)', boxShadow: '0 2px 8px rgba(0,0,0,0.5)' } : null),
         color: t.fg,
         fontFamily: 'var(--font-mono)',
         fontSize: sm ? '0.6875rem' : 'var(--text-xs)',
