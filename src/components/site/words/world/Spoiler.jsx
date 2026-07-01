@@ -46,7 +46,7 @@ export function Spoiler({ active, children, label = 'Spoiler', inline = false })
   const hidden = !show && !revealed
   const Tag = inline ? 'span' : 'div'
   return (
-    <Tag style={{ position: 'relative', display: inline ? 'inline-block' : 'block', height: inline ? undefined : '100%' }}>
+    <Tag style={{ position: 'relative', display: inline ? 'inline-block' : 'block' }}>
       <Tag
         aria-hidden={hidden || undefined}
         style={

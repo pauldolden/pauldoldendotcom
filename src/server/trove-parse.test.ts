@@ -173,3 +173,41 @@ describe('buildWorld', () => {
     expect(world.relationships[0].spoiler).toBe(true)
   })
 })
+
+describe('whole-entity spoiler flag', () => {
+  const bare = `---\nname: "Nell"\n---\nA face in the crowd.`
+
+  it('leaves an unflagged entity visible (stub shown; details gated in UI)', () => {
+    const w = buildWorld('s', [{ path: 'characters/nell.md', text: bare }], 'ts')
+    expect(w.entities[0].spoiler).toBe(false)
+  })
+
+  it('a file flag hides the whole entity', () => {
+    const w = buildWorld('s', [{ path: 'characters/nell.md', text: `---\nname: "Nell"\nspoiler: true\n---\nhi` }], 'ts')
+    expect(w.entities[0].spoiler).toBe(true)
+  })
+
+  it('a type _meta.toml `spoiler = true` hides the whole type by default', () => {
+    const w = buildWorld(
+      's',
+      [
+        { path: 'characters/_meta.toml', text: 'spoiler = true' },
+        { path: 'characters/nell.md', text: bare },
+      ],
+      'ts',
+    )
+    expect(w.entities[0].spoiler).toBe(true)
+  })
+
+  it('a file flag still wins over the type default', () => {
+    const w = buildWorld(
+      's',
+      [
+        { path: 'characters/_meta.toml', text: 'spoiler = true' },
+        { path: 'characters/vip.md', text: `---\nname: "VIP"\nspoiler: false\n---\nx` },
+      ],
+      'ts',
+    )
+    expect(w.entities[0].spoiler).toBe(false)
+  })
+})

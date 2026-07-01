@@ -324,7 +324,7 @@ function toBool(v: unknown): boolean {
   return v === true || v === 'true' || v === 1 || v === 'yes'
 }
 
-function parseEntity(type: string, path: string, text: string): WorldEntity {
+function parseEntity(type: string, path: string, text: string, defaultSpoiler: boolean): WorldEntity {
   const { data, body } = parseFrontmatter(text)
   const slug = slugFromFile(path)
   const fields: Record<string, string | number | boolean> = {}
@@ -348,7 +348,9 @@ function parseEntity(type: string, path: string, text: string): WorldEntity {
     surname: data.surname ? String(data.surname) : '',
     middleName: data.middle_name ? String(data.middle_name) : '',
     aliases,
-    spoiler: toBool(data.spoiler),
+    // Whole-entity hide flag. Default false (stub visible); opt IN with
+    // `spoiler: true`, or per-type via _meta.toml. A file's own flag wins.
+    spoiler: 'spoiler' in data ? toBool(data.spoiler) : defaultSpoiler,
     fields,
     bio: parseBio(body),
   }
@@ -393,6 +395,9 @@ export function buildWorld(storyId: string, files: TroveFile[], generatedAt: str
   const metaByType = new Map<string, Record<string, string | number | boolean>>()
   const typesSeen = new Set<string>()
 
+  // Pass 1: bucket files. Meta must be known before entities parse, so a
+  // type's spoiler default can apply.
+  const entityFiles: { type: string; path: string; text: string }[] = []
   for (const f of files) {
     const dir = topDir(f.path)
     const name = baseName(f.path)
@@ -402,17 +407,29 @@ export function buildWorld(storyId: string, files: TroveFile[], generatedAt: str
       if (isIngestibleMd(f.path)) relationships.push(parseRelationship(f.text))
       continue
     }
-
     if (name === '_meta.toml') {
       metaByType.set(dir, parseFlatToml(f.text))
       typesSeen.add(dir)
       continue
     }
-
     if (isIngestibleMd(f.path)) {
-      entities.push(parseEntity(dir, f.path, f.text))
+      entityFiles.push({ type: dir, path: f.path, text: f.text })
       typesSeen.add(dir)
     }
+  }
+
+  // Entity EXISTENCE (the avatar/name/description stub) is visible by default —
+  // the detail-level gating (role, bio, relationships, …) happens in the UI.
+  // A whole entity is hidden with `spoiler: true` (file), or per-type via a
+  // `_meta.toml` `spoiler = true`.
+  const typeDefaultSpoiler = (type: string): boolean => {
+    const meta = metaByType.get(type)
+    return meta && 'spoiler' in meta ? toBool(meta.spoiler) : false
+  }
+
+  // Pass 2: parse entities with their type's default.
+  for (const ef of entityFiles) {
+    entities.push(parseEntity(ef.type, ef.path, ef.text, typeDefaultSpoiler(ef.type)))
   }
 
   // A relationship whose endpoint entity is itself a spoiler is a spoiler too

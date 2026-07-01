@@ -31,8 +31,10 @@ export function CastScreen({ story, world }) {
   if (entities.length === 0) return <EmptyState story={story} message={c.emptyGated} />
 
   const types = (world.entityTypes ?? []).filter((t) => entities.some((e) => e.type === t.name))
-  const hasSpoilers =
-    entities.some((e) => e.spoiler) || (world.relationships ?? []).some((r) => r.spoiler)
+  // Every entity carries a gated dossier (role/bio/relationships/…), so the
+  // reveal toggle is always relevant once there's a cast.
+  const hasSpoilers = entities.length > 0
+  const hasEdges = (world.relationships ?? []).length > 0
 
   return (
     <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '48px 28px 0' }}>
@@ -51,6 +53,11 @@ export function CastScreen({ story, world }) {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
           {hasSpoilers && <SpoilerToggle />}
+          {hasEdges && (
+            <Link to="/words/$storyId/world" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              {words.world.mapLink} →
+            </Link>
+          )}
           <Link to="/words/$storyId" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap' }}>
             {words.world.backToStory}
           </Link>

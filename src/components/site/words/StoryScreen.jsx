@@ -12,7 +12,9 @@ export function StoryScreen({ story, chapters = [], world = null }) {
   const c = words.story;
   const navigate = useNavigate();
   const first = chapters[0];
-  // Count only non-spoiler entities so the badge never hints at hidden cast.
+  // Badge shows only the openly-visible (non-spoiler) count so it never hints
+  // at hidden cast; the link itself shows whenever there's any cast at all.
+  const entityCount = world?.entities?.length ?? 0;
   const castCount = world?.entities?.filter((e) => !e.spoiler).length ?? 0;
   const statusLabel = STATUS_LABEL[story.status] || story.status;
   const statusTone = STATUS_TONE[story.status] || 'neutral';
@@ -53,9 +55,9 @@ export function StoryScreen({ story, chapters = [], world = null }) {
                 <Button variant="neon" size="lg" disabled>{c.noChaptersBtn}</Button>
               )}
               <Button variant="outline" size="lg" iconLeft={<Icon name="bookmark" size={16} color="var(--magenta-400)" />}>{c.addToLibrary}</Button>
-              {castCount > 0 && (
+              {entityCount > 0 && (
                 <Button as={Link} to="/words/$storyId/cast" params={{ storyId: story.id }} variant="outline" size="lg" iconLeft={<Icon name="feather" size={16} color="var(--magenta-400)" />}>
-                  {words.world.castTitle} ({castCount})
+                  {castCount > 0 ? `${words.world.castTitle} (${castCount})` : words.world.castTitle}
                 </Button>
               )}
             </div>

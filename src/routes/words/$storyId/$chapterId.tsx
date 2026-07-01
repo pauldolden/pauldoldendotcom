@@ -2,13 +2,17 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { ReaderScreen } from '../../../components/site/words/ReaderScreen.jsx'
 import { getChapter } from '../../../server/stories'
+import { getWorld } from '../../../server/world'
 import { words } from '../../../content/words'
 
 export const Route = createFileRoute('/words/$storyId/$chapterId')({
   loader: async ({ params }) => {
-    const data = await getChapter({ data: { storyId: params.storyId, chapterId: params.chapterId } })
+    const [data, world] = await Promise.all([
+      getChapter({ data: { storyId: params.storyId, chapterId: params.chapterId } }),
+      getWorld({ data: { storyId: params.storyId } }),
+    ])
     if (!data) throw notFound()
-    return data
+    return { ...data, world }
   },
   head: ({ loaderData }) => ({
     meta: [{ title: `${loaderData?.chapter.title ?? 'Chapter'} — ${loaderData?.story.title ?? ''}` }],
@@ -18,8 +22,8 @@ export const Route = createFileRoute('/words/$storyId/$chapterId')({
 })
 
 function ReaderRoute() {
-  const { story, chapter, blocks, prev, next } = Route.useLoaderData()
-  return <ReaderScreen story={story} chapter={chapter} blocks={blocks} prev={prev} next={next} />
+  const { story, chapter, blocks, prev, next, world } = Route.useLoaderData()
+  return <ReaderScreen story={story} chapter={chapter} blocks={blocks} prev={prev} next={next} world={world} />
 }
 
 function NotFound() {

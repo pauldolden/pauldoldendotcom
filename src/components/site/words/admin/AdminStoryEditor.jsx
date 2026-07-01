@@ -6,6 +6,7 @@ import React from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { Badge, Button } from '../../../ds/index.js';
 import { StoryMetaForm } from './StoryMetaForm.jsx';
+import { AdminWorldPanel } from './AdminWorldPanel.jsx';
 import { adminSaveStory, adminSaveChapter, adminDeleteChapter } from '../../../../server/admin';
 
 const label = {
@@ -236,6 +237,8 @@ export function AdminStoryEditor({ story, storyId }) {
           ))}
         </div>
       </section>
+
+      <AdminWorldPanel storyId={storyId} />
     </div>
   );
 }

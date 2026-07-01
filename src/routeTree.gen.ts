@@ -20,6 +20,7 @@ import { Route as WordsAdminRouteRouteImport } from './routes/words/admin/route'
 import { Route as WordsAdminIndexRouteImport } from './routes/words/admin/index'
 import { Route as WordsStoryIdIndexRouteImport } from './routes/words/$storyId/index'
 import { Route as WordsAdminStoryIdRouteImport } from './routes/words/admin/$storyId'
+import { Route as WordsStoryIdWorldRouteImport } from './routes/words/$storyId/world'
 import { Route as WordsStoryIdChapterIdRouteImport } from './routes/words/$storyId/$chapterId'
 import { Route as WordsStoryIdCastIndexRouteImport } from './routes/words/$storyId/cast/index'
 import { Route as WordsStoryIdCastSlugRouteImport } from './routes/words/$storyId/cast/$slug'
@@ -79,6 +80,11 @@ const WordsAdminStoryIdRoute = WordsAdminStoryIdRouteImport.update({
   path: '/$storyId',
   getParentRoute: () => WordsAdminRouteRoute,
 } as any)
+const WordsStoryIdWorldRoute = WordsStoryIdWorldRouteImport.update({
+  id: '/$storyId/world',
+  path: '/$storyId/world',
+  getParentRoute: () => WordsRouteRoute,
+} as any)
 const WordsStoryIdChapterIdRoute = WordsStoryIdChapterIdRouteImport.update({
   id: '/$storyId/$chapterId',
   path: '/$storyId/$chapterId',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words/': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/$storyId/world': typeof WordsStoryIdWorldRoute
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
   '/words/admin/': typeof WordsAdminIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/$storyId/world': typeof WordsStoryIdWorldRoute
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId': typeof WordsStoryIdIndexRoute
   '/words/admin': typeof WordsAdminIndexRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/words/rss.xml': typeof WordsRssDotxmlRoute
   '/words/': typeof WordsIndexRoute
   '/words/$storyId/$chapterId': typeof WordsStoryIdChapterIdRoute
+  '/words/$storyId/world': typeof WordsStoryIdWorldRoute
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
   '/words/admin/': typeof WordsAdminIndexRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/words/rss.xml'
     | '/words/'
     | '/words/$storyId/$chapterId'
+    | '/words/$storyId/world'
     | '/words/admin/$storyId'
     | '/words/$storyId/'
     | '/words/admin/'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/words/rss.xml'
     | '/words'
     | '/words/$storyId/$chapterId'
+    | '/words/$storyId/world'
     | '/words/admin/$storyId'
     | '/words/$storyId'
     | '/words/admin'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/words/rss.xml'
     | '/words/'
     | '/words/$storyId/$chapterId'
+    | '/words/$storyId/world'
     | '/words/admin/$storyId'
     | '/words/$storyId/'
     | '/words/admin/'
@@ -276,6 +288,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WordsAdminStoryIdRouteImport
       parentRoute: typeof WordsAdminRouteRoute
     }
+    '/words/$storyId/world': {
+      id: '/words/$storyId/world'
+      path: '/$storyId/world'
+      fullPath: '/words/$storyId/world'
+      preLoaderRoute: typeof WordsStoryIdWorldRouteImport
+      parentRoute: typeof WordsRouteRoute
+    }
     '/words/$storyId/$chapterId': {
       id: '/words/$storyId/$chapterId'
       path: '/$storyId/$chapterId'
@@ -321,6 +340,7 @@ interface WordsRouteRouteChildren {
   WordsRssDotxmlRoute: typeof WordsRssDotxmlRoute
   WordsIndexRoute: typeof WordsIndexRoute
   WordsStoryIdChapterIdRoute: typeof WordsStoryIdChapterIdRoute
+  WordsStoryIdWorldRoute: typeof WordsStoryIdWorldRoute
   WordsStoryIdIndexRoute: typeof WordsStoryIdIndexRoute
   WordsStoryIdCastSlugRoute: typeof WordsStoryIdCastSlugRoute
   WordsStoryIdCastIndexRoute: typeof WordsStoryIdCastIndexRoute
@@ -333,6 +353,7 @@ const WordsRouteRouteChildren: WordsRouteRouteChildren = {
   WordsRssDotxmlRoute: WordsRssDotxmlRoute,
   WordsIndexRoute: WordsIndexRoute,
   WordsStoryIdChapterIdRoute: WordsStoryIdChapterIdRoute,
+  WordsStoryIdWorldRoute: WordsStoryIdWorldRoute,
   WordsStoryIdIndexRoute: WordsStoryIdIndexRoute,
   WordsStoryIdCastSlugRoute: WordsStoryIdCastSlugRoute,
   WordsStoryIdCastIndexRoute: WordsStoryIdCastIndexRoute,

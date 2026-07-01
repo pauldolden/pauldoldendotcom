@@ -89,7 +89,7 @@ export const words = {
     castEyebrow: '§ Who’s who',
     castTitle: 'Cast & world',
     castIntro:
-      'The people and places caught in the gears. Spoiler-safe — everyone here has already stepped onto the page for you.',
+      'The people and places caught in the gears. You get a name and a line each — flip “show spoilers” for roles, ties and backstory.',
     mapLink: 'Relationships map',
     empty: 'No cast is posted for this story yet.',
     emptyGated: 'No one’s been introduced yet — keep reading and they’ll appear here as you meet them.',
@@ -98,6 +98,13 @@ export const words = {
     aka: 'a.k.a.',
     relationships: 'Relationships',
     details: 'Details',
+    familyTitle: 'Family',
+    treeRows: { parents: 'Parents', siblings: 'Siblings', partners: 'Partners', children: 'Children' },
+    // /words/:storyId/world — the full relationship graph
+    mapEyebrow: '§ The web',
+    mapTitle: 'How it all connects',
+    mapIntro: 'Everyone and everything, and the lines between them. Colour marks the kind of tie.',
+    mapEmpty: 'No connections mapped for this story yet.',
     // Section titles for grouped relationships (by predicate category).
     relGroups: {
       family: 'Family',

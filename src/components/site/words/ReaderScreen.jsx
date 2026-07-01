@@ -9,7 +9,7 @@ import { useReaderPrefs } from './useReaderPrefs.js';
 import { useBookmarks } from './useBookmarks.js';
 import { words } from '../../../content/words';
 
-export function ReaderScreen({ story, chapter, blocks, prev, next }) {
+export function ReaderScreen({ story, chapter, blocks, prev, next, world = null }) {
   const c = words.reader;
   const { size, smaller, larger, themePreset, toggleTheme } = useReaderPrefs();
   const bookmarks = useBookmarks();
@@ -46,7 +46,7 @@ export function ReaderScreen({ story, chapter, blocks, prev, next }) {
           </div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 46, letterSpacing: '0', lineHeight: 1.04, color: 'var(--text-strong)', margin: '0 0 36px' }}>{chapter.title}</h1>
 
-          <ChapterBody blocks={blocks} fontSize={size} />
+          <ChapterBody blocks={blocks} fontSize={size} world={world} storyId={story.id} />
 
           {/* chapter nav */}
           <nav style={{ display: 'flex', justifyContent: 'space-between', gap: 16, margin: '48px 0', paddingTop: 28, borderTop: '1px solid var(--border-faint)' }}>
