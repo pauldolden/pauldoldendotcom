@@ -21,6 +21,8 @@ import { Route as WordsAdminIndexRouteImport } from './routes/words/admin/index'
 import { Route as WordsStoryIdIndexRouteImport } from './routes/words/$storyId/index'
 import { Route as WordsAdminStoryIdRouteImport } from './routes/words/admin/$storyId'
 import { Route as WordsStoryIdChapterIdRouteImport } from './routes/words/$storyId/$chapterId'
+import { Route as WordsStoryIdCastIndexRouteImport } from './routes/words/$storyId/cast/index'
+import { Route as WordsStoryIdCastSlugRouteImport } from './routes/words/$storyId/cast/$slug'
 
 const CodeRoute = CodeRouteImport.update({
   id: '/code',
@@ -82,6 +84,16 @@ const WordsStoryIdChapterIdRoute = WordsStoryIdChapterIdRouteImport.update({
   path: '/$storyId/$chapterId',
   getParentRoute: () => WordsRouteRoute,
 } as any)
+const WordsStoryIdCastIndexRoute = WordsStoryIdCastIndexRouteImport.update({
+  id: '/$storyId/cast/',
+  path: '/$storyId/cast/',
+  getParentRoute: () => WordsRouteRoute,
+} as any)
+const WordsStoryIdCastSlugRoute = WordsStoryIdCastSlugRouteImport.update({
+  id: '/$storyId/cast/$slug',
+  path: '/$storyId/cast/$slug',
+  getParentRoute: () => WordsRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +108,8 @@ export interface FileRoutesByFullPath {
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
   '/words/admin/': typeof WordsAdminIndexRoute
+  '/words/$storyId/cast/$slug': typeof WordsStoryIdCastSlugRoute
+  '/words/$storyId/cast/': typeof WordsStoryIdCastIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -108,6 +122,8 @@ export interface FileRoutesByTo {
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId': typeof WordsStoryIdIndexRoute
   '/words/admin': typeof WordsAdminIndexRoute
+  '/words/$storyId/cast/$slug': typeof WordsStoryIdCastSlugRoute
+  '/words/$storyId/cast': typeof WordsStoryIdCastIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,6 +139,8 @@ export interface FileRoutesById {
   '/words/admin/$storyId': typeof WordsAdminStoryIdRoute
   '/words/$storyId/': typeof WordsStoryIdIndexRoute
   '/words/admin/': typeof WordsAdminIndexRoute
+  '/words/$storyId/cast/$slug': typeof WordsStoryIdCastSlugRoute
+  '/words/$storyId/cast/': typeof WordsStoryIdCastIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,6 +157,8 @@ export interface FileRouteTypes {
     | '/words/admin/$storyId'
     | '/words/$storyId/'
     | '/words/admin/'
+    | '/words/$storyId/cast/$slug'
+    | '/words/$storyId/cast/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -151,6 +171,8 @@ export interface FileRouteTypes {
     | '/words/admin/$storyId'
     | '/words/$storyId'
     | '/words/admin'
+    | '/words/$storyId/cast/$slug'
+    | '/words/$storyId/cast'
   id:
     | '__root__'
     | '/'
@@ -165,6 +187,8 @@ export interface FileRouteTypes {
     | '/words/admin/$storyId'
     | '/words/$storyId/'
     | '/words/admin/'
+    | '/words/$storyId/cast/$slug'
+    | '/words/$storyId/cast/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -259,6 +283,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WordsStoryIdChapterIdRouteImport
       parentRoute: typeof WordsRouteRoute
     }
+    '/words/$storyId/cast/': {
+      id: '/words/$storyId/cast/'
+      path: '/$storyId/cast'
+      fullPath: '/words/$storyId/cast/'
+      preLoaderRoute: typeof WordsStoryIdCastIndexRouteImport
+      parentRoute: typeof WordsRouteRoute
+    }
+    '/words/$storyId/cast/$slug': {
+      id: '/words/$storyId/cast/$slug'
+      path: '/$storyId/cast/$slug'
+      fullPath: '/words/$storyId/cast/$slug'
+      preLoaderRoute: typeof WordsStoryIdCastSlugRouteImport
+      parentRoute: typeof WordsRouteRoute
+    }
   }
 }
 
@@ -284,6 +322,8 @@ interface WordsRouteRouteChildren {
   WordsIndexRoute: typeof WordsIndexRoute
   WordsStoryIdChapterIdRoute: typeof WordsStoryIdChapterIdRoute
   WordsStoryIdIndexRoute: typeof WordsStoryIdIndexRoute
+  WordsStoryIdCastSlugRoute: typeof WordsStoryIdCastSlugRoute
+  WordsStoryIdCastIndexRoute: typeof WordsStoryIdCastIndexRoute
 }
 
 const WordsRouteRouteChildren: WordsRouteRouteChildren = {
@@ -294,6 +334,8 @@ const WordsRouteRouteChildren: WordsRouteRouteChildren = {
   WordsIndexRoute: WordsIndexRoute,
   WordsStoryIdChapterIdRoute: WordsStoryIdChapterIdRoute,
   WordsStoryIdIndexRoute: WordsStoryIdIndexRoute,
+  WordsStoryIdCastSlugRoute: WordsStoryIdCastSlugRoute,
+  WordsStoryIdCastIndexRoute: WordsStoryIdCastIndexRoute,
 }
 
 const WordsRouteRouteWithChildren = WordsRouteRoute._addFileChildren(

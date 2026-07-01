@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Icon } from '../../ds/index.js';
 import { SearchOverlay } from './SearchOverlay.jsx';
+import { SpoilerProvider } from './world/Spoiler.jsx';
 import { words } from '../../../content/words';
 
 const navItemStyle = {
@@ -77,7 +78,9 @@ export function Shell({ children, isAdmin = false }) {
         </div>
       </header>
 
-      <main style={{ position: 'relative', zIndex: 1, flex: 1 }}>{children}</main>
+      <main style={{ position: 'relative', zIndex: 1, flex: 1 }}>
+        <SpoilerProvider>{children}</SpoilerProvider>
+      </main>
 
       <footer style={{
         position: 'relative', zIndex: 1, marginTop: 'var(--space-12)',

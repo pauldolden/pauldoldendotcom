@@ -1,29 +1,29 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 
-import { StoryScreen } from '../../../components/site/words/StoryScreen.jsx'
-import { getStoryBundle } from '../../../server/stories'
-import { getWorld } from '../../../server/world'
-import { words } from '../../../content/words'
+import { CastScreen } from '../../../../components/site/words/world/CastScreen.jsx'
+import { getStoryBundle } from '../../../../server/stories'
+import { getWorld } from '../../../../server/world'
+import { words } from '../../../../content/words'
 
-export const Route = createFileRoute('/words/$storyId/')({
+export const Route = createFileRoute('/words/$storyId/cast/')({
   loader: async ({ params }) => {
-    const [data, world] = await Promise.all([
+    const [bundle, world] = await Promise.all([
       getStoryBundle({ data: { storyId: params.storyId } }),
       getWorld({ data: { storyId: params.storyId } }),
     ])
-    if (!data) throw notFound()
-    return { ...data, world }
+    if (!bundle) throw notFound()
+    return { story: bundle.story, world }
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: `${loaderData?.story.title ?? 'Story'} — words.pauldolden.com` }],
+    meta: [{ title: `Cast — ${loaderData?.story.title ?? 'Story'} — words.pauldolden.com` }],
   }),
-  component: StoryRoute,
+  component: CastRoute,
   notFoundComponent: NotFound,
 })
 
-function StoryRoute() {
-  const { story, chapters, world } = Route.useLoaderData()
-  return <StoryScreen story={story} chapters={chapters} world={world} />
+function CastRoute() {
+  const { story, world } = Route.useLoaderData()
+  return <CastScreen story={story} world={world} />
 }
 
 function NotFound() {

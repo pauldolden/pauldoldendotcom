@@ -17,6 +17,8 @@ import {
   putChapterMd,
   deleteObject,
 } from './stories-data'
+import { buildWorld } from './trove-parse'
+import { loadWorld, putWorld, deleteWorld } from './world-data'
 
 const STATUSES = ['ongoing', 'complete', 'hiatus', 'drafting', 'planned']
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -192,5 +194,79 @@ export const adminDeleteChapter = createServerFn({ method: 'POST' })
     } catch {
       /* body may not exist — ignore */
     }
+    return { ok: true }
+  })
+
+// ── Worldbuilding (Trove import) ───────────────────────────
+// The admin uploads a story's raw Trove files (entity `.md` + `_meta.toml`
+// per type, plus `relationships/*.md`) exactly as Trove writes them. We parse
+// them here (buildWorld) into <storyId>/world.json. Trove stays unaware of
+// this site; the reveal gate is applied later, on public reads (world.ts).
+
+const MAX_WORLD_FILES = 2000
+const MAX_WORLD_TOTAL_BYTES = 30 * 1024 * 1024 // base64 avatars can be large
+
+/** Whitelist + clamp an uploaded Trove file list. */
+function cleanTroveFiles(input: unknown): { path: string; text: string }[] {
+  if (!Array.isArray(input)) throw new Error('Expected an array of files.')
+  if (input.length > MAX_WORLD_FILES) throw new Error('Too many files in upload.')
+  const files: { path: string; text: string }[] = []
+  let total = 0
+  for (const f of input as any[]) {
+    const path = String(f?.path ?? '')
+      .replace(/\\/g, '/')
+      .replace(/^\.?\//, '')
+      .slice(0, 512)
+    const text = String(f?.text ?? '')
+    if (!path) continue
+    total += text.length
+    if (total > MAX_WORLD_TOTAL_BYTES) throw new Error('World upload too large.')
+    files.push({ path, text })
+  }
+  return files
+}
+
+/** Parse uploaded Trove files → <storyId>/world.json. Returns a parse summary. */
+export const adminUploadWorld = createServerFn({ method: 'POST' })
+  .validator((d: { storyId: string; files: unknown }) => ({
+    storyId: String(d.storyId),
+    files: d.files,
+  }))
+  .handler(async ({ data }) => {
+    await requireAdmin()
+    const storyId = assertSlug(data.storyId)
+    const files = cleanTroveFiles(data.files)
+    const world = buildWorld(storyId, files, new Date().toISOString())
+    await putWorld(world)
+    return {
+      ok: true,
+      entities: world.entities.length,
+      relationships: world.relationships.length,
+      spoilers:
+        world.entities.filter((e) => e.spoiler).length +
+        world.relationships.filter((r) => r.spoiler).length,
+      types: world.entityTypes.map((t) => ({
+        name: t.name,
+        count: world.entities.filter((e) => e.type === t.name).length,
+      })),
+    }
+  })
+
+/** Full stored world (ungated) for the admin preview. Null when a story has none. */
+export const adminGetWorld = createServerFn({ method: 'POST' })
+  .validator((d: { storyId: string }) => ({ storyId: String(d.storyId) }))
+  .handler(async ({ data }) => {
+    await requireAdmin()
+    assertSlug(data.storyId)
+    return await loadWorld(data.storyId)
+  })
+
+/** Remove a story's world.json. */
+export const adminDeleteWorld = createServerFn({ method: 'POST' })
+  .validator((d: { storyId: string }) => ({ storyId: String(d.storyId) }))
+  .handler(async ({ data }) => {
+    await requireAdmin()
+    const storyId = assertSlug(data.storyId)
+    await deleteWorld(storyId)
     return { ok: true }
   })

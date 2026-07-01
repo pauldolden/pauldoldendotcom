@@ -83,11 +83,39 @@ export const words = {
     ],
   },
 
+  // Worldbuilding (characters / places / relationships) — sourced from Trove,
+  // spoiler-gated by reading progress. See src/server/world.ts.
+  world: {
+    castEyebrow: '§ Who’s who',
+    castTitle: 'Cast & world',
+    castIntro:
+      'The people and places caught in the gears. Spoiler-safe — everyone here has already stepped onto the page for you.',
+    mapLink: 'Relationships map',
+    empty: 'No cast is posted for this story yet.',
+    emptyGated: 'No one’s been introduced yet — keep reading and they’ll appear here as you meet them.',
+    backToStory: '← Back to the story',
+    backToCast: '← All cast',
+    aka: 'a.k.a.',
+    relationships: 'Relationships',
+    details: 'Details',
+    // Section titles for grouped relationships (by predicate category).
+    relGroups: {
+      family: 'Family',
+      social: 'Ties',
+      org: 'Allegiances',
+      possession: 'Holdings',
+      spatial: 'Place',
+      other: 'Other',
+    } as Record<string, string>,
+  },
+
   notFound: {
     storyTitle: 'No such story',
     storyBody: (id: string) => `Nothing in the library is called “${id}”.`,
     chapterTitle: 'Chapter not found',
     chapterBody: 'That chapter isn’t posted yet.',
+    entityTitle: 'Not in the cast — yet',
+    entityBody: 'Either there’s no one here by that name, or you haven’t met them so far.',
   },
 
   search: {
