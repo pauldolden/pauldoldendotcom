@@ -67,7 +67,7 @@ export function StoryScreen({ story, chapters = [], world = null }) {
       </section>
 
       {/* BODY: TOC */}
-      <div className="story-body" style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '56px 28px 0' }}>
+      <div className="story-body" style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '28px 28px 0' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, color: 'var(--text-heading)', margin: 0 }}>{c.tocTitle}</h2>
           <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-pill)', padding: '6px 14px', color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontSize: 13 }}>
