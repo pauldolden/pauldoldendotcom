@@ -21,16 +21,16 @@ export function LibraryScreen({ stories }) {
   const shown = active === all ? stories : stories.filter((s) => (s.tags || []).includes(active));
 
   return (
-    <div style={{ maxWidth: 'var(--width-wide)', margin: '0 auto', padding: '56px 28px 0' }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--cyan-400)', marginBottom: 12 }}>{c.eyebrow}</div>
-      <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px,6vw,64px)', letterSpacing: '0', color: 'var(--text-strong)', margin: 0 }}>
+    <div className="mx-auto max-w-wide px-7 pt-14">
+      <div className="mb-3 font-code text-xs uppercase tracking-[0.2em] text-cyan-400">{c.eyebrow}</div>
+      <h1 className="m-0 font-heading text-[clamp(40px,6vw,64px)] font-bold text-strong">
         {c.titleLead}<span className="pd-grad-text">{c.titleAccent}</span>
       </h1>
-      <p style={{ marginTop: 16, maxWidth: 520, fontFamily: 'var(--font-ui)', fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.55 }}>
+      <p className="mt-4 max-w-[520px] font-sans text-[18px] leading-[1.55] text-muted">
         {c.intro}
       </p>
 
-      <div style={{ display: 'flex', gap: 9, marginTop: 32, flexWrap: 'wrap' }}>
+      <div className="mt-8 flex flex-wrap gap-[9px]">
         {filters.map((f) => (
           <Tag key={f} active={active === f} accent="cyan" onClick={() => setActive(f)}>
             {f} · {f === all ? stories.length : counts[f]}
@@ -38,13 +38,13 @@ export function LibraryScreen({ stories }) {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24, marginTop: 32 }}>
+      <div className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6">
         {shown.map((s) => (
           <StoryCard key={s.id} id={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} coverStyle={s.coverStyle} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
         ))}
       </div>
       {shown.length === 0 && (
-        <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--text-faint)', fontFamily: 'var(--font-ui)' }}>{c.empty}</div>
+        <div className="py-[60px] text-center font-sans text-faint">{c.empty}</div>
       )}
     </div>
   );

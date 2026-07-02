@@ -42,7 +42,7 @@ export function WorldIcon({ name, size = 18, color = 'currentColor', strokeWidth
   const C = worldIconFor(name)
   if (!C) return null
   return (
-    <span style={{ display: 'inline-flex', lineHeight: 0 }}>
+    <span className="inline-flex leading-[0]">
       <C size={size} color={color} strokeWidth={strokeWidth} />
     </span>
   )
@@ -62,40 +62,24 @@ export function initials(name) {
  * or a rounded square (places/factions).
  */
 export function EntityAvatar({ entity, size = 56, radius = 'var(--r-md)' }) {
-  const dim = { width: size, height: size, flex: `0 0 ${size}px` }
+  const dim = { width: size, height: size, flex: `0 0 ${size}px`, borderRadius: radius }
   if (entity?.avatar) {
     return (
       <img
         src={entity.avatar}
         alt=""
-        style={{ ...dim, objectFit: 'cover', borderRadius: radius, border: '1px solid var(--border)' }}
+        className="border border-line object-cover"
+        style={dim}
       />
     )
   }
   const C = worldIconFor(entity?.icon)
   return (
-    <div
-      style={{
-        ...dim,
-        borderRadius: radius,
-        display: 'grid',
-        placeItems: 'center',
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border)',
-      }}
-    >
+    <div className="grid place-items-center border border-line bg-surface" style={dim}>
       {C ? (
         <C size={Math.round(size * 0.46)} color="var(--accent)" strokeWidth={1.6} />
       ) : (
-        <span
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontWeight: 700,
-            fontSize: Math.round(size * 0.36),
-            color: 'var(--accent)',
-            lineHeight: 1,
-          }}
-        >
+        <span className="font-heading font-bold leading-none text-accent" style={{ fontSize: Math.round(size * 0.36) }}>
           {initials(entity?.name)}
         </span>
       )}

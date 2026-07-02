@@ -9,6 +9,9 @@ import { useReaderPrefs } from './useReaderPrefs.js';
 import { useBookmarks } from './useBookmarks.js';
 import { words } from '../../../content/words';
 
+const NAV_BTN = 'flex items-center gap-3 font-sans text-[15px] font-semibold text-body no-underline';
+const FAB = 'grid h-10 w-10 place-items-center rounded-full border-none bg-transparent cursor-pointer';
+
 export function ReaderScreen({ story, chapter, blocks, prev, next, world = null }) {
   const c = words.reader;
   const { size, smaller, larger, themePreset, toggleTheme } = useReaderPrefs();
@@ -28,36 +31,36 @@ export function ReaderScreen({ story, chapter, blocks, prev, next, world = null 
   }, []);
 
   return (
-    <div style={{ background: themePreset.bg, position: 'relative' }}>
+    <div className="relative" style={{ background: themePreset.bg }}>
       {/* fixed progress bar */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 10 }}>
+      <div className="sticky top-0 z-10">
         <ReadingProgress value={progress} height={3} />
       </div>
 
-      <div id="reader-scroll" style={{ maxHeight: 'none' }}>
-        <article style={{ maxWidth: 'var(--width-prose)', margin: '0 auto', padding: '40px 24px 0', ...themePreset.vars }}>
+      <div id="reader-scroll">
+        <article className="mx-auto max-w-prose px-6 pt-10" style={themePreset.vars}>
           {/* chapter header */}
-          <Link to="/words/$storyId" params={{ storyId: story.id }} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, textDecoration: 'none', color: 'var(--text-faint)', fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 28 }}>
+          <Link to="/words/$storyId" params={{ storyId: story.id }} className="mb-7 inline-flex items-center gap-[7px] font-code text-xs uppercase tracking-[0.08em] text-faint no-underline">
             <Icon name="chevron-left" size={14} color="var(--text-faint)" /> {story.title}
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.12em', color: 'var(--magenta-400)' }}>CHAPTER {chapter.index}</span>
+          <div className="mb-3.5 flex items-center gap-3">
+            <span className="font-code text-[13px] tracking-[0.12em] text-magenta-400">CHAPTER {chapter.index}</span>
             <Badge tone="complete">{chapter.words} words · {c.readTime}</Badge>
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 46, letterSpacing: '0', lineHeight: 1.04, color: 'var(--text-strong)', margin: '0 0 36px' }}>{chapter.title}</h1>
+          <h1 className="m-0 mb-9 font-heading text-[46px] font-bold leading-[1.04] text-strong">{chapter.title}</h1>
 
           <ChapterBody blocks={blocks} fontSize={size} world={world} storyId={story.id} />
 
           {/* chapter nav */}
-          <nav style={{ display: 'flex', justifyContent: 'space-between', gap: 16, margin: '48px 0', paddingTop: 28, borderTop: '1px solid var(--border-faint)' }}>
+          <nav className="my-12 flex justify-between gap-4 border-t border-line-faint pt-7">
             {prev ? (
-              <Link to="/words/$storyId/$chapterId" params={{ storyId: story.id, chapterId: String(prev.index) }} style={navBtn}>
+              <Link to="/words/$storyId/$chapterId" params={{ storyId: story.id, chapterId: String(prev.index) }} className={NAV_BTN}>
                 <Icon name="chevron-left" size={16} color="var(--text-muted)" />
                 <span><small>{c.prevLabel}</small><br/>{prev.title}</span>
               </Link>
             ) : <span />}
             {next ? (
-              <Link to="/words/$storyId/$chapterId" params={{ storyId: story.id, chapterId: String(next.index) }} style={{ ...navBtn, textAlign: 'right', flexDirection: 'row-reverse' }}>
+              <Link to="/words/$storyId/$chapterId" params={{ storyId: story.id, chapterId: String(next.index) }} className={`${NAV_BTN} flex-row-reverse text-right`}>
                 <Icon name="chevron-right" size={16} color="var(--magenta-400)" />
                 <span><small>{c.nextLabel}</small><br/>{next.title}</span>
               </Link>
@@ -67,13 +70,13 @@ export function ReaderScreen({ story, chapter, blocks, prev, next, world = null 
       </div>
 
       {/* floating type controls */}
-      <div style={{ position: 'fixed', right: 24, bottom: 24, zIndex: 30, display: 'flex', alignItems: 'center', gap: 6, padding: 6, borderRadius: 'var(--r-pill)', background: 'var(--glass)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', boxShadow: 'var(--shadow-lg)' }}>
-        <button style={fab} title={c.smallerTitle} onClick={smaller}><span style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-muted)' }}>A</span></button>
-        <button style={fab} title={c.largerTitle} onClick={larger}><span style={{ fontFamily: 'var(--font-display)', fontSize: 19, color: 'var(--text-strong)' }}>A</span></button>
-        <div style={{ width: 1, height: 22, background: 'var(--border)' }} />
-        <button style={fab} title={c.themeTitle} onClick={toggleTheme}><Icon name={themePreset.icon} size={17} color="var(--cyan-400)" /></button>
+      <div className="fixed bottom-6 right-6 z-30 flex items-center gap-1.5 rounded-pill border border-glass-line bg-glass p-1.5 shadow-lg backdrop-blur-[14px]">
+        <button className={FAB} title={c.smallerTitle} onClick={smaller}><span className="font-heading text-[13px] text-muted">A</span></button>
+        <button className={FAB} title={c.largerTitle} onClick={larger}><span className="font-heading text-[19px] text-strong">A</span></button>
+        <div className="h-[22px] w-px bg-line" />
+        <button className={FAB} title={c.themeTitle} onClick={toggleTheme}><Icon name={themePreset.icon} size={17} color="var(--cyan-400)" /></button>
         <button
-          style={fab}
+          className={FAB}
           title={saved ? c.bookmarkedTitle : c.bookmarkTitle}
           aria-pressed={saved}
           onClick={() => bookmarks.toggle({ storyId: story.id, chapterId: chapter.index, title: chapter.title, storyTitle: story.title })}
@@ -84,12 +87,3 @@ export function ReaderScreen({ story, chapter, blocks, prev, next, world = null 
     </div>
   );
 }
-
-const navBtn = {
-  display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none',
-  color: 'var(--text-body)', fontFamily: 'var(--font-ui)', fontSize: 15, fontWeight: 600,
-};
-const fab = {
-  width: 40, height: 40, display: 'grid', placeItems: 'center', borderRadius: '50%',
-  background: 'transparent', border: 'none', cursor: 'pointer',
-};

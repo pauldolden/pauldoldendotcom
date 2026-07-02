@@ -78,27 +78,27 @@ export function AdminWorldPanel({ storyId }) {
   const counts = world ? summarize(world) : null;
 
   return (
-    <section style={{ marginTop: 40 }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 6 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: 'var(--text-heading)', margin: 0 }}>Worldbuilding</h2>
+    <section className="mt-10">
+      <div className="mb-1.5 flex items-end justify-between gap-4">
+        <h2 className="m-0 font-heading text-[26px] text-heading">Worldbuilding</h2>
         {counts && (counts.entities > 0 || counts.relationships > 0) && (
           <Button variant="ghost" size="sm" disabled={busy} onClick={del}>Delete world</Button>
         )}
       </div>
-      <p style={{ fontFamily: 'var(--font-ui)', fontSize: 14, color: 'var(--text-faint)', margin: '0 0 16px', maxWidth: 640 }}>
+      <p className="mb-4 mt-0 max-w-[640px] font-sans text-sm text-faint">
         Import cast, places, factions and relationships straight from Trove. Names and descriptions show;
         every other detail (role, traits, backstory, relationships, family) hides behind a “show spoilers”
         toggle. Hide a whole entity with <code>spoiler: true</code> (or a type via its <code>_meta.toml</code>).
       </p>
 
-      {error && <div style={{ color: 'var(--accent)', marginBottom: 14, fontFamily: 'var(--font-ui)' }}>{error}</div>}
+      {error && <div className="mb-3.5 font-sans text-accent">{error}</div>}
 
       {/* current state */}
-      <div style={{ border: '1px solid var(--border)', borderRadius: 'var(--r-md)', background: 'var(--bg-raised)', padding: '14px 16px', marginBottom: 16 }}>
+      <div className="mb-4 rounded-md border border-line bg-raised px-4 py-[14px]">
         {world === undefined ? (
-          <span style={{ fontFamily: 'var(--font-ui)', color: 'var(--text-faint)' }}>Loading…</span>
+          <span className="font-sans text-faint">Loading…</span>
         ) : counts && counts.entities > 0 ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <div className="flex flex-wrap items-center gap-2.5">
             {counts.types.map((t) => (
               <Badge key={t.name} tone="neutral">{t.count} {t.name}</Badge>
             ))}
@@ -106,7 +106,7 @@ export function AdminWorldPanel({ storyId }) {
             {counts.spoilers > 0 && <Badge tone="hiatus">{counts.spoilers} spoiler{counts.spoilers === 1 ? '' : 's'}</Badge>}
           </div>
         ) : (
-          <span style={{ fontFamily: 'var(--font-ui)', color: 'var(--text-faint)' }}>No worldbuilding uploaded yet.</span>
+          <span className="font-sans text-faint">No worldbuilding uploaded yet.</span>
         )}
       </div>
 
@@ -116,25 +116,19 @@ export function AdminWorldPanel({ storyId }) {
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         onClick={() => dirInput.current?.click()}
-        style={{
-          border: `1.5px dashed ${dragging ? 'var(--border-neon)' : 'var(--border)'}`,
-          borderRadius: 'var(--r-lg)',
-          background: dragging ? 'rgba(255,46,151,0.06)' : 'var(--bg-raised)',
-          padding: '26px 22px', textAlign: 'center', cursor: 'pointer',
-          transition: 'var(--t-control)',
-        }}
+        className={`cursor-pointer rounded-lg border-[1.5px] border-dashed px-[22px] py-[26px] text-center transition-control ${dragging ? 'border-line-neon bg-[rgba(255,46,151,0.06)]' : 'border-line bg-raised'}`}
       >
-        <input ref={dirInput} type="file" multiple style={{ display: 'none' }} onChange={onPick} />
-        <div style={{ fontFamily: 'var(--font-ui)', fontSize: 16, color: 'var(--text-prose)' }}>
+        <input ref={dirInput} type="file" multiple className="hidden" onChange={onPick} />
+        <div className="font-sans text-base text-prose">
           {busy ? 'Parsing…' : world && counts?.entities > 0 ? 'Drop your Trove folder again to re-import' : 'Drop your Trove manuscript folder, or click to choose'}
         </div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-faint)', marginTop: 8 }}>
+        <div className="mt-2 font-code text-xs text-faint">
           Reads <code>characters/</code>, <code>locations/</code>, <code>factions/</code>, <code>relationships/</code> and each <code>_meta.toml</code>. Ignores <code>documents/</code> and drafts.
         </div>
       </div>
 
       {result && (
-        <div style={{ marginTop: 14, fontFamily: 'var(--font-ui)', fontSize: 15, color: 'var(--status-ongoing)' }}>
+        <div className="mt-3.5 font-sans text-[15px] text-status-ongoing">
           Imported {result.entities} {result.entities === 1 ? 'entity' : 'entities'} and {result.relationships} relationships
           {result.spoilers ? ` · ${result.spoilers} spoiler-flagged` : ''}.
         </div>

@@ -9,46 +9,17 @@ export function ChapterRow({ index, title, date, words, isNew = false, read = fa
     <button
       type="button"
       onClick={onClick}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 16,
-        width: '100%',
-        textAlign: 'left',
-        padding: '14px 16px',
-        background: 'transparent',
-        border: 'none',
-        borderBottom: '1px solid var(--border-faint)',
-        cursor: 'pointer',
-        transition: 'var(--t-control)',
-        color: 'inherit',
-        fontFamily: 'var(--font-ui)',
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-inset)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+      className="flex w-full items-center gap-4 border-b border-line-faint bg-transparent px-4 py-[14px] text-left font-sans text-inherit transition-control hover:bg-inset"
     >
-      <span style={{
-        fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)',
-        color: 'var(--mist-500)', width: 34, flexShrink: 0, textAlign: 'right',
-        fontVariantNumeric: 'tabular-nums',
-      }}>{String(index).padStart(2, '0')}</span>
-      <span style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{
-          fontSize: 'var(--text-md)', fontWeight: 'var(--fw-medium)',
-          color: read ? 'var(--text-faint)' : 'var(--text-body)',
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-        }}>{title}</span>
+      <span className="w-[34px] shrink-0 text-right font-code text-sm tabular-nums text-mist-500">{String(index).padStart(2, '0')}</span>
+      <span className="flex min-w-0 flex-1 items-center gap-2.5">
+        <span className={`truncate text-md font-medium ${read ? 'text-faint' : 'text-body'}`}>{title}</span>
         {isNew && (
-          <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: 'var(--text-on-neon)',
-            background: 'var(--cyan-500)', borderRadius: 'var(--r-pill)',
-            padding: '2px 7px', flexShrink: 0, fontWeight: 600,
-          }}>New</span>
+          <span className="shrink-0 rounded-pill bg-cyan-500 px-[7px] py-0.5 font-code text-[10px] font-semibold uppercase tracking-[0.1em] text-on-neon">New</span>
         )}
       </span>
-      {words && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--mist-500)', flexShrink: 0 }}>{words}</span>}
-      {date && <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-faint)', flexShrink: 0, width: 92, textAlign: 'right' }}>{date}</span>}
+      {words && <span className="shrink-0 font-code text-xs text-mist-500">{words}</span>}
+      {date && <span className="w-[92px] shrink-0 text-right text-sm text-faint">{date}</span>}
     </button>
   );
 }

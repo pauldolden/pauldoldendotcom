@@ -5,40 +5,27 @@ import React from 'react';
  * for filtering and labeling (e.g. "LitRPG", "Cyberpunk", "Slow burn").
  * Interactive when `onClick`/`active` are passed.
  */
-export function Tag({ children, active = false, accent = 'purple', onClick, ...rest }) {
-  const accents = {
-    purple:  'var(--purple-400)',
-    magenta: 'var(--magenta-400)',
-    cyan:    'var(--cyan-400)',
-  };
-  const c = accents[accent] || accents.purple;
-  const interactive = !!onClick;
+const ACCENTS = {
+  purple:  { border: 'border-purple-400',  shadow: 'shadow-[0_0_16px_-6px_var(--purple-400)]',  hash: 'text-purple-400' },
+  magenta: { border: 'border-magenta-400', shadow: 'shadow-[0_0_16px_-6px_var(--magenta-400)]', hash: 'text-magenta-400' },
+  cyan:    { border: 'border-cyan-400',    shadow: 'shadow-[0_0_16px_-6px_var(--cyan-400)]',    hash: 'text-cyan-400' },
+};
+
+export function Tag({ children, active = false, accent = 'purple', onClick, className = '', ...rest }) {
+  const a = ACCENTS[accent] || ACCENTS.purple;
+  const cls = [
+    'inline-flex items-center gap-1.5 h-[30px] px-[13px] rounded-pill border-[1.5px]',
+    'font-sans text-sm font-medium whitespace-nowrap transition-control',
+    onClick ? 'cursor-pointer' : 'cursor-default',
+    active
+      ? `${a.border} ${a.shadow} bg-[rgba(168,85,247,0.16)] text-paper-100`
+      : 'border-line bg-raised text-mist-300',
+    className,
+  ].filter(Boolean).join(' ');
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        height: 30,
-        padding: '0 13px',
-        borderRadius: 'var(--r-pill)',
-        border: `1.5px solid ${active ? c : 'var(--border)'}`,
-        background: active ? 'rgba(168,85,247,0.16)' : 'var(--bg-raised)',
-        color: active ? 'var(--paper-100)' : 'var(--mist-300)',
-        fontFamily: 'var(--font-ui)',
-        fontSize: 'var(--text-sm)',
-        fontWeight: 'var(--fw-medium)',
-        cursor: interactive ? 'pointer' : 'default',
-        transition: 'var(--t-control)',
-        whiteSpace: 'nowrap',
-        boxShadow: active ? `0 0 16px -6px ${c}` : 'none',
-      }}
-      {...rest}
-    >
-      <span aria-hidden style={{ color: c, fontSize: '0.8em', opacity: active ? 1 : 0.7 }}>#</span>
+    <button type="button" onClick={onClick} className={cls} {...rest}>
+      <span aria-hidden className={`text-[0.8em] ${a.hash} ${active ? 'opacity-100' : 'opacity-70'}`}>#</span>
       {children}
     </button>
   );

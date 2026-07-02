@@ -6,36 +6,28 @@ import React from 'react';
  */
 export function StatPanel({ name, title, level, stats = [], hp }) {
   return (
-    <div style={{
-      borderRadius: 'var(--r-lg)',
-      border: '1.5px solid var(--border-cyan)',
-      background: 'linear-gradient(180deg, rgba(34,211,238,0.05), rgba(13,10,24,0.6))',
-      boxShadow: 'var(--glow-cyan)',
-      fontFamily: 'var(--font-mono)',
-      overflow: 'hidden',
-      maxWidth: 360,
-    }}>
-      <div style={{ padding: '14px 16px', borderBottom: '1px solid var(--border-cyan)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+    <div className="max-w-[360px] overflow-hidden rounded-lg border-[1.5px] border-line-cyan bg-[linear-gradient(180deg,rgba(34,211,238,0.05),rgba(13,10,24,0.6))] font-code shadow-glow-cyan">
+      <div className="flex items-center justify-between gap-3 border-b border-line-cyan px-4 py-[14px]">
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-black)', fontSize: 'var(--text-lg)', color: 'var(--text-strong)', lineHeight: 1.1 }}>{name}</div>
-          {title && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--cyan-400)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 3 }}>{title}</div>}
+          <div className="font-heading text-lg font-bold leading-[1.1] text-strong">{name}</div>
+          {title && <div className="mt-[3px] text-xs uppercase tracking-[0.08em] text-cyan-400">{title}</div>}
         </div>
         {level != null && (
-          <div style={{ textAlign: 'center', flexShrink: 0 }}>
-            <div style={{ fontSize: '10px', color: 'var(--text-faint)', letterSpacing: '0.16em' }}>LVL</div>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-black)', fontSize: 'var(--text-2xl)', lineHeight: 1, background: 'var(--grad-text)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{level}</div>
+          <div className="shrink-0 text-center">
+            <div className="text-[10px] tracking-[0.16em] text-faint">LVL</div>
+            <div className="pd-grad-text font-heading text-2xl font-bold leading-none">{level}</div>
           </div>
         )}
       </div>
-      <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className="flex flex-col gap-3 px-4 py-[14px]">
         {hp && <StatBar label={hp.label || 'HP'} value={hp.value} max={hp.max} color="var(--magenta-500)" />}
         {stats.map((s) => (
           s.max != null
             ? <StatBar key={s.label} label={s.label} value={s.value} max={s.max} color={s.color || 'var(--cyan-500)'} />
             : (
-              <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px dashed var(--border-faint)', paddingBottom: 7 }}>
-                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{s.label}</span>
-                <span style={{ fontSize: 'var(--text-md)', color: 'var(--text-strong)', fontWeight: 'var(--fw-bold)', fontVariantNumeric: 'tabular-nums' }}>{s.value}</span>
+              <div key={s.label} className="flex items-baseline justify-between border-b border-dashed border-line-faint pb-[7px]">
+                <span className="text-sm uppercase tracking-wide text-muted">{s.label}</span>
+                <span className="text-md font-bold tabular-nums text-strong">{s.value}</span>
               </div>
             )
         ))}
@@ -48,12 +40,15 @@ function StatBar({ label, value, max, color }) {
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 'var(--text-xs)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-        <span style={{ color: 'var(--text-muted)' }}>{label}</span>
-        <span style={{ color: 'var(--text-body)', fontVariantNumeric: 'tabular-nums' }}>{value} / {max}</span>
+      <div className="mb-[5px] flex justify-between text-xs uppercase tracking-[0.06em]">
+        <span className="text-muted">{label}</span>
+        <span className="tabular-nums text-body">{value} / {max}</span>
       </div>
-      <div style={{ height: 7, borderRadius: 'var(--r-pill)', background: 'var(--night-600)', overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${pct}%`, background: color, boxShadow: `0 0 10px -1px ${color}`, borderRadius: 'var(--r-pill)', transition: 'width var(--dur-slow) var(--ease-out)' }} />
+      <div className="h-[7px] overflow-hidden rounded-pill bg-night-600">
+        <div
+          className="h-full rounded-pill [transition:width_var(--dur-slow)_var(--ease-out)]"
+          style={{ width: `${pct}%`, background: color, boxShadow: `0 0 10px -1px ${color}` }}
+        />
       </div>
     </div>
   );

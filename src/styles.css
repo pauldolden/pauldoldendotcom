@@ -1,7 +1,290 @@
-/* Tailwind entry. Kept for preflight + the few utility classes used on <body>
-   (antialiased, overflow-wrap). The starter's teal theme + demo component CSS
-   was removed when the demo /about page was deleted — it also defined a
-   conflicting `--bg-base`, which collided with the design-system token and
-   tinted the dark canvas. The brand palette lives in styles/design-system.css. */
+/* Tailwind entry + design-token bridge.
+
+   The synthwave/grimoire palette lives in styles/design-system/* as CSS custom
+   properties (synced from the Claude Design project — do not hand-edit those).
+   `.theme-ember` re-points the SAME token names via the cascade to switch the
+   writing side from arcade-neon to matte-grimoire.
+
+   This file bridges those runtime tokens into Tailwind v4 utilities. Anything
+   that theme-swaps (colors, fonts, radius, shadows) MUST resolve `var(--token)`
+   at use time — so it goes through `@theme inline` (inlines the var expression
+   into the utility) or a `@utility` rule. Static scales (type sizes, widths,
+   tracking) are plain `@theme` literals mirroring design-system values. */
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Grimoire side: `.theme-ember` on an ancestor swaps the palette AND flips a
+   few structural treatments (squared corners, matte — no neon glow). This
+   variant lets components carry those reversions inline (e.g.
+   `theme-ember:rounded-md theme-ember:[filter:none]`) — replaces the old
+   styles/theme-overrides.css carve-out. Real class (not :where) so it outranks
+   the base utility it overrides. */
+@custom-variant theme-ember (.theme-ember &);
+
+/* ============================================================
+   COLORS — theme-swap aware (arcade ↔ ember). `inline` so each
+   utility emits `…: var(--token)` and the .theme-ember cascade
+   reaches it. Names avoid Tailwind scale keywords (base/sm/lg…)
+   to prevent text- and rounded- utility collisions.
+   ============================================================ */
+@theme inline {
+  /* backgrounds (canvas = --bg-base, renamed to dodge the text-base clash) */
+  --color-canvas:  var(--bg-base);
+  --color-void:    var(--bg-void);
+  --color-band:    var(--bg-band);
+  --color-surface: var(--bg-surface);
+  --color-raised:  var(--bg-raised);
+  --color-inset:   var(--bg-inset);
+  --color-overlay: var(--bg-overlay);
+  --color-reader:  var(--bg-reader);
+
+  /* text */
+  --color-strong:      var(--text-strong);
+  --color-heading:     var(--text-heading);
+  --color-body:        var(--text-body);
+  --color-muted:       var(--text-muted);
+  --color-faint:       var(--text-faint);
+  --color-disabled:    var(--text-disabled);
+  --color-prose:       var(--text-prose);
+  --color-prose-muted: var(--text-prose-muted);
+  --color-on-neon:     var(--text-on-neon);
+
+  /* accents */
+  --color-accent:       var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-press: var(--accent-press);
+  --color-accent-2:     var(--accent-2);
+  --color-accent-3:     var(--accent-3);
+  --color-accent-warm:  var(--accent-warm);
+
+  /* borders-as-colors (use with border- and ring- utilities) */
+  --color-line:        var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-line-faint:  var(--border-faint);
+  --color-line-neon:   var(--border-neon);
+  --color-line-cyan:   var(--border-cyan);
+
+  /* status */
+  --color-status-ongoing:  var(--status-ongoing);
+  --color-status-complete: var(--status-complete);
+  --color-status-hiatus:   var(--status-hiatus);
+  --color-status-danger:   var(--status-danger);
+
+  /* link */
+  --color-link:         var(--link);
+  --color-link-hover:   var(--link-hover);
+  --color-link-visited: var(--link-visited);
+
+  /* glass */
+  --color-glass:      var(--glass);
+  --color-glass-line: var(--glass-border);
+
+  /* --- ramps (used directly in a few places) --- */
+  --color-night-950: var(--night-950);
+  --color-night-900: var(--night-900);
+  --color-night-850: var(--night-850);
+  --color-night-800: var(--night-800);
+  --color-night-700: var(--night-700);
+  --color-night-600: var(--night-600);
+  --color-night-500: var(--night-500);
+  --color-night-400: var(--night-400);
+  --color-night-300: var(--night-300);
+
+  --color-paper-50:  var(--paper-50);
+  --color-paper-100: var(--paper-100);
+  --color-paper-200: var(--paper-200);
+
+  --color-mist-300: var(--mist-300);
+  --color-mist-400: var(--mist-400);
+  --color-mist-500: var(--mist-500);
+  --color-mist-600: var(--mist-600);
+
+  --color-magenta-200: var(--magenta-200);
+  --color-magenta-300: var(--magenta-300);
+  --color-magenta-400: var(--magenta-400);
+  --color-magenta-500: var(--magenta-500);
+  --color-magenta-600: var(--magenta-600);
+
+  --color-purple-300: var(--purple-300);
+  --color-purple-400: var(--purple-400);
+  --color-purple-500: var(--purple-500);
+  --color-purple-600: var(--purple-600);
+
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-400: var(--cyan-400);
+  --color-cyan-500: var(--cyan-500);
+  --color-cyan-600: var(--cyan-600);
+
+  --color-sunset-400: var(--sunset-400);
+  --color-sunset-500: var(--sunset-500);
+  --color-gold-500:   var(--gold-500);
+
+  --color-green-500: var(--green-500);
+  --color-amber-500: var(--amber-500);
+  --color-red-500:   var(--red-500);
+}
+
+/* ============================================================
+   FONTS — theme-swap aware (ember flips display to Cormorant).
+   Semantic keys avoid the circular `--font-mono: var(--font-mono)`.
+     font-heading → display   font-sans → ui
+     font-serif   → prose     font-code → mono
+   ============================================================ */
+@theme inline {
+  --font-heading: var(--font-display);
+  --font-sans:    var(--font-ui);
+  --font-serif:   var(--font-prose);
+  --font-code:    var(--font-mono);
+}
+
+/* ============================================================
+   RADIUS — theme-swap aware (ember squares everything off).
+   `--radius-*: var(--r-*)` — key differs from token, no circular ref.
+   ============================================================ */
+@theme inline {
+  --radius-xs:   var(--r-xs);
+  --radius-sm:   var(--r-sm);
+  --radius-md:   var(--r-md);
+  --radius-lg:   var(--r-lg);
+  --radius-xl:   var(--r-xl);
+  --radius-2xl:  var(--r-2xl);
+  --radius-pill: var(--r-pill);
+}
+
+/* ============================================================
+   STATIC SCALES — no theme swap; literal mirrors of the design
+   tokens (resync if design-system/typography.css|spacing.css move).
+   ============================================================ */
+@theme {
+  /* type scale (px→rem @16) — sizes only; pair with leading-* */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  1.875rem;
+  --text-3xl:  2.375rem;
+  --text-4xl:  3rem;
+  --text-5xl:  4rem;
+  --text-6xl:  5.25rem;
+
+  /* content widths → max-w-* */
+  --container-prose:   38rem;
+  --container-content: 64rem;
+  --container-wide:    80rem;
+  --container-shell:   90rem;
+
+  /* letter spacing */
+  --tracking-tighter: -0.03em;
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.14em;
+  --tracking-widest:  0.28em;
+
+  /* line heights */
+  --leading-tight:   1.05;
+  --leading-snug:    1.18;
+  --leading-normal:  1.45;
+  --leading-relaxed: 1.6;
+}
+
+/* ============================================================
+   ELEVATION / GLOW / MOTION / GRADIENTS — via @utility so they
+   reference the runtime var (theme-swap aware) without colliding
+   with Tailwind's own shadow / ease theme keys.
+   ============================================================ */
+@utility shadow-sm { box-shadow: var(--shadow-sm); }
+@utility shadow-md { box-shadow: var(--shadow-md); }
+@utility shadow-lg { box-shadow: var(--shadow-lg); }
+@utility shadow-xl { box-shadow: var(--shadow-xl); }
+
+@utility shadow-glow-magenta { box-shadow: var(--glow-magenta); }
+@utility shadow-glow-cyan    { box-shadow: var(--glow-cyan); }
+@utility shadow-glow-purple  { box-shadow: var(--glow-purple); }
+@utility shadow-glow-soft    { box-shadow: var(--glow-soft); }
+@utility shadow-edge         { box-shadow: var(--edge-light); }
+
+@utility text-glow-magenta { text-shadow: var(--glow-text-magenta); }
+@utility text-glow-cyan    { text-shadow: var(--glow-text-cyan); }
+
+/* full composed control transition (color/bg/border/shadow/transform) */
+@utility transition-control { transition: var(--t-control); }
+
+/* gradient washes — `background` shorthand so a flat color (arcade) or a
+   gradient (ember) both apply cleanly */
+@utility bg-grad-sunset { background: var(--grad-sunset); }
+@utility bg-grad-aurora { background: var(--grad-aurora); }
+@utility bg-grad-dusk   { background: var(--grad-dusk); }
+@utility bg-grad-night  { background: var(--grad-night); }
+@utility bg-grad-glow   { background: var(--grad-glow); }
+
+/* ============================================================
+   Front door (choose-a-door) — the few rules utilities express
+   poorly: full-bleed body lock, and the hover-to-expand interplay
+   between the two sibling halves. Everything else lives as
+   utilities on the markup (routes/index.tsx).
+
+   Deliberately UNLAYERED: the flex-grow interplay must beat the
+   `flex-1` utility, and Tailwind's `utilities` layer would win over
+   any `@layer` block regardless of specificity. Unlayered rules
+   outrank every layer.
+   ============================================================ */
+/* Global: never let a stray wide child cause horizontal scroll (was responsive.css). */
+html { overflow-x: hidden; }
+
+body:has(.split-screen) { background: #000; overflow: hidden; }
+html:has(.split-screen) { height: 100%; }
+
+/* hover-to-expand (progressive enhancement): the un-hovered half yields */
+.split-screen:has(.pd-door-code:hover)  .pd-door-words,
+.split-screen:has(.pd-door-words:hover) .pd-door-code { flex-grow: 0.72; }
+.split-screen:has(.pd-door-code:hover)  .pd-door-words .pd-door-content,
+.split-screen:has(.pd-door-words:hover) .pd-door-code  .pd-door-content {
+  filter: saturate(0.6) brightness(0.7);
+}
+
+@media (max-width: 760px) {
+  html:has(.split-screen), body:has(.split-screen) { height: auto; overflow: auto; }
+  .split-screen:has(.pd-door-code:hover)  .pd-door-words,
+  .split-screen:has(.pd-door-words:hover) .pd-door-code { flex-grow: 1; }
+}
+
+/* ============================================================
+   /words (grimoire) canvas + StoryCover foil shimmer.
+   Ported from the retired styles/words.css.
+   ============================================================ */
+body:has(.words-app) { background: #0f0b09; }
+
+.words-app small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+/* StoryCover foil sheen — one keyframe shared by every procedural cover.
+   Matte-safe: a slow light sweep, not a glow. */
+@keyframes pdFoilShimmer {
+  0%   { background-position: 130% 0; }
+  100% { background-position: -30% 0; }
+}
+@utility pd-foil-sheen { animation: pdFoilShimmer 9s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pd-foil-sheen { animation: none; }
+}
+
+/* MobileDrawer entrance — slide the panel in from the right, fade the backdrop.
+   Panel/backdrop only mount on open, so the animation runs on mount.
+   Ported from the retired styles/responsive.css. */
+@keyframes pdDrawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes pdDrawerFade { from { opacity: 0; } to { opacity: 1; } }
+@utility pd-drawer-backdrop { animation: pdDrawerFade 160ms ease; }
+@utility pd-drawer-panel { animation: pdDrawerIn 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) {
+  .pd-drawer-backdrop, .pd-drawer-panel { animation: none; }
+}

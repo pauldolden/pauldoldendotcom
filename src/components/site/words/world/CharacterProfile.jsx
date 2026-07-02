@@ -14,6 +14,7 @@ import { words } from '../../../../content/words'
 
 const GROUP_ORDER = ['family', 'social', 'org', 'possession', 'spatial', 'other']
 const FAMILY_PREDS = new Set([...FAMILY_POV.parents, ...FAMILY_POV.children, ...FAMILY_POV.siblings, ...FAMILY_POV.partners])
+const SIDE_HEADING = 'mb-3 mt-0 border-b border-line-faint pb-2 font-heading text-base font-bold text-heading'
 
 function RelRow({ storyId, link }) {
   const other = { name: link.otherName, avatar: link.otherAvatar, icon: link.otherIcon, type: link.otherType }
@@ -22,12 +23,12 @@ function RelRow({ storyId, link }) {
     <Link
       to="/words/$storyId/cast/$slug"
       params={{ storyId, slug: link.otherSlug }}
-      style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px', borderRadius: 'var(--r-md)', textDecoration: 'none', border: '1px solid var(--border-faint)', background: 'var(--bg-surface)' }}
+      className="flex items-center gap-3 rounded-md border border-line-faint bg-surface px-3 py-2.5 no-underline"
     >
       <EntityAvatar entity={other} size={40} radius={isPerson ? '50%' : 'var(--r-sm)'} />
-      <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: 15, color: 'var(--text-strong)' }}>{link.otherName}</div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--text-muted)', letterSpacing: '0.03em' }}>
+      <div className="min-w-0">
+        <div className="font-sans text-[15px] font-semibold text-strong">{link.otherName}</div>
+        <div className="font-code text-[11.5px] tracking-[0.03em] text-muted">
           {link.label}
           {link.intensity ? ` · ${link.intensity}` : ''}
         </div>
@@ -58,32 +59,32 @@ export function CharacterProfile({ story, entity, links = [], entityTypes = [] }
     !!entity.role || (entity.aliases?.length ?? 0) > 0 || hasDetails || (entity.bio?.length ?? 0) > 0 || links.length > 0 || hasFamily
 
   return (
-    <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '32px 28px 0' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-        <Link to="/words/$storyId/cast" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none' }}>
+    <div className="mx-auto max-w-content px-7 pt-8">
+      <div className="flex items-center justify-between gap-4">
+        <Link to="/words/$storyId/cast" params={{ storyId: story.id }} className="font-sans text-sm text-cyan-400 no-underline">
           {c.backToCast}
         </Link>
         {hasGated && <SpoilerToggle />}
       </div>
 
       {/* Header — stub (avatar + name) is always safe; role/aliases are gated. */}
-      <header style={{ display: 'flex', gap: 24, alignItems: 'center', marginTop: 20, flexWrap: 'wrap' }}>
+      <header className="mt-5 flex flex-wrap items-center gap-6">
         <EntityAvatar entity={entity} size={112} radius={isPerson ? '50%' : 'var(--r-lg)'} />
-        <div style={{ minWidth: 0 }}>
+        <div className="min-w-0">
           {typeMeta && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+            <span className="inline-flex items-center gap-1.5 font-code text-xs uppercase tracking-[0.06em] text-muted">
               {typeMeta.icon && <WorldIcon name={typeMeta.icon} size={13} color="var(--text-muted)" />}
               {typeMeta.displayName}
             </span>
           )}
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 46, color: 'var(--text-strong)', margin: '6px 0 0', lineHeight: 1.02 }}>
+          <h1 className="mb-0 mt-1.5 font-heading text-[46px] font-bold leading-[1.02] text-strong">
             {entity.name}
           </h1>
           {(entity.role || (entity.aliases?.length ?? 0) > 0) && (
             <Spoiler active label="Spoiler">
-              {entity.role && <div style={{ marginTop: 6, fontFamily: 'var(--font-mono)', fontSize: 14, letterSpacing: '0.04em', color: 'var(--accent)' }}>{entity.role}</div>}
+              {entity.role && <div className="mt-1.5 font-code text-sm tracking-wide text-accent">{entity.role}</div>}
               {entity.aliases?.length > 0 && (
-                <div style={{ marginTop: 6, fontFamily: 'var(--font-ui)', fontSize: 14, color: 'var(--text-faint)' }}>
+                <div className="mt-1.5 font-sans text-sm text-faint">
                   {c.aka} {entity.aliases.join(', ')}
                 </div>
               )}
@@ -93,15 +94,15 @@ export function CharacterProfile({ story, entity, links = [], entityTypes = [] }
       </header>
 
       {/* Body: description (safe) + gated dossier */}
-      <div className="cast-profile-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 320px', gap: 40, marginTop: 40, alignItems: 'start' }}>
+      <div className="mt-10 grid grid-cols-[minmax(0,1fr)_320px] items-start gap-10">
         <div>
           {entity.description && (
-            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 20, lineHeight: 1.55, color: 'var(--text-prose)', margin: 0 }}>{entity.description}</p>
+            <p className="m-0 font-serif text-[20px] leading-[1.55] text-prose">{entity.description}</p>
           )}
           {entity.bio?.length > 0 && (
-            <div style={{ marginTop: 20 }}>
+            <div className="mt-5">
               <Spoiler active label="Backstory">
-                <div className="cast-bio" style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.7, color: 'var(--text-body)', display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div className="flex flex-col gap-3.5 font-serif text-[17px] leading-[1.7] text-body">
                   {entity.bio.map((seg, i) => (
                     <div key={i} dangerouslySetInnerHTML={{ __html: renderProse(seg.text) }} />
                   ))}
@@ -116,12 +117,12 @@ export function CharacterProfile({ story, entity, links = [], entityTypes = [] }
           )}
         </div>
 
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+        <aside className="flex flex-col gap-7">
           {hasDetails && (
             <Spoiler active label="Details">
               <section>
-                <h2 style={sideHeading}>{c.details}</h2>
-                <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px 14px' }}>
+                <h2 className={SIDE_HEADING}>{c.details}</h2>
+                <dl className="m-0 grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-2">
                   {entity.surname && <Row label="Surname" value={entity.surname} />}
                   {entity.middleName && <Row label="Middle name" value={entity.middleName} />}
                   {fields.map(([k, v]) => (
@@ -135,14 +136,14 @@ export function CharacterProfile({ story, entity, links = [], entityTypes = [] }
           {groupKeys.length > 0 && (
             <Spoiler active label="Relationships">
               <section>
-                <h2 style={sideHeading}>{c.relationships}</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+                <h2 className={SIDE_HEADING}>{c.relationships}</h2>
+                <div className="flex flex-col gap-[18px]">
                   {groupKeys.map((g) => (
                     <div key={g}>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--text-faint)', textTransform: 'uppercase', marginBottom: 8 }}>
+                      <div className="mb-2 font-code text-[11px] uppercase tracking-[0.08em] text-faint">
                         {c.relGroups[g] ?? g}
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <div className="flex flex-col gap-2">
                         {groups[g].map((l, i) => (
                           <RelRow key={`${l.otherSlug}-${i}`} storyId={story.id} link={l} />
                         ))}
@@ -159,21 +160,11 @@ export function CharacterProfile({ story, entity, links = [], entityTypes = [] }
   )
 }
 
-const sideHeading = {
-  fontFamily: 'var(--font-display)',
-  fontWeight: 700,
-  fontSize: 16,
-  color: 'var(--text-heading)',
-  margin: '0 0 12px',
-  paddingBottom: 8,
-  borderBottom: '1px solid var(--border-faint)',
-}
-
 function Row({ label, value }) {
   return (
     <>
-      <dt style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{label}</dt>
-      <dd style={{ margin: 0, fontFamily: 'var(--font-ui)', fontSize: 14, color: 'var(--text-body)' }}>{value}</dd>
+      <dt className="font-code text-xs uppercase tracking-wide text-faint">{label}</dt>
+      <dd className="m-0 font-sans text-sm text-body">{value}</dd>
     </>
   )
 }

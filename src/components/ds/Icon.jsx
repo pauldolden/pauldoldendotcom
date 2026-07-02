@@ -61,10 +61,10 @@ const ICONS = {
   x: X,
 };
 
-export function Icon({ name, size = 18, color = 'currentColor', strokeWidth = 1.75, style }) {
+export function Icon({ name, size = 18, color = 'currentColor', strokeWidth = 1.75, style, className = '' }) {
   const Cmp = ICONS[name];
   return (
-    <span style={{ display: 'inline-flex', lineHeight: 0, ...style }}>
+    <span className={`inline-flex leading-[0] ${className}`} style={style}>
       {Cmp ? <Cmp size={size} color={color} strokeWidth={strokeWidth} /> : null}
     </span>
   );

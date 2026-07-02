@@ -9,17 +9,8 @@ import { StoryMetaForm } from './StoryMetaForm.jsx';
 import { AdminWorldPanel } from './AdminWorldPanel.jsx';
 import { adminSaveStory, adminSaveChapter, adminDeleteChapter } from '../../../../server/admin';
 
-const label = {
-  display: 'block', marginBottom: 7,
-  fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
-  letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', color: 'var(--text-muted)',
-};
-const control = {
-  width: '100%', boxSizing: 'border-box', padding: '11px 13px',
-  background: 'var(--bg-base)', color: 'var(--text-strong)',
-  border: '1px solid var(--border)', borderRadius: 'var(--r-md)',
-  fontFamily: 'var(--font-ui)', fontSize: 15,
-};
+const LABEL = 'mb-[7px] block font-code text-xs uppercase tracking-wide text-muted';
+const CONTROL = 'w-full box-border rounded-md border border-line bg-canvas px-[13px] py-[11px] font-sans text-[15px] text-strong';
 const MD_RE = /\.(md|markdown|txt)$/i;
 
 // "01-the-body.md" / "1. The Body.md" / "12_chapter.md" -> { index, title }
@@ -44,10 +35,10 @@ export function AdminStoryEditor({ story, storyId }) {
   if (!story) {
     return (
       <div>
-        <p style={{ fontFamily: 'var(--font-ui)', fontSize: 17, color: 'var(--text-faint)' }}>
+        <p className="font-sans text-[17px] text-faint">
           No story with id <code>{storyId}</code>.
         </p>
-        <Link to="/words/admin" style={{ color: 'var(--cyan-400)' }}>← All stories</Link>
+        <Link to="/words/admin" className="text-cyan-400">← All stories</Link>
       </div>
     );
   }
@@ -142,24 +133,24 @@ export function AdminStoryEditor({ story, storyId }) {
 
   return (
     <div>
-      <div style={{ marginBottom: 8 }}>
-        <Link to="/words/admin" style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none' }}>← All stories</Link>
+      <div className="mb-2">
+        <Link to="/words/admin" className="font-sans text-sm text-cyan-400 no-underline">← All stories</Link>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 34, color: 'var(--text-strong)', margin: 0 }}>{story.title || story.id}</h1>
+      <div className="mb-6 flex items-center gap-3">
+        <h1 className="m-0 font-heading text-[34px] font-bold text-strong">{story.title || story.id}</h1>
         <Badge tone={story.published ? 'ongoing' : 'neutral'} dot>{story.published ? 'Published' : 'Draft'}</Badge>
       </div>
 
-      {error && <div style={{ color: 'var(--accent)', marginBottom: 16, fontFamily: 'var(--font-ui)' }}>{error}</div>}
+      {error && <div className="mb-4 font-sans text-accent">{error}</div>}
 
-      <section style={{ border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', background: 'var(--bg-raised)', padding: 24, marginBottom: 32 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: 'var(--text-heading)', margin: '0 0 18px' }}>Details</h2>
+      <section className="mb-8 rounded-lg border border-line bg-raised p-6">
+        <h2 className="mb-[18px] mt-0 font-heading text-[22px] text-heading">Details</h2>
         <StoryMetaForm initial={story} mode="edit" onSave={saveMeta} busy={busy} />
       </section>
 
       <section>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 14 }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: 'var(--text-heading)', margin: 0 }}>Chapters</h2>
+        <div className="mb-3.5 flex items-end justify-between gap-4">
+          <h2 className="m-0 font-heading text-[26px] text-heading">Chapters</h2>
           {!editing && (
             <Button variant="outline" onClick={() => setEditing({ index: nextIndex, title: '', words: '', date: '', isNew: true, published: false, _new: true })}>
               Add chapter manually
@@ -173,26 +164,20 @@ export function AdminStoryEditor({ story, storyId }) {
           onDragLeave={() => setDragging(false)}
           onDrop={(e) => { e.preventDefault(); setDragging(false); onBulk(e.dataTransfer.files); }}
           onClick={() => bulkInput.current?.click()}
-          style={{
-            border: `1.5px dashed ${dragging ? 'var(--border-neon)' : 'var(--border)'}`,
-            borderRadius: 'var(--r-lg)',
-            background: dragging ? 'rgba(255,46,151,0.06)' : 'var(--bg-raised)',
-            padding: '26px 22px', textAlign: 'center', cursor: 'pointer', marginBottom: 24,
-            transition: 'var(--t-control)',
-          }}
+          className={`mb-6 cursor-pointer rounded-lg border-[1.5px] border-dashed px-[22px] py-[26px] text-center transition-control ${dragging ? 'border-line-neon bg-[rgba(255,46,151,0.06)]' : 'border-line bg-raised'}`}
         >
           <input
             ref={bulkInput}
             type="file"
             accept=".md,.markdown,.txt"
             multiple
-            style={{ display: 'none' }}
+            className="hidden"
             onChange={(e) => { onBulk(e.target.files); e.target.value = ''; }}
           />
-          <div style={{ fontFamily: 'var(--font-ui)', fontSize: 16, color: 'var(--text-prose)' }}>
+          <div className="font-sans text-base text-prose">
             {progress ? `Uploading… ${progress.done}/${progress.total}` : 'Drop Markdown files here, or click to choose'}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-faint)', marginTop: 8 }}>
+          <div className="mt-2 font-code text-xs text-faint">
             Filename leads with the chapter number → index &amp; title. e.g. <code>1-the-body-in-ring-three.md</code> → ch.1 “The Body In Ring Three”. Uploaded as drafts; publish when ready.
           </div>
         </div>
@@ -220,10 +205,10 @@ export function AdminStoryEditor({ story, storyId }) {
         )}
 
         {toc.length === 0 && !editing && (
-          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 16, color: 'var(--text-faint)' }}>No chapters yet — drop some files above.</p>
+          <p className="font-sans text-base text-faint">No chapters yet — drop some files above.</p>
         )}
 
-        <div style={{ display: 'grid', gap: 10 }}>
+        <div className="grid gap-2.5">
           {toc.map((c) => (
             <ChapterRow
               key={c.index}
@@ -246,16 +231,16 @@ export function AdminStoryEditor({ story, storyId }) {
 function ChapterRow({ chapter: c, busy, onTogglePublish, onReplaceBody, onEdit, onDelete }) {
   const fileRef = React.useRef(null);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14, border: '1px solid var(--border)', borderRadius: 'var(--r-md)', background: 'var(--bg-raised)', padding: '12px 16px' }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-faint)', width: 28 }}>{c.index}</span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-ui)', fontSize: 16, color: 'var(--text-strong)' }}>{c.title || `Chapter ${c.index}`}</div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+    <div className="flex items-center gap-3.5 rounded-md border border-line bg-raised px-4 py-3">
+      <span className="w-7 font-code text-[13px] text-faint">{c.index}</span>
+      <div className="min-w-0 flex-1">
+        <div className="font-sans text-base text-strong">{c.title || `Chapter ${c.index}`}</div>
+        <div className="mt-0.5 font-code text-[11px] text-faint">
           {[c.date, c.words].filter(Boolean).join(' · ') || '—'}
         </div>
       </div>
       <Badge tone={c.published ? 'ongoing' : 'neutral'} dot>{c.published ? 'Live' : 'Draft'}</Badge>
-      <input ref={fileRef} type="file" accept=".md,.markdown,.txt" style={{ display: 'none' }} onChange={(e) => { onReplaceBody(e.target.files?.[0]); e.target.value = ''; }} />
+      <input ref={fileRef} type="file" accept=".md,.markdown,.txt" className="hidden" onChange={(e) => { onReplaceBody(e.target.files?.[0]); e.target.value = ''; }} />
       <Button variant="ghost" size="sm" disabled={busy} onClick={() => fileRef.current?.click()}>Replace .md</Button>
       <Button variant={c.published ? 'ghost' : 'outline'} size="sm" disabled={busy} onClick={onTogglePublish}>{c.published ? 'Unpublish' : 'Publish'}</Button>
       <Button variant="ghost" size="sm" disabled={busy} onClick={onEdit}>Edit</Button>
@@ -289,35 +274,35 @@ function ChapterMetaForm({ chapter, isNew, onSave, onCancel, busy }) {
   };
 
   return (
-    <div style={{ border: '1px solid var(--border-neon)', borderRadius: 'var(--r-lg)', background: 'var(--bg-raised)', padding: 24, marginBottom: 24 }}>
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: 'var(--text-heading)', margin: '0 0 18px' }}>
+    <div className="mb-6 rounded-lg border border-line-neon bg-raised p-6">
+      <h3 className="mb-[18px] mt-0 font-heading text-xl text-heading">
         {isNew ? 'New chapter' : `Edit chapter ${chapter.index}`}
       </h3>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 1fr 140px', gap: 14, marginBottom: 16 }}>
-        <div><span style={label}>Index</span><input style={control} type="number" min="1" value={meta.index} onChange={set('index')} /></div>
-        <div><span style={label}>Title</span><input style={control} value={meta.title} onChange={set('title')} placeholder="The Body in Ring Three" /></div>
-        <div><span style={label}>Date (display)</span><input style={control} value={meta.date} onChange={set('date')} placeholder="Jun 30, 2026" /></div>
-        <div><span style={label}>Words (display)</span><input style={control} value={meta.words} onChange={set('words')} placeholder="3.2k" /></div>
+      <div className="mb-4 grid grid-cols-[90px_1fr_1fr_140px] gap-3.5">
+        <div><span className={LABEL}>Index</span><input className={CONTROL} type="number" min="1" value={meta.index} onChange={set('index')} /></div>
+        <div><span className={LABEL}>Title</span><input className={CONTROL} value={meta.title} onChange={set('title')} placeholder="The Body in Ring Three" /></div>
+        <div><span className={LABEL}>Date (display)</span><input className={CONTROL} value={meta.date} onChange={set('date')} placeholder="Jun 30, 2026" /></div>
+        <div><span className={LABEL}>Words (display)</span><input className={CONTROL} value={meta.words} onChange={set('words')} placeholder="3.2k" /></div>
       </div>
 
-      <div style={{ display: 'flex', gap: 24, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
-        <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-ui)', fontSize: 15, color: 'var(--text-prose)', cursor: 'pointer' }}>
-          <input type="checkbox" checked={meta.isNew} onChange={set('isNew')} style={{ width: 18, height: 18 }} /> Mark “new”
+      <div className="mb-4 flex flex-wrap items-center gap-6">
+        <label className="flex cursor-pointer items-center gap-2 font-sans text-[15px] text-prose">
+          <input type="checkbox" checked={meta.isNew} onChange={set('isNew')} className="h-[18px] w-[18px]" /> Mark “new”
         </label>
-        <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-ui)', fontSize: 15, color: 'var(--text-prose)', cursor: 'pointer' }}>
-          <input type="checkbox" checked={meta.published} onChange={set('published')} style={{ width: 18, height: 18 }} /> Published
+        <label className="flex cursor-pointer items-center gap-2 font-sans text-[15px] text-prose">
+          <input type="checkbox" checked={meta.published} onChange={set('published')} className="h-[18px] w-[18px]" /> Published
         </label>
       </div>
 
       <div>
-        <span style={label}>Body file (.md){isNew ? '' : ' — leave empty to keep current'}</span>
-        <input type="file" accept=".md,.markdown,.txt" onChange={(e) => setFile(e.target.files?.[0] ?? null)} style={{ fontFamily: 'var(--font-ui)', color: 'var(--text-prose)' }} />
+        <span className={LABEL}>Body file (.md){isNew ? '' : ' — leave empty to keep current'}</span>
+        <input type="file" accept=".md,.markdown,.txt" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="font-sans text-prose" />
       </div>
 
-      {err && <div style={{ color: 'var(--accent)', marginTop: 14, fontFamily: 'var(--font-ui)' }}>{err}</div>}
+      {err && <div className="mt-3.5 font-sans text-accent">{err}</div>}
 
-      <div style={{ display: 'flex', gap: 12, marginTop: 18 }}>
+      <div className="mt-[18px] flex gap-3">
         <Button variant="neon" onClick={submit} disabled={busy}>{busy ? 'Saving…' : 'Save chapter'}</Button>
         <Button variant="outline" onClick={onCancel} disabled={busy}>Cancel</Button>
       </div>

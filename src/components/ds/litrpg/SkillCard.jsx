@@ -3,58 +3,41 @@ import React from 'react';
 /**
  * SkillCard — an ability / skill block. Rarity drives the accent color and glow.
  * Shows name, type line, description and an optional cost/cooldown footer.
+ * Rarity colour rides a single CSS var (--rc) so utilities can reference it.
  */
+const RARITIES = {
+  common:    { c: 'var(--mist-300)',    label: 'Common' },
+  rare:      { c: 'var(--cyan-400)',    label: 'Rare' },
+  epic:      { c: 'var(--purple-400)',  label: 'Epic' },
+  legendary: { c: 'var(--magenta-400)', label: 'Legendary' },
+  mythic:    { c: 'var(--gold-500)',    label: 'Mythic' },
+};
+
 export function SkillCard({ name, type, description, rarity = 'rare', tier, cost, cooldown, icon = '✦' }) {
-  const rarities = {
-    common:    { c: 'var(--mist-300)',     label: 'Common' },
-    rare:      { c: 'var(--cyan-400)',     label: 'Rare' },
-    epic:      { c: 'var(--purple-400)',   label: 'Epic' },
-    legendary: { c: 'var(--magenta-400)',  label: 'Legendary' },
-    mythic:    { c: 'var(--gold-500)',     label: 'Mythic' },
-  };
-  const r = rarities[rarity] || rarities.rare;
+  const r = RARITIES[rarity] || RARITIES.rare;
   return (
-    <div style={{
-      position: 'relative',
-      width: 268,
-      borderRadius: 'var(--r-lg)',
-      border: `1.5px solid ${r.c}`,
-      background: 'linear-gradient(180deg, var(--bg-raised), var(--bg-surface))',
-      boxShadow: `0 0 24px -10px ${r.c}, var(--shadow-md)`,
-      overflow: 'hidden',
-      fontFamily: 'var(--font-ui)',
-    }}>
-      <div style={{ height: 3, background: r.c, boxShadow: `0 0 12px ${r.c}` }} />
-      <div style={{ padding: '16px 16px 14px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-          <div style={{
-            width: 44, height: 44, flexShrink: 0,
-            display: 'grid', placeItems: 'center',
-            borderRadius: 'var(--r-md)',
-            border: `1px solid ${r.c}`,
-            background: 'var(--night-800)',
-            color: r.c, fontSize: 20,
-            textShadow: `0 0 12px ${r.c}`,
-          }}>{icon}</div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-lg)', color: 'var(--text-strong)', lineHeight: 1.12 }}>{name}</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.06em', textTransform: 'uppercase', color: r.c, marginTop: 4 }}>
+    <div
+      style={{ '--rc': r.c }}
+      className="relative w-[268px] overflow-hidden rounded-lg border-[1.5px] border-[var(--rc)] bg-[linear-gradient(180deg,var(--bg-raised),var(--bg-surface))] font-sans shadow-[0_0_24px_-10px_var(--rc),var(--shadow-md)]"
+    >
+      <div className="h-[3px] bg-[var(--rc)] shadow-[0_0_12px_var(--rc)]" />
+      <div className="px-4 pb-[14px] pt-4">
+        <div className="flex items-start gap-3">
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[var(--rc)] bg-night-800 text-[20px] text-[var(--rc)] [text-shadow:0_0_12px_var(--rc)]">{icon}</div>
+          <div className="min-w-0">
+            <div className="font-heading text-lg font-bold leading-[1.12] text-strong">{name}</div>
+            <div className="mt-1 font-code text-xs uppercase tracking-[0.06em] text-[var(--rc)]">
               {r.label}{type ? ` · ${type}` : ''}{tier ? ` · ${tier}` : ''}
             </div>
           </div>
         </div>
         {description && (
-          <p style={{ margin: '13px 0 0', fontSize: 'var(--text-sm)', lineHeight: 1.55, color: 'var(--text-muted)' }}>{description}</p>
+          <p className="mb-0 mt-[13px] text-sm leading-[1.55] text-muted">{description}</p>
         )}
         {(cost || cooldown) && (
-          <div style={{
-            display: 'flex', gap: 18, marginTop: 14, paddingTop: 12,
-            borderTop: '1px solid var(--border-faint)',
-            fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
-            textTransform: 'uppercase', letterSpacing: '0.06em',
-          }}>
-            {cost && <span style={{ color: 'var(--text-faint)' }}>Cost <b style={{ color: 'var(--cyan-400)', fontWeight: 700 }}>{cost}</b></span>}
-            {cooldown && <span style={{ color: 'var(--text-faint)' }}>CD <b style={{ color: 'var(--magenta-400)', fontWeight: 700 }}>{cooldown}</b></span>}
+          <div className="mt-3.5 flex gap-[18px] border-t border-line-faint pt-3 font-code text-xs uppercase tracking-[0.06em]">
+            {cost && <span className="text-faint">Cost <b className="font-bold text-cyan-400">{cost}</b></span>}
+            {cooldown && <span className="text-faint">CD <b className="font-bold text-magenta-400">{cooldown}</b></span>}
           </div>
         )}
       </div>

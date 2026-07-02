@@ -11,56 +11,27 @@ export function Input({
   iconLeft = null,
   id,
   full = true,
+  className = '',
   ...rest
 }) {
   const inputId = id || (label ? `in-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined);
   return (
-    <label htmlFor={inputId} style={{ display: full ? 'block' : 'inline-block', width: full ? '100%' : undefined }}>
+    <label htmlFor={inputId} className={full ? 'block w-full' : 'inline-block'}>
       {label && (
-        <span style={{
-          display: 'block',
-          marginBottom: 7,
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'var(--text-xs)',
-          letterSpacing: 'var(--tracking-wide)',
-          textTransform: 'uppercase',
-          color: 'var(--text-muted)',
-        }}>{label}</span>
+        <span className="mb-[7px] block font-code text-xs uppercase tracking-wide text-muted">{label}</span>
       )}
-      <span style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 9,
-        height: 46,
-        padding: '0 14px',
-        borderRadius: 'var(--r-md)',
-        background: 'var(--bg-surface)',
-        border: `1.5px solid ${error ? 'var(--status-danger)' : 'var(--border)'}`,
-        transition: 'var(--t-control)',
-      }}>
-        {iconLeft && <span style={{ color: 'var(--text-faint)', display: 'inline-flex' }}>{iconLeft}</span>}
+      <span
+        className={`flex h-[46px] items-center gap-[9px] rounded-md border-[1.5px] bg-surface px-[14px] transition-control ${error ? 'border-status-danger' : 'border-line'}`}
+      >
+        {iconLeft && <span className="inline-flex text-faint">{iconLeft}</span>}
         <input
           id={inputId}
-          style={{
-            flex: 1,
-            minWidth: 0,
-            background: 'transparent',
-            border: 'none',
-            outline: 'none',
-            color: 'var(--text-body)',
-            fontFamily: 'var(--font-ui)',
-            fontSize: 'var(--text-base)',
-          }}
+          className={`min-w-0 flex-1 border-none bg-transparent font-sans text-base text-body outline-none ${className}`}
           {...rest}
         />
       </span>
       {(hint || error) && (
-        <span style={{
-          display: 'block',
-          marginTop: 6,
-          fontSize: 'var(--text-sm)',
-          color: error ? 'var(--status-danger)' : 'var(--text-faint)',
-        }}>{error || hint}</span>
+        <span className={`mt-1.5 block text-sm ${error ? 'text-status-danger' : 'text-faint'}`}>{error || hint}</span>
       )}
     </label>
   );

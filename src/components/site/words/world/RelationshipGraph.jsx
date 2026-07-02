@@ -36,7 +36,7 @@ export function RelationshipGraph({ storyId, world }) {
 
   return (
     <div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', maxHeight: 640 }} role="img" aria-label="Relationship graph">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto max-h-[640px] w-full" role="img" aria-label="Relationship graph">
         {edges.map((r, i) => {
           const a = pos.get(r.from)
           const b = pos.get(r.to)
@@ -60,7 +60,7 @@ export function RelationshipGraph({ storyId, world }) {
           return (
             <g
               key={e.slug}
-              style={{ cursor: masked ? 'default' : 'pointer' }}
+              className={masked ? 'cursor-default' : 'cursor-pointer'}
               onClick={() => !masked && navigate({ to: '/words/$storyId/cast/$slug', params: { storyId, slug: e.slug } })}
             >
               <circle
@@ -85,10 +85,10 @@ export function RelationshipGraph({ storyId, world }) {
       </svg>
 
       {cats.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', marginTop: 8 }}>
+        <div className="mt-2 flex flex-wrap justify-center gap-4">
           {cats.map((cat) => (
-            <span key={cat} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)' }}>
-              <span style={{ width: 14, height: 3, borderRadius: 2, background: CATEGORY_COLOR[cat] ?? CATEGORY_COLOR.other }} />
+            <span key={cat} className="inline-flex items-center gap-[7px] font-code text-xs text-muted">
+              <span className="h-[3px] w-3.5 rounded-[2px]" style={{ background: CATEGORY_COLOR[cat] ?? CATEGORY_COLOR.other }} />
               {words.world.relGroups[cat] ?? cat}
             </span>
           ))}

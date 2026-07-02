@@ -49,15 +49,12 @@ export function Spoiler({ active, children, label = 'Spoiler', inline = false })
 
   const hidden = !show && !revealed
   const Tag = inline ? 'span' : 'div'
+  const flow = inline ? 'inline' : 'block'
   return (
-    <Tag style={{ position: 'relative', display: inline ? 'inline-block' : 'block' }}>
+    <Tag className={`relative ${inline ? 'inline-block' : 'block'}`}>
       <Tag
         aria-hidden={hidden || undefined}
-        style={
-          hidden
-            ? { filter: 'blur(7px)', userSelect: 'none', pointerEvents: 'none', opacity: 0.55, transition: 'filter .25s ease, opacity .25s ease', display: inline ? 'inline' : 'block' }
-            : { transition: 'filter .25s ease, opacity .25s ease', display: inline ? 'inline' : 'block' }
-        }
+        className={`${flow} [transition:filter_.25s_ease,opacity_.25s_ease] ${hidden ? 'pointer-events-none select-none opacity-55 blur-[7px]' : ''}`}
       >
         {children}
       </Tag>
@@ -71,24 +68,7 @@ export function Spoiler({ active, children, label = 'Spoiler', inline = false })
           }}
           aria-label={`Reveal ${label.toLowerCase()}`}
           title="Reveal spoiler"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 6,
-            background: 'rgba(11,8,23,0.35)',
-            border: 'none',
-            borderRadius: 'var(--r-md)',
-            cursor: 'pointer',
-            color: 'var(--accent)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
+          className="absolute inset-0 flex cursor-pointer items-center justify-center gap-1.5 rounded-md border-none bg-[rgba(11,8,23,0.35)] font-code text-[11px] font-semibold uppercase tracking-[0.08em] text-accent"
         >
           <Lock size={13} /> {label}
         </button>
@@ -105,22 +85,7 @@ export function SpoilerToggle() {
       type="button"
       onClick={toggle}
       title={show ? 'Hide spoilers' : 'Show spoilers'}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 7,
-        height: 36,
-        padding: '0 14px',
-        borderRadius: 'var(--r-pill)',
-        border: `1px solid ${show ? 'var(--accent)' : 'var(--border)'}`,
-        background: show ? 'rgba(122,31,61,0.16)' : 'transparent',
-        color: show ? 'var(--accent)' : 'var(--text-muted)',
-        fontFamily: 'var(--font-ui)',
-        fontSize: 13,
-        fontWeight: 600,
-        cursor: 'pointer',
-        transition: 'var(--t-control)',
-      }}
+      className={`inline-flex h-9 cursor-pointer items-center gap-[7px] rounded-pill border px-[14px] font-sans text-[13px] font-semibold transition-control ${show ? 'border-accent bg-[rgba(122,31,61,0.16)] text-accent' : 'border-line bg-transparent text-muted'}`}
     >
       {show ? <Eye size={15} /> : <EyeOff size={15} />} {show ? 'Hide spoilers' : 'Show spoilers'}
     </button>

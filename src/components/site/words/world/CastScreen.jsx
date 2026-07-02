@@ -8,15 +8,17 @@ import { WorldIcon } from './WorldIcon.jsx'
 import { SpoilerToggle } from './Spoiler.jsx'
 import { words } from '../../../../content/words'
 
+const QUIET_LINK = 'font-sans text-sm text-cyan-400 no-underline whitespace-nowrap'
+
 function EmptyState({ story, message }) {
   return (
-    <div style={{ maxWidth: 'var(--width-prose)', margin: '0 auto', padding: '72px 28px', textAlign: 'center' }}>
-      <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 34, color: 'var(--text-strong)', margin: 0 }}>
+    <div className="mx-auto max-w-prose px-7 py-[72px] text-center">
+      <h1 className="m-0 font-heading text-[34px] text-strong">
         {story.title}
       </h1>
-      <p style={{ marginTop: 12, fontFamily: 'var(--font-prose)', fontSize: 18, color: 'var(--text-muted)' }}>{message}</p>
-      <div style={{ marginTop: 24 }}>
-        <Link to="/words/$storyId" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', textDecoration: 'none' }}>
+      <p className="mt-3 font-serif text-[18px] text-muted">{message}</p>
+      <div className="mt-6">
+        <Link to="/words/$storyId" params={{ storyId: story.id }} className="font-sans text-cyan-400 no-underline">
           {words.world.backToStory}
         </Link>
       </div>
@@ -37,28 +39,28 @@ export function CastScreen({ story, world }) {
   const hasEdges = (world.relationships ?? []).length > 0
 
   return (
-    <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '48px 28px 0' }}>
+    <div className="mx-auto max-w-content px-7 pt-12">
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.08em', color: 'var(--accent)', textTransform: 'uppercase' }}>
+          <div className="font-code text-[13px] uppercase tracking-[0.08em] text-accent">
             {c.castEyebrow}
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 44, color: 'var(--text-strong)', margin: '6px 0 0', lineHeight: 1 }}>
+          <h1 className="mb-0 mt-1.5 font-heading text-[44px] font-bold leading-none text-strong">
             {story.title}
           </h1>
-          <p style={{ margin: '12px 0 0', maxWidth: 560, fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.55, color: 'var(--text-muted)' }}>
+          <p className="mb-0 mt-3 max-w-[560px] font-serif text-[17px] leading-[1.55] text-muted">
             {c.castIntro}
           </p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
+        <div className="flex flex-col items-end gap-3">
           {hasSpoilers && <SpoilerToggle />}
           {hasEdges && (
-            <Link to="/words/$storyId/world" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+            <Link to="/words/$storyId/world" params={{ storyId: story.id }} className={QUIET_LINK}>
               {words.world.mapLink} →
             </Link>
           )}
-          <Link to="/words/$storyId" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+          <Link to="/words/$storyId" params={{ storyId: story.id }} className={QUIET_LINK}>
             {words.world.backToStory}
           </Link>
         </div>
@@ -68,15 +70,15 @@ export function CastScreen({ story, world }) {
       {types.map((type) => {
         const items = entities.filter((e) => e.type === type.name)
         return (
-          <section key={type.name} style={{ marginTop: 44 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+          <section key={type.name} className="mt-11">
+            <div className="mb-4 flex items-center gap-2.5">
               {type.icon && <WorldIcon name={type.icon} size={18} color="var(--text-muted)" />}
-              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 24, color: 'var(--text-heading)', margin: 0 }}>
+              <h2 className="m-0 font-heading text-xl font-bold text-heading">
                 {type.displayName}
               </h2>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-faint)' }}>{items.length}</span>
+              <span className="font-code text-[13px] text-faint">{items.length}</span>
             </div>
-            <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-3.5">
               {items.map((entity) => (
                 <EntityCard key={entity.slug} storyId={story.id} entity={entity} />
               ))}

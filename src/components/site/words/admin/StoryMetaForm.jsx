@@ -13,23 +13,11 @@ const COVERS = [
   'var(--magenta-400)',
 ];
 
-const label = {
-  display: 'block', marginBottom: 7,
-  fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
-  letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', color: 'var(--text-muted)',
-};
-const control = {
-  width: '100%', boxSizing: 'border-box', padding: '11px 13px',
-  background: 'var(--bg-raised)', color: 'var(--text-strong)',
-  border: '1px solid var(--border)', borderRadius: 'var(--r-md)',
-  fontFamily: 'var(--font-ui)', fontSize: 15,
-};
+const LABEL = 'mb-[7px] block font-code text-xs uppercase tracking-wide text-muted';
+const CONTROL = 'w-full box-border rounded-md border border-line bg-raised px-[13px] py-[11px] font-sans text-[15px] text-strong';
 // Auto-collapse to a single column on narrow screens. `min(100%, 200px)` keeps
 // the minimum from ever exceeding the container, so fields never overflow.
-const responsiveGrid = {
-  display: 'grid', gap: 14,
-  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
-};
+const GRID = 'grid gap-3.5 grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))]';
 
 function slugify(s) {
   return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -72,21 +60,21 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
   };
 
   return (
-    <div style={{ display: 'grid', gap: 18, maxWidth: 720 }}>
-      <div style={responsiveGrid}>
+    <div className="grid max-w-[720px] gap-[18px]">
+      <div className={GRID}>
         <Input label="Title" value={f.title} onChange={set('title')} placeholder="Circus Murder" />
         <div>
-          <span style={label}>Story id (URL slug)</span>
+          <span className={LABEL}>Story id (URL slug)</span>
           {mode === 'create' ? (
             <input
-              style={control}
+              className={CONTROL}
               value={f.id}
               onChange={set('id')}
               onBlur={() => !f.id && f.title && setF((s) => ({ ...s, id: slugify(s.title) }))}
               placeholder="circus-murder (auto from title)"
             />
           ) : (
-            <input style={{ ...control, opacity: 0.6 }} value={f.id} readOnly />
+            <input className={`${CONTROL} opacity-60`} value={f.id} readOnly />
           )}
         </div>
       </div>
@@ -94,14 +82,14 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
       <Input label="Logline" value={f.logline} onChange={set('logline')} placeholder="A god-touched ringmaster, dead in the town his blessing built." />
 
       <div>
-        <span style={label}>Blurb</span>
-        <textarea style={{ ...control, minHeight: 110, resize: 'vertical', lineHeight: 1.55 }} value={f.blurb} onChange={set('blurb')} />
+        <span className={LABEL}>Blurb</span>
+        <textarea className={`${CONTROL} min-h-[110px] resize-y leading-[1.55]`} value={f.blurb} onChange={set('blurb')} />
       </div>
 
-      <div style={responsiveGrid}>
+      <div className={GRID}>
         <div>
-          <span style={label}>Status</span>
-          <select style={control} value={f.status} onChange={set('status')}>
+          <span className={LABEL}>Status</span>
+          <select className={CONTROL} value={f.status} onChange={set('status')}>
             {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
@@ -109,30 +97,30 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
         <Input label="Progress line" value={f.progress} onChange={set('progress')} placeholder="Drafting · Act II" />
       </div>
 
-      <div style={responsiveGrid}>
+      <div className={GRID}>
         <Input label="Tags (comma-separated)" value={f.tags} onChange={set('tags')} placeholder="Mystery, Fantasy" />
         <div>
-          <span style={label}>Cover colour</span>
-          <select style={{ ...control, color: f.coverColor }} value={f.coverColor} onChange={set('coverColor')}>
+          <span className={LABEL}>Cover colour</span>
+          <select className={CONTROL} style={{ color: f.coverColor }} value={f.coverColor} onChange={set('coverColor')}>
             {COVERS.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
         <div>
-          <span style={label}>Cover style</span>
-          <select style={control} value={f.coverStyle} onChange={set('coverStyle')}>
+          <span className={LABEL}>Cover style</span>
+          <select className={CONTROL} value={f.coverStyle} onChange={set('coverStyle')}>
             {COVER_STYLES.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
           </select>
         </div>
       </div>
 
-      <label style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-ui)', fontSize: 15, color: 'var(--text-prose)', cursor: 'pointer' }}>
-        <input type="checkbox" checked={f.published} onChange={set('published')} style={{ width: 18, height: 18 }} />
+      <label className="flex cursor-pointer items-center gap-2.5 font-sans text-[15px] text-prose">
+        <input type="checkbox" checked={f.published} onChange={set('published')} className="h-[18px] w-[18px]" />
         Published (visible on the public site)
       </label>
 
-      {err && <div style={{ color: 'var(--accent)', fontSize: 14, fontFamily: 'var(--font-ui)' }}>{err}</div>}
+      {err && <div className="font-sans text-sm text-accent">{err}</div>}
 
-      <div style={{ display: 'flex', gap: 12 }}>
+      <div className="flex gap-3">
         <Button onClick={submit} variant="neon" disabled={busy}>{busy ? 'Saving…' : mode === 'create' ? 'Create story' : 'Save story'}</Button>
         {onCancel && <Button onClick={onCancel} variant="outline" disabled={busy}>Cancel</Button>}
       </div>

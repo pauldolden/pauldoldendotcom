@@ -8,11 +8,15 @@ import { code } from '../../../content/code';
 const HubIcon = Icon;
 const ACCENTS = { magenta: 'var(--magenta-400)', cyan: 'var(--cyan-400)', purple: 'var(--purple-400)' };
 
+const SECTION = 'pt-20 scroll-mt-20';
+const DRAWER_ROW = 'flex items-center gap-[11px] rounded-md px-3 py-[13px] font-sans text-base font-medium text-body no-underline';
+const CHIP = 'rounded-sm border border-line px-2.5 py-1 font-code text-xs text-mist-300 whitespace-nowrap';
+
 function Eyebrow({ children, color = 'var(--magenta-400)' }) {
-  return <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color, marginBottom: 10 }}>{children}</div>;
+  return <div className="mb-2.5 font-code text-xs uppercase tracking-[0.18em]" style={{ color }}>{children}</div>;
 }
 function SectionTitle({ children }) {
-  return <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 32, letterSpacing: 0, color: 'var(--text-heading)', margin: 0 }}>{children}</h2>;
+  return <h2 className="m-0 font-heading text-[32px] font-bold text-heading">{children}</h2>;
 }
 
 export function HubLanding() {
@@ -20,40 +24,39 @@ export function HubLanding() {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
-    <div style={{ minHeight: '100%', background: 'var(--bg-base)', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ position: 'fixed', inset: 0, background: 'var(--grad-glow)', pointerEvents: 'none', zIndex: 0 }} />
+    <div className="flex min-h-full flex-col bg-canvas">
+      <div className="pointer-events-none fixed inset-0 z-0 bg-grad-glow" />
 
       {/* HEADER */}
-      <header className="hub-header" style={{ position: 'sticky', top: 0, zIndex: 20, height: 'var(--header-h)', display: 'flex', alignItems: 'center', padding: '0 28px', gap: 22, background: 'rgba(11,8,23,0.72)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderBottom: '1px solid var(--border-faint)' }}>
-        <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
-          <img src={brand.mark} alt="" style={{ width: 34, height: 34 }} />
-          {/* Dual-voice wordmark (brand mark): mono "paul" + serif-italic "dolden" in --accent (pink). */}
-          <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, fontSize: 17, letterSpacing: '-0.01em', color: 'var(--text-strong)' }}>{brand.codeWord}</span>
-            <span style={{ fontFamily: 'var(--font-prose)', fontStyle: 'italic', fontWeight: 500, fontSize: 21, color: 'var(--accent)', marginLeft: 1 }}>{brand.wordsWord}</span>
+      <header className="sticky top-0 z-20 flex h-[var(--header-h)] items-center gap-[22px] border-b border-line-faint bg-[rgba(11,8,23,0.72)] px-7 backdrop-blur-[14px]">
+        <a href="#top" className="flex items-center gap-[11px] no-underline">
+          <img src={brand.mark} alt="" className="h-[34px] w-[34px]" />
+          {/* Dual-voice wordmark: mono "paul" + serif-italic "dolden" in --accent (pink). */}
+          <span className="inline-flex items-baseline">
+            <span className="font-code text-[17px] font-medium tracking-[-0.01em] text-strong">{brand.codeWord}</span>
+            <span className="ml-px font-serif text-[21px] font-medium italic text-accent">{brand.wordsWord}</span>
           </span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', color: 'var(--text-faint)' }}>{brand.tag}</span>
+          <span className="font-code text-[11px] tracking-[0.12em] text-faint">{brand.tag}</span>
         </a>
-        <nav className="hub-nav" style={{ display: 'flex', gap: 2, marginLeft: 10 }}>
+        <nav className="ml-2.5 flex gap-0.5 max-[900px]:hidden">
           {nav.map(([label, id]) => (
-            <a key={id} href={`#${id}`} style={{ fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 500, padding: '8px 11px', borderRadius: 'var(--r-sm)', color: 'var(--text-muted)', textDecoration: 'none' }}>{label}</a>
+            <a key={id} href={`#${id}`} className="rounded-sm px-[11px] py-2 font-sans text-sm font-medium text-muted no-underline">{label}</a>
           ))}
         </nav>
-        <div className="hub-actions" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <a href={wordsLink.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <div className="ml-auto flex items-center gap-3 max-[900px]:hidden">
+          <a href={wordsLink.href} className="inline-flex items-center gap-1.5 font-code text-[13px] text-muted no-underline">
             <HubIcon name="feather" size={14} color="var(--text-muted)" /> {wordsLink.label}
           </a>
-          <a href={resume.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, height: 38, padding: '0 18px', clipPath: 'polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)', WebkitClipPath: 'polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px)', background: 'var(--grad-sunset)', color: 'var(--text-on-neon)', fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', textDecoration: 'none', filter: 'drop-shadow(0 0 16px rgba(255,46,151,0.55))' }}>
+          <a href={resume.href} className="inline-flex h-[38px] items-center gap-[7px] bg-grad-sunset px-[18px] font-heading text-sm font-bold uppercase tracking-[0.09em] text-on-neon no-underline [clip-path:polygon(9px_0,100%_0,100%_calc(100%-9px),calc(100%-9px)_100%,0_100%,0_9px)] [filter:drop-shadow(0_0_16px_rgba(255,46,151,0.55))]">
             <HubIcon name="download" size={15} color="#1a0a14" /> {resume.label}
           </a>
         </div>
         <button
-          className="mobile-menu-btn"
           onClick={() => setMenuOpen(true)}
           title="Menu"
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          style={{ width: 38, height: 38, display: 'none', placeItems: 'center', borderRadius: 'var(--r-sm)', border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}
+          className="hidden h-[38px] w-[38px] place-items-center rounded-sm border border-transparent bg-transparent cursor-pointer max-[900px]:grid"
         >
           <HubIcon name="menu" color="var(--text-strong)" />
         </button>
@@ -61,87 +64,87 @@ export function HubLanding() {
 
       <MobileDrawer open={menuOpen} onClose={() => setMenuOpen(false)} label="Menu">
         {nav.map(([label, id]) => (
-          <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} style={hubDrawerRow}>{label}</a>
+          <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className={DRAWER_ROW}>{label}</a>
         ))}
-        <span style={{ height: 1, background: 'var(--border-faint)', margin: '8px 4px' }} />
-        <a href={wordsLink.href} style={hubDrawerRow}>
+        <span className="mx-1 my-2 h-px bg-line-faint" />
+        <a href={wordsLink.href} className={DRAWER_ROW}>
           <HubIcon name="feather" size={17} color="var(--text-muted)" /> {wordsLink.label}
         </a>
-        <a href={resume.href} onClick={() => setMenuOpen(false)} style={{ ...hubDrawerRow, color: 'var(--magenta-300)' }}>
+        <a href={resume.href} onClick={() => setMenuOpen(false)} className={`${DRAWER_ROW} text-magenta-300`}>
           <HubIcon name="download" size={17} color="var(--magenta-400)" /> {resume.label}
         </a>
       </MobileDrawer>
 
-      <main id="top" style={{ position: 'relative', zIndex: 1, flex: 1 }}>
+      <main id="top" className="relative z-[1] flex-1">
         {/* HERO */}
-        <section style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--border-faint)' }}>
-          <img className="brand-splash" src="/assets/splash-bg.svg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.42 }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(11,8,23,0.5), rgba(11,8,23,0.84) 72%, var(--bg-base))' }} />
-          <div className="hub-hero" style={{ position: 'relative', maxWidth: 'var(--width-content)', margin: '0 auto', padding: '76px 28px 64px', display: 'grid', gridTemplateColumns: '1.25fr 0.75fr', gap: 40, alignItems: 'center' }}>
+        <section className="relative overflow-hidden border-b border-line-faint">
+          <img className="brand-splash absolute inset-0 h-full w-full object-cover opacity-[0.42]" src="/assets/splash-bg.svg" alt="" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,8,23,0.5),rgba(11,8,23,0.84)_72%,var(--bg-base))]" />
+          <div className="relative mx-auto grid max-w-content grid-cols-[1.25fr_0.75fr] items-center gap-10 px-7 pb-16 pt-[76px] max-[860px]:grid-cols-1">
             <div>
-              <div style={{ marginBottom: 18 }}><Badge tone="ongoing" dot>{dev.availability}</Badge></div>
-              <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(40px,6vw,72px)', lineHeight: 1, color: 'var(--text-strong)', margin: 0 }}>{dev.name}</h1>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(16px,2vw,20px)', color: 'var(--cyan-400)', marginTop: 12, letterSpacing: '0.02em' }}>{dev.role}</div>
-              <p style={{ marginTop: 20, maxWidth: 520, fontFamily: 'var(--font-ui)', fontSize: 18, lineHeight: 1.55, color: 'var(--text-muted)' }}>{dev.tagline}</p>
-              <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
+              <div className="mb-[18px]"><Badge tone="ongoing" dot>{dev.availability}</Badge></div>
+              <h1 className="m-0 font-heading text-[clamp(40px,6vw,72px)] font-bold leading-none text-strong">{dev.name}</h1>
+              <div className="mt-3 font-code text-[clamp(16px,2vw,20px)] tracking-[0.02em] text-cyan-400">{dev.role}</div>
+              <p className="mt-5 max-w-[520px] font-sans text-[18px] leading-[1.55] text-muted">{dev.tagline}</p>
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Button variant="neon" tech as="a" href="#work" iconRight={<HubIcon name="arrow-down" size={17} color="#1a0a14" />}>{hero.ctaPrimary}</Button>
                 <Button variant="outline" tech as="a" href="#contact">{hero.ctaSecondary}</Button>
               </div>
-              <div style={{ display: 'flex', gap: 18, marginTop: 26, flexWrap: 'wrap' }}>
+              <div className="mt-[26px] flex flex-wrap gap-[18px]">
                 {socials.map((s) => (
-                  <a key={s.id} href={s.href} title={s.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: 'var(--text-faint)', textDecoration: 'none', fontFamily: 'var(--font-ui)', fontSize: 13 }}><HubIcon name={s.icon} size={16} color="var(--text-muted)" /> {s.label}</a>
+                  <a key={s.id} href={s.href} title={s.label} className="inline-flex items-center gap-[7px] font-sans text-[13px] text-faint no-underline"><HubIcon name={s.icon} size={16} color="var(--text-muted)" /> {s.label}</a>
                 ))}
-                <a href={`mailto:${dev.email}`} title={emailLabel} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: 'var(--text-faint)', textDecoration: 'none', fontFamily: 'var(--font-ui)', fontSize: 13 }}><HubIcon name="mail" size={16} color="var(--text-muted)" /> {emailLabel}</a>
+                <a href={`mailto:${dev.email}`} title={emailLabel} className="inline-flex items-center gap-[7px] font-sans text-[13px] text-faint no-underline"><HubIcon name="mail" size={16} color="var(--text-muted)" /> {emailLabel}</a>
               </div>
             </div>
             <Terminal />
           </div>
         </section>
 
-        <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '0 28px' }}>
+        <div className="mx-auto max-w-content px-7">
           {/* ABOUT */}
-          <section id="about" style={sectionStyle}>
+          <section id="about" className={SECTION}>
             <Eyebrow color="var(--magenta-400)">{about.eyebrow}</Eyebrow>
-            <div className="hub-about" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 40, alignItems: 'start' }}>
+            <div className="grid grid-cols-[1.4fr_1fr] items-start gap-10 max-[860px]:grid-cols-1">
               {/* trusted author bio (in-repo content), may contain an inline link */}
-              <p style={{ margin: 0, fontFamily: 'var(--font-ui)', fontSize: 19, lineHeight: 1.65, color: 'var(--text-body)' }} dangerouslySetInnerHTML={{ __html: about.html }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <p className="m-0 font-sans text-[19px] leading-[1.65] text-body" dangerouslySetInnerHTML={{ __html: about.html }} />
+              <div className="flex flex-col gap-3">
                 {about.facts.map((f) => <Fact key={f.label} icon={f.icon} label={f.label} value={f.value} />)}
               </div>
             </div>
           </section>
 
           {/* EXPERIENCE */}
-          <section id="experience" style={sectionStyle}>
+          <section id="experience" className={SECTION}>
             <Eyebrow color="var(--cyan-400)">{experience.eyebrow}</Eyebrow>
             <SectionTitle>{experience.title}</SectionTitle>
-            <div style={{ marginTop: 32, position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 7, top: 6, bottom: 6, width: 2, background: 'var(--accent)', borderRadius: 2 }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
+            <div className="relative mt-8">
+              <div className="absolute bottom-1.5 left-[7px] top-1.5 w-0.5 rounded-[2px] bg-accent" />
+              <div className="flex flex-col gap-[30px]">
                 {experience.roles.map((job, i) => <Role key={i} job={job} bullet={experience.bullet} />)}
               </div>
             </div>
           </section>
 
           {/* WORK */}
-          <section id="work" style={sectionStyle}>
+          <section id="work" className={SECTION}>
             <Eyebrow color="var(--magenta-400)">{work.eyebrow}</Eyebrow>
             <SectionTitle>{work.title}</SectionTitle>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22, marginTop: 28 }}>
+            <div className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-[22px]">
               {work.projects.map((p) => <ProjectCard key={p.name} p={p} sourceLabel={work.sourceLabel} visitLabel={work.visitLabel} />)}
             </div>
           </section>
 
           {/* SKILLS */}
-          <section id="skills" style={sectionStyle}>
+          <section id="skills" className={SECTION}>
             <Eyebrow color="var(--cyan-400)">{skills.eyebrow}</Eyebrow>
             <SectionTitle>{skills.title}</SectionTitle>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22, marginTop: 28 }}>
+            <div className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[22px]">
               {skills.groups.map((g) => (
-                <div key={g.group} style={{ background: 'var(--bg-raised)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', padding: '20px 22px', boxShadow: 'var(--edge-light)' }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 14 }}>{g.group}</div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    {g.items.map((s) => <span key={s} style={chip}>{s}</span>)}
+                <div key={g.group} className="rounded-lg border border-line bg-raised px-[22px] py-5 shadow-edge">
+                  <div className="mb-3.5 font-code text-xs uppercase tracking-[0.1em] text-faint">{g.group}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {g.items.map((s) => <span key={s} className={CHIP}>{s}</span>)}
                   </div>
                 </div>
               ))}
@@ -149,16 +152,16 @@ export function HubLanding() {
           </section>
 
           {/* CONTACT */}
-          <section id="contact" style={{ ...sectionStyle, paddingBottom: 0 }}>
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--r-xl)', border: '1px solid var(--glass-border)', background: 'var(--glass)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', padding: '44px', textAlign: 'center' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'var(--grad-glow)', pointerEvents: 'none' }} />
-              <div style={{ position: 'relative' }}>
+          <section id="contact" className={`${SECTION} pb-0`}>
+            <div className="relative overflow-hidden rounded-xl border border-glass-line bg-glass p-11 text-center backdrop-blur-[14px]">
+              <div className="pointer-events-none absolute inset-0 bg-grad-glow" />
+              <div className="relative">
                 <Eyebrow color="var(--cyan-400)">{contact.eyebrow}</Eyebrow>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px,4vw,46px)', color: 'var(--text-strong)', margin: '0 auto 12px', maxWidth: 620 }}>
+                <h2 className="mx-auto mb-3 max-w-[620px] font-heading text-[clamp(30px,4vw,46px)] font-bold text-strong">
                   {contact.headingLead}<span className="pd-grad-text">{contact.headingAccent}</span>
                 </h2>
-                <p style={{ margin: '0 auto 26px', maxWidth: 460, fontFamily: 'var(--font-ui)', fontSize: 17, color: 'var(--text-muted)' }}>{contact.blurb}</p>
-                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <p className="mx-auto mb-[26px] max-w-[460px] font-sans text-[17px] text-muted">{contact.blurb}</p>
+                <div className="flex flex-wrap justify-center gap-3">
                   <Button variant="neon" as="a" href={`mailto:${dev.email}`} iconLeft={<HubIcon name="mail" size={16} color="#1a0a14" />}>{dev.email}</Button>
                   <Button variant="outline" tech as="a" href={resume.href}>{contact.resumeLabel}</Button>
                 </div>
@@ -169,13 +172,13 @@ export function HubLanding() {
       </main>
 
       {/* FOOTER */}
-      <footer style={{ position: 'relative', zIndex: 1, marginTop: 'var(--space-11)', borderTop: '1px solid var(--border-faint)', padding: '32px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-          <img src={brand.mark} alt="" style={{ width: 26, height: 26 }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{footer.domain}</span>
+      <footer className="relative z-[1] mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-line-faint px-7 py-8">
+        <div className="flex items-center gap-[11px]">
+          <img src={brand.mark} alt="" className="h-[26px] w-[26px]" />
+          <span className="font-code text-xs uppercase tracking-wider text-faint">{footer.domain}</span>
         </div>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center', fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--text-faint)' }}>
-          <a href={wordsLink.href} style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>{footer.wordsLabel}</a>
+        <div className="flex items-center gap-4 font-sans text-[13px] text-faint">
+          <a href={wordsLink.href} className="text-muted no-underline">{footer.wordsLabel}</a>
           <span>{footer.copyright}</span>
         </div>
       </footer>
@@ -186,32 +189,32 @@ export function HubLanding() {
 function Terminal() {
   const { terminal, dev } = code;
   return (
-    <div style={{ borderRadius: 'var(--r-lg)', border: '1px solid var(--border)', background: 'rgba(13,10,24,0.85)', boxShadow: 'var(--shadow-lg), var(--glow-purple)', overflow: 'hidden', fontFamily: 'var(--font-mono)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '10px 14px', borderBottom: '1px solid var(--border)' }}>
-        <span style={{ width: 11, height: 11, borderRadius: '50%', background: 'var(--magenta-500)' }} />
-        <span style={{ width: 11, height: 11, borderRadius: '50%', background: 'var(--gold-500)' }} />
-        <span style={{ width: 11, height: 11, borderRadius: '50%', background: 'var(--cyan-500)' }} />
-        <span style={{ marginLeft: 8, fontSize: 12, color: 'var(--text-faint)' }}>{terminal.title}</span>
+    <div className="overflow-hidden rounded-lg border border-line bg-[rgba(13,10,24,0.85)] font-code shadow-[var(--shadow-lg),var(--glow-purple)]">
+      <div className="flex items-center gap-[7px] border-b border-line px-[14px] py-2.5">
+        <span className="h-[11px] w-[11px] rounded-full bg-magenta-500" />
+        <span className="h-[11px] w-[11px] rounded-full bg-gold-500" />
+        <span className="h-[11px] w-[11px] rounded-full bg-cyan-500" />
+        <span className="ml-2 text-xs text-faint">{terminal.title}</span>
       </div>
-      <pre style={{ margin: 0, padding: '16px 16px 20px', fontSize: 13, lineHeight: 1.8, color: 'var(--text-body)' }}>
-<span style={{ color: 'var(--cyan-400)' }}>$</span> whoami{'\n'}
-<span style={{ color: 'var(--paper-100)' }}>{terminal.whoamiName}</span> — {terminal.whoamiRole}{'\n'}
-<span style={{ color: 'var(--cyan-400)' }}>$</span> cat stack.txt{'\n'}
-<span style={{ color: 'var(--magenta-300)' }}>{dev.stackLine}</span>{'\n'}
-<span style={{ color: 'var(--cyan-400)' }}>$</span> cat now.txt{'\n'}
-<span style={{ color: 'var(--purple-300)' }}>{terminal.now}</span>{'\n'}
-<span style={{ color: 'var(--cyan-400)' }}>$</span> <span style={{ color: 'var(--text-faint)' }}>_</span></pre>
+      <pre className="m-0 px-4 pb-5 pt-4 text-[13px] leading-[1.8] text-body">
+<span className="text-cyan-400">$</span> whoami{'\n'}
+<span className="text-paper-100">{terminal.whoamiName}</span> — {terminal.whoamiRole}{'\n'}
+<span className="text-cyan-400">$</span> cat stack.txt{'\n'}
+<span className="text-magenta-300">{dev.stackLine}</span>{'\n'}
+<span className="text-cyan-400">$</span> cat now.txt{'\n'}
+<span className="text-purple-300">{terminal.now}</span>{'\n'}
+<span className="text-cyan-400">$</span> <span className="text-faint">_</span></pre>
     </div>
   );
 }
 
 function Fact({ icon, label, value }) {
   return (
-    <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-      <span style={{ width: 34, height: 34, flexShrink: 0, display: 'grid', placeItems: 'center', borderRadius: 'var(--r-md)', border: '1px solid var(--border)', background: 'var(--bg-surface)', color: 'var(--cyan-400)' }}><HubIcon name={icon} size={16} color="var(--cyan-400)" /></span>
+    <div className="flex items-start gap-3">
+      <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-md border border-line bg-surface text-cyan-400"><HubIcon name={icon} size={16} color="var(--cyan-400)" /></span>
       <div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{label}</div>
-        <div style={{ fontFamily: 'var(--font-ui)', fontSize: 15, color: 'var(--text-body)', marginTop: 2 }}>{value}</div>
+        <div className="font-code text-[11px] uppercase tracking-[0.1em] text-faint">{label}</div>
+        <div className="mt-0.5 font-sans text-[15px] text-body">{value}</div>
       </div>
     </div>
   );
@@ -219,25 +222,25 @@ function Fact({ icon, label, value }) {
 
 function Role({ job, bullet }) {
   return (
-    <div style={{ position: 'relative', paddingLeft: 36 }}>
-      <span style={{ position: 'absolute', left: 0, top: 5, width: 16, height: 16, borderRadius: '50%', background: 'var(--bg-base)', border: `2.5px solid ${job.current ? 'var(--magenta-500)' : 'var(--purple-500)'}`, boxShadow: job.current ? '0 0 12px -2px var(--magenta-500)' : 'none' }} />
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 21, color: 'var(--text-strong)', margin: 0 }}>
-          {job.role} <span style={{ color: 'var(--magenta-300)' }}>@ {job.company}</span>
+    <div className="relative pl-9">
+      <span className={`absolute left-0 top-[5px] h-4 w-4 rounded-full border-[2.5px] bg-canvas ${job.current ? 'border-magenta-500 shadow-[0_0_12px_-2px_var(--magenta-500)]' : 'border-purple-500'}`} />
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h3 className="m-0 font-heading text-[21px] font-bold text-strong">
+          {job.role} <span className="text-magenta-300">@ {job.company}</span>
         </h3>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-faint)' }}>{job.period}</span>
+        <span className="font-code text-[13px] text-faint">{job.period}</span>
       </div>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-faint)', marginTop: 4 }}>{job.location}</div>
-      <p style={{ margin: '12px 0 10px', fontFamily: 'var(--font-ui)', fontSize: 15.5, lineHeight: 1.55, color: 'var(--text-body)' }}>{job.summary}</p>
-      <ul style={{ margin: '0 0 14px', paddingLeft: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }}>
+      <div className="mt-1 font-code text-xs text-faint">{job.location}</div>
+      <p className="mb-2.5 mt-3 font-sans text-[15.5px] leading-[1.55] text-body">{job.summary}</p>
+      <ul className="mb-3.5 mt-0 flex list-none flex-col gap-[7px] pl-0">
         {job.bullets.map((b, i) => (
-          <li key={i} style={{ display: 'flex', gap: 10, fontFamily: 'var(--font-ui)', fontSize: 14.5, lineHeight: 1.5, color: 'var(--text-muted)' }}>
-            <span style={{ color: 'var(--cyan-400)', flexShrink: 0 }}>{bullet}</span> {b}
+          <li key={i} className="flex gap-2.5 font-sans text-[14.5px] leading-[1.5] text-muted">
+            <span className="shrink-0 text-cyan-400">{bullet}</span> {b}
           </li>
         ))}
       </ul>
-      <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
-        {job.tech.map((t) => <span key={t} style={chip}>{t}</span>)}
+      <div className="flex flex-wrap gap-[7px]">
+        {job.tech.map((t) => <span key={t} className={CHIP}>{t}</span>)}
       </div>
     </div>
   );
@@ -246,28 +249,19 @@ function Role({ job, bullet }) {
 function ProjectCard({ p, sourceLabel, visitLabel }) {
   const c = ACCENTS[p.accent];
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', borderRadius: 'var(--r-lg)', border: '1px solid var(--border)', background: 'var(--bg-raised)', padding: '24px', boxShadow: 'var(--shadow-md), var(--edge-light)' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, color: 'var(--text-strong)', margin: 0 }}>{p.name}</h3>
+    <div className="flex flex-col rounded-lg border border-line bg-raised p-6 shadow-[var(--shadow-md),var(--edge-light)]">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <h3 className="m-0 font-heading text-[22px] font-bold text-strong">{p.name}</h3>
         <Badge tone={p.tone} dot>{p.status}</Badge>
       </div>
-      <p style={{ margin: '0 0 16px', fontFamily: 'var(--font-ui)', fontSize: 15, lineHeight: 1.55, color: 'var(--text-muted)', flex: 1 }}>{p.blurb}</p>
-      <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 16 }}>
-        {p.stack.map((s) => <span key={s} style={chip}>{s}</span>)}
+      <p className="mb-4 mt-0 flex-1 font-sans text-[15px] leading-[1.55] text-muted">{p.blurb}</p>
+      <div className="mb-4 flex flex-wrap gap-[7px]">
+        {p.stack.map((s) => <span key={s} className={CHIP}>{s}</span>)}
       </div>
-      <div style={{ display: 'flex', gap: 16, paddingTop: 14, borderTop: '1px solid var(--border-faint)' }}>
-        <a href={p.source || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)', textDecoration: 'none', fontFamily: 'var(--font-ui)', fontSize: 13, fontWeight: 500 }}><HubIcon name="github" size={15} color="var(--text-muted)" /> {sourceLabel}</a>
-        <a href={p.visit || '#'} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: c, textDecoration: 'none', fontFamily: 'var(--font-ui)', fontSize: 13, fontWeight: 600 }}><HubIcon name="external-link" size={14} color={c} /> {visitLabel}</a>
+      <div className="flex gap-4 border-t border-line-faint pt-3.5">
+        <a href={p.source || '#'} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-muted no-underline"><HubIcon name="github" size={15} color="var(--text-muted)" /> {sourceLabel}</a>
+        <a href={p.visit || '#'} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold no-underline" style={{ color: c }}><HubIcon name="external-link" size={14} color={c} /> {visitLabel}</a>
       </div>
     </div>
   );
 }
-
-const sectionStyle = { paddingTop: 'var(--space-11)', scrollMarginTop: '80px' };
-const hubDrawerRow = {
-  display: 'flex', alignItems: 'center', gap: 11,
-  padding: '13px 12px', borderRadius: 'var(--r-md)',
-  fontFamily: 'var(--font-ui)', fontSize: 16, fontWeight: 500,
-  color: 'var(--text-body)', textDecoration: 'none',
-};
-const chip = { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--mist-300)', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)', padding: '4px 10px', whiteSpace: 'nowrap' };

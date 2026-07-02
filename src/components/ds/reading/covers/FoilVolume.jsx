@@ -94,7 +94,7 @@ export function FoilVolume({ title, id, tags = [], coverColor = 'var(--accent)',
         </svg>
       </div>
 
-      {/* subtle foil shimmer (keyframe lives in words.css) */}
+      {/* subtle foil shimmer (pdFoilShimmer keyframe lives in styles.css) */}
       <div className="pd-foil-sheen" style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.06) 50%, transparent 58%)',
         backgroundSize: '250% 100%' }} />

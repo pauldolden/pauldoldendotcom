@@ -40,31 +40,30 @@ export function SearchOverlay({ open, onClose }) {
   return (
     <div
       onClick={onClose}
-      style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'var(--bg-overlay)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '14vh 20px 20px' }}
+      className="fixed inset-0 z-[60] flex items-start justify-center bg-overlay px-5 pb-5 pt-[14vh] backdrop-blur-[6px]"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="theme-ember"
-        style={{ width: '100%', maxWidth: 560, background: 'var(--bg-surface)', border: '1px solid var(--glass-border)', borderRadius: 'var(--r-lg)', boxShadow: 'var(--shadow-xl)', overflow: 'hidden' }}
+        className="theme-ember w-full max-w-[560px] overflow-hidden rounded-lg border border-glass-line bg-surface shadow-xl"
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--border)' }}>
+        <div className="flex items-center gap-2.5 border-b border-line px-4 py-[14px]">
           <Icon name="search" size={18} color="var(--text-muted)" />
           <input
             ref={inputRef}
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={words.search.placeholder}
-            style={{ flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none', color: 'var(--text-body)', fontFamily: 'var(--font-ui)', fontSize: 'var(--text-md)' }}
+            className="min-w-0 flex-1 border-none bg-transparent font-sans text-md text-body outline-none"
           />
-          <button onClick={onClose} title="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-faint)', fontFamily: 'var(--font-mono)', fontSize: 12 }}>ESC</button>
+          <button onClick={onClose} title="Close" className="cursor-pointer border-none bg-none font-code text-xs text-faint">ESC</button>
         </div>
 
-        <div style={{ maxHeight: '52vh', overflowY: 'auto' }}>
+        <div className="max-h-[52vh] overflow-y-auto">
           {stories === null && (
-            <div style={{ padding: '24px 16px', color: 'var(--text-faint)', fontFamily: 'var(--font-ui)' }}>Loading…</div>
+            <div className="px-4 py-6 font-sans text-faint">Loading…</div>
           )}
           {stories !== null && results.length === 0 && (
-            <div style={{ padding: '24px 16px', color: 'var(--text-faint)', fontFamily: 'var(--font-ui)' }}>{words.search.empty}</div>
+            <div className="px-4 py-6 font-sans text-faint">{words.search.empty}</div>
           )}
           {results.map((s) => (
             <Link
@@ -72,18 +71,18 @@ export function SearchOverlay({ open, onClose }) {
               to="/words/$storyId"
               params={{ storyId: s.id }}
               onClick={onClose}
-              style={{ display: 'block', padding: '12px 16px', textDecoration: 'none', borderBottom: '1px solid var(--border-faint)' }}
+              className="block border-b border-line-faint px-4 py-3 no-underline"
             >
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-md)', color: 'var(--text-strong)' }}>{s.title}</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-faint)' }}>{s.status}</span>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-heading text-md font-bold text-strong">{s.title}</span>
+                <span className="font-code text-xs uppercase tracking-[0.06em] text-faint">{s.status}</span>
               </div>
-              <div style={{ marginTop: 3, fontFamily: 'var(--font-ui)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.blurb}</div>
+              <div className="mt-[3px] truncate font-sans text-sm text-muted">{s.blurb}</div>
             </Link>
           ))}
         </div>
 
-        <div style={{ padding: '8px 16px', borderTop: '1px solid var(--border)', fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.04em', color: 'var(--text-faint)' }}>{words.search.hint}</div>
+        <div className="border-t border-line px-4 py-2 font-code text-[11px] tracking-wide text-faint">{words.search.hint}</div>
       </div>
     </div>
   );

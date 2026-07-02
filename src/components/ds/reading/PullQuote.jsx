@@ -4,34 +4,20 @@ import React from 'react';
  * PullQuote — an inset emphasis quote for chapters and essays.
  * Big serif, gradient bar, optional attribution.
  */
+const BAR = {
+  magenta: 'shadow-[0_0_16px_-2px_var(--magenta-500)]',
+  cyan: 'shadow-[0_0_16px_-2px_var(--cyan-500)]',
+  purple: 'shadow-[0_0_16px_-2px_var(--purple-500)]',
+};
+
 export function PullQuote({ children, cite, accent = 'magenta' }) {
-  const bar = { magenta: 'var(--magenta-500)', cyan: 'var(--cyan-500)', purple: 'var(--purple-500)' }[accent] || 'var(--magenta-500)';
   return (
-    <figure style={{ margin: '2.2em 0', display: 'flex', gap: 22 }}>
-      <span style={{
-        width: 4, flexShrink: 0, borderRadius: 'var(--r-pill)',
-        background: 'var(--grad-sunset)',
-        boxShadow: `0 0 16px -2px ${bar}`,
-      }} />
+    <figure className="my-[2.2em] flex gap-[22px]">
+      <span className={`w-1 shrink-0 rounded-pill bg-grad-sunset ${BAR[accent] || BAR.magenta}`} />
       <div>
-        <blockquote style={{
-          margin: 0,
-          fontFamily: 'var(--font-prose)',
-          fontStyle: 'italic',
-          fontSize: 'var(--text-2xl)',
-          lineHeight: 1.32,
-          color: 'var(--text-strong)',
-          textWrap: 'balance',
-        }}>{children}</blockquote>
+        <blockquote className="m-0 text-balance font-serif text-2xl italic leading-[1.32] text-strong">{children}</blockquote>
         {cite && (
-          <figcaption style={{
-            marginTop: 12,
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-sm)',
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-            color: 'var(--text-muted)',
-          }}>— {cite}</figcaption>
+          <figcaption className="mt-3 font-code text-sm uppercase tracking-[0.06em] text-muted">— {cite}</figcaption>
         )}
       </div>
     </figure>

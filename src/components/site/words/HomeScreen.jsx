@@ -5,6 +5,8 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { Badge, Button, ChapterRow, Icon, StoryCard, StoryCover } from '../../ds/index.js';
 import { words } from '../../../content/words';
 
+const LINK_BTN = 'font-sans text-sm font-semibold text-cyan-400 no-underline';
+
 export function HomeScreen({ stories }) {
   const c = words.home;
   const navigate = useNavigate();
@@ -18,18 +20,18 @@ export function HomeScreen({ stories }) {
   return (
     <div>
       {/* HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--border-faint)' }}>
-        <img className="brand-splash" src="/assets/splash-bg.svg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(11,8,23,0.4) 0%, rgba(11,8,23,0.82) 70%, var(--bg-base) 100%)' }} />
-        <div style={{ position: 'relative', maxWidth: 'var(--width-content)', margin: '0 auto', padding: '88px 28px 76px' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--cyan-400)', marginBottom: 20 }}>{c.hero.eyebrow}</div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 0.98, letterSpacing: '0', color: 'var(--text-strong)', margin: 0, maxWidth: 880 }}>
+      <section className="relative overflow-hidden border-b border-line-faint">
+        <img className="brand-splash absolute inset-0 h-full w-full object-cover opacity-55" src="/assets/splash-bg.svg" alt="" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,8,23,0.4)_0%,rgba(11,8,23,0.82)_70%,var(--bg-base)_100%)]" />
+        <div className="relative mx-auto max-w-content px-7 pb-[76px] pt-[88px]">
+          <div className="mb-5 font-code text-[13px] uppercase tracking-[0.22em] text-cyan-400">{c.hero.eyebrow}</div>
+          <h1 className="m-0 max-w-[880px] font-heading text-[clamp(44px,7vw,84px)] font-bold leading-[0.98] text-strong">
             {c.hero.titleLead}<span className="pd-grad-text">{c.hero.titleAccent}</span>
           </h1>
-          <p style={{ marginTop: 22, maxWidth: 560, fontFamily: 'var(--font-ui)', fontSize: 19, lineHeight: 1.55, color: 'var(--text-muted)' }}>
+          <p className="mt-[22px] max-w-[560px] font-sans text-[19px] leading-[1.55] text-muted">
             {words.author.tagline}{c.hero.taglineSuffix}
           </p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+          <div className="mt-8 flex flex-wrap gap-3">
             {featured && (
               <Button as={Link} to="/words/$storyId" params={{ storyId: featured.id }} variant="neon" size="lg" iconRight={<Icon name="arrow-right" size={18} color="#1a0a14" />}>{(featuredHasChapters ? c.hero.ctaPrimary : c.hero.ctaPreview)} {featured.title}</Button>
             )}
@@ -38,39 +40,39 @@ export function HomeScreen({ stories }) {
         </div>
       </section>
 
-      <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '0 28px' }}>
+      <div className="mx-auto max-w-content px-7">
         {!featured && (
-          <p style={{ paddingTop: 'var(--space-11)', fontFamily: 'var(--font-ui)', fontSize: 18, color: 'var(--text-faint)' }}>{c.empty}</p>
+          <p className="pt-20 font-sans text-[18px] text-faint">{c.empty}</p>
         )}
 
         {/* FEATURED */}
         {featured && (
-          <section style={{ paddingTop: 'var(--space-11)' }}>
+          <section className="pt-20">
             <SectionHead eyebrow={c.featured.eyebrow} title={c.featured.title} />
-            <div className="words-featured" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 28, alignItems: 'center', marginTop: 28 }}>
-              <Link to="/words/$storyId" params={{ storyId: featured.id }} aria-label={featured.title} style={{ display: 'block' }}>
-                <article style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', cursor: 'pointer' }}>
-                  <div style={{ height: 260, background: 'var(--night-800)', position: 'relative', overflow: 'hidden' }}>
+            <div className="mt-7 grid grid-cols-[1.1fr_0.9fr] items-center gap-7 max-[860px]:grid-cols-1">
+              <Link to="/words/$storyId" params={{ storyId: featured.id }} aria-label={featured.title} className="block">
+                <article className="cursor-pointer overflow-hidden rounded-xl border border-line shadow-lg">
+                  <div className="relative h-[260px] overflow-hidden bg-night-800">
                     <StoryCover coverStyle={featured.coverStyle} id={featured.id} title={featured.title} tags={featured.tags} coverColor={featured.coverColor} status={featured.status} />
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 40%, rgba(7,5,14,0.7))' }} />
-                    <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot overlay>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,5,14,0)_40%,rgba(7,5,14,0.7))]" />
+                    <div className="absolute left-[18px] top-[18px]"><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot overlay>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
                   </div>
                 </article>
               </Link>
               <div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 40, letterSpacing: '0', color: 'var(--text-strong)', margin: 0 }}>{featured.title}</h3>
-                <p style={{ marginTop: 14, fontFamily: 'var(--font-prose)', fontSize: 19, lineHeight: 1.6, color: 'var(--text-prose)' }}>{featured.blurb}</p>
-                <div style={{ display: 'flex', gap: 18, marginTop: 18, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                <h3 className="m-0 font-heading text-[40px] font-bold text-strong">{featured.title}</h3>
+                <p className="mt-3.5 font-serif text-[19px] leading-[1.6] text-prose">{featured.blurb}</p>
+                <div className="mt-[18px] flex gap-[18px] font-code text-xs uppercase tracking-[0.06em] text-faint">
                   {featuredHasChapters ? (
                     <>
                       <span>{featured.chapters} chapters</span><span>{featured.words} words</span>
-                      {featured.updated && <span style={{ color: 'var(--cyan-400)' }}>{featured.updated}</span>}
+                      {featured.updated && <span className="text-cyan-400">{featured.updated}</span>}
                     </>
                   ) : (
-                    <span style={{ color: 'var(--cyan-400)' }}>{featured.progress || 'In progress'}</span>
+                    <span className="text-cyan-400">{featured.progress || 'In progress'}</span>
                   )}
                 </div>
-                <div style={{ marginTop: 24 }}>
+                <div className="mt-6">
                   <Button as={Link} to="/words/$storyId" params={{ storyId: featured.id }} variant="solid" iconRight={<Icon name="chevron-right" size={16} color="#1a0a14" />}>{c.featured.cta}</Button>
                 </div>
               </div>
@@ -80,9 +82,9 @@ export function HomeScreen({ stories }) {
 
         {/* MORE WORK */}
         {more.length > 0 && (
-          <section style={{ paddingTop: 'var(--space-11)' }}>
-            <SectionHead eyebrow={c.shelf.eyebrow} title={c.shelf.title} action={<Link to="/words/library" style={linkBtn}>{c.shelf.allWorks}</Link>} />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22, marginTop: 28 }}>
+          <section className="pt-20">
+            <SectionHead eyebrow={c.shelf.eyebrow} title={c.shelf.title} action={<Link to="/words/library" className={LINK_BTN}>{c.shelf.allWorks}</Link>} />
+            <div className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[22px]">
               {more.map((s) => (
                 <StoryCard key={s.id} id={s.id} title={s.title} blurb={s.blurb} coverColor={s.coverColor} coverStyle={s.coverStyle} status={s.status} tags={s.tags} meta={s.chapters > 0 ? `${s.chapters} ch · ${s.words}` : `${s.words} planned`} onClick={() => navigate({ to: '/words/$storyId', params: { storyId: s.id } })} />
               ))}
@@ -92,9 +94,9 @@ export function HomeScreen({ stories }) {
 
         {/* LATEST CHAPTERS */}
         {latest.length > 0 && (
-          <section style={{ paddingTop: 'var(--space-11)' }}>
+          <section className="pt-20">
             <SectionHead eyebrow={c.latest.eyebrow} title={c.latest.title} />
-            <div style={{ marginTop: 22, border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'var(--bg-raised)' }}>
+            <div className="mt-[22px] overflow-hidden rounded-lg border border-line bg-raised">
               {latest.slice().reverse().map((ch) => (
                 <ChapterRow key={ch.index} index={ch.index} title={ch.title} date={ch.date} words={ch.words} isNew={ch.isNew} read={ch.read} onClick={() => navigate({ to: '/words/$storyId/$chapterId', params: { storyId: featured.id, chapterId: String(ch.index) } })} />
               ))}
@@ -110,17 +112,12 @@ export function HomeScreen({ stories }) {
 
 function SectionHead({ eyebrow, title, action }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16 }}>
+    <div className="flex items-end justify-between gap-4">
       <div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--magenta-400)', marginBottom: 8 }}>{eyebrow}</div>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 32, letterSpacing: '0', color: 'var(--text-heading)', margin: 0 }}>{title}</h2>
+        <div className="mb-2 font-code text-xs uppercase tracking-[0.18em] text-magenta-400">{eyebrow}</div>
+        <h2 className="m-0 font-heading text-[32px] font-bold text-heading">{title}</h2>
       </div>
       {action}
     </div>
   );
 }
-
-const linkBtn = {
-  color: 'var(--cyan-400)', textDecoration: 'none',
-  fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600,
-};

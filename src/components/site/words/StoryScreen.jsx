@@ -22,17 +22,17 @@ export function StoryScreen({ story, chapters = [], world = null }) {
   return (
     <div>
       {/* COVER HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', marginBottom: 2 }}>
-        <div style={{ position: 'absolute', inset: 0, background: story.coverColor, opacity: 0.32 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(11,8,23,0.5), var(--bg-base) 92%)' }} />
-        <div className="story-hero" style={{ position: 'relative', maxWidth: 'var(--width-content)', margin: '0 auto', padding: '64px 28px 0', display: 'grid', gridTemplateColumns: '300px 1fr', gap: 40 }}>
-          <div className="story-cover" style={{ aspectRatio: '2 / 3', borderRadius: 'var(--r-xl)', background: 'var(--night-800)', boxShadow: 'var(--shadow-xl), var(--glow-purple)', position: 'relative', overflow: 'hidden' }}>
+      <section className="relative mb-0.5 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.32]" style={{ background: story.coverColor }} />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,8,23,0.5),var(--bg-base)_92%)]" />
+        <div className="relative mx-auto grid max-w-content grid-cols-[300px_1fr] gap-10 px-7 pt-16 max-[860px]:grid-cols-1">
+          <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-night-800 shadow-[var(--shadow-xl),var(--glow-purple)] max-[860px]:aspect-auto max-[860px]:h-[280px] max-[860px]:max-w-[360px]">
             <StoryCover coverStyle={story.coverStyle} id={story.id} title={story.title} tags={story.tags} coverColor={story.coverColor} status={story.status} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 55%, rgba(7,5,14,0.7))' }} />
-            <div style={{ position: 'absolute', left: 18, bottom: 18, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 30, color: '#fff', letterSpacing: '0', textShadow: '0 2px 14px rgba(0,0,0,0.5)' }}>{story.title}</div>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(7,5,14,0.7))]" />
+            <div className="absolute bottom-[18px] left-[18px] font-heading text-[30px] font-bold text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.5)]">{story.title}</div>
           </div>
-          <div style={{ paddingTop: 8 }}>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+          <div className="pt-2">
+            <div className="mb-4 flex gap-2">
               <Badge tone={statusTone} dot>{statusLabel}</Badge>
               {story.chapters > 0 ? (
                 <>
@@ -43,13 +43,13 @@ export function StoryScreen({ story, chapters = [], world = null }) {
                 <Badge tone="neutral">{story.progress || 'In progress'}</Badge>
               )}
             </div>
-            <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 56, letterSpacing: '0', color: 'var(--text-strong)', margin: 0, lineHeight: 1 }}>{story.title}</h1>
-            <p style={{ marginTop: 10, fontFamily: 'var(--font-mono)', fontSize: 14, letterSpacing: '0.04em', color: 'var(--cyan-400)' }}>{story.logline}</p>
-            <p style={{ marginTop: 20, maxWidth: 540, fontFamily: 'var(--font-prose)', fontSize: 20, lineHeight: 1.6, color: 'var(--text-prose)' }}>{story.blurb}</p>
-            <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
+            <h1 className="m-0 font-heading text-[56px] font-bold leading-none text-strong">{story.title}</h1>
+            <p className="mt-2.5 font-code text-sm tracking-wide text-cyan-400">{story.logline}</p>
+            <p className="mt-5 max-w-[540px] font-serif text-[20px] leading-[1.6] text-prose">{story.blurb}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
               {story.tags.map((t) => <Tag key={t}>{t}</Tag>)}
             </div>
-            <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
+            <div className="mt-7 flex flex-wrap gap-3">
               {first ? (
                 <Button as={Link} to="/words/$storyId/$chapterId" params={{ storyId: story.id, chapterId: String(first.index) }} variant="neon" size="lg" iconRight={<Icon name="book-open" size={17} color="#1a0a14" />}>{c.start}</Button>
               ) : (
@@ -67,18 +67,18 @@ export function StoryScreen({ story, chapters = [], world = null }) {
       </section>
 
       {/* BODY: TOC */}
-      <div className="story-body" style={{ maxWidth: 'var(--width-content)', margin: '2px auto', padding: '28px 28px 0' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, color: 'var(--text-heading)', margin: 0 }}>{c.tocTitle}</h2>
-          <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--r-pill)', padding: '6px 14px', color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'var(--font-ui)', fontSize: 13 }}>
+      <div className="mx-auto my-0.5 max-w-content px-7 pt-7">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="m-0 font-heading text-[28px] font-bold text-heading">{c.tocTitle}</h2>
+          <button className="inline-flex cursor-pointer items-center gap-[7px] rounded-pill border border-line bg-none px-[14px] py-1.5 font-sans text-[13px] text-muted">
             <Icon name="arrow-down-up" size={14} color="var(--text-muted)" /> {c.sort}
           </button>
         </div>
-        <div style={{ border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'var(--bg-raised)' }}>
+        <div className="overflow-hidden rounded-lg border border-line bg-raised">
           {chapters.length ? chapters.map((ch) => (
             <ChapterRow key={ch.index} index={ch.index} title={ch.title} date={ch.date} words={ch.words} isNew={ch.isNew} read={ch.read} onClick={() => navigate({ to: '/words/$storyId/$chapterId', params: { storyId: story.id, chapterId: String(ch.index) } })} />
           )) : (
-            <div style={{ padding: '28px 16px', fontFamily: 'var(--font-ui)', color: 'var(--text-faint)' }}>{c.noChapters}</div>
+            <div className="px-4 py-7 font-sans text-faint">{c.noChapters}</div>
           )}
         </div>
       </div>

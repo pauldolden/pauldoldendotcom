@@ -16,10 +16,10 @@ function Chip({ storyId, link, size = 38 }) {
       <Link
         to="/words/$storyId/cast/$slug"
         params={{ storyId, slug: link.otherSlug }}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, width: 100, textDecoration: 'none' }}
+        className="flex w-[100px] flex-col items-center gap-1.5 no-underline"
       >
         <EntityAvatar entity={{ name: link.otherName, avatar: link.otherAvatar, icon: link.otherIcon, type: link.otherType }} size={size} radius={isPerson ? '50%' : 'var(--r-sm)'} />
-        <span style={{ fontFamily: 'var(--font-ui)', fontSize: 12.5, fontWeight: 600, color: 'var(--text-body)', textAlign: 'center', lineHeight: 1.2 }}>{link.otherName}</span>
+        <span className="text-center font-sans text-[12.5px] font-semibold leading-[1.2] text-body">{link.otherName}</span>
       </Link>
     </Spoiler>
   )
@@ -28,20 +28,20 @@ function Chip({ storyId, link, size = 38 }) {
 function EgoChip({ ego }) {
   const isPerson = ego.type === 'characters' || ego.type === 'people'
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, width: 108 }}>
-      <div style={{ padding: 3, borderRadius: '50%', border: '2px solid var(--accent)' }}>
+    <div className="flex w-[108px] flex-col items-center gap-1.5">
+      <div className="rounded-full border-2 border-accent p-[3px]">
         <EntityAvatar entity={ego} size={50} radius={isPerson ? '50%' : 'var(--r-sm)'} />
       </div>
-      <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 700, color: 'var(--text-strong)', textAlign: 'center', lineHeight: 1.2 }}>{ego.name}</span>
+      <span className="text-center font-heading text-[13px] font-bold leading-[1.2] text-strong">{ego.name}</span>
     </div>
   )
 }
 
 const Row = ({ children }) => (
-  <div style={{ display: 'flex', gap: 20, justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'wrap' }}>{children}</div>
+  <div className="flex flex-wrap items-start justify-center gap-5">{children}</div>
 )
 
-const Connector = () => <div style={{ width: 2, height: 22, background: 'var(--border-strong)' }} />
+const Connector = () => <div className="h-[22px] w-0.5 bg-line-strong" />
 
 export function FamilyTree({ storyId, ego, links = [] }) {
   const pick = (keys) => links.filter((l) => keys.includes(l.predicate))
@@ -52,11 +52,11 @@ export function FamilyTree({ storyId, ego, links = [] }) {
   if (!parents.length && !children.length && !siblings.length && !partners.length) return null
 
   return (
-    <section style={{ marginTop: 36 }}>
-      <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, color: 'var(--text-heading)', margin: '0 0 18px' }}>
+    <section className="mt-9">
+      <h2 className="mb-[18px] mt-0 font-heading text-[18px] font-bold text-heading">
         {words.world.familyTitle}
       </h2>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '8px 0' }}>
+      <div className="flex flex-col items-center gap-1.5 py-2">
         {parents.length > 0 && (
           <>
             <Row>{parents.map((l, i) => <Chip key={`p-${i}`} storyId={storyId} link={l} />)}</Row>

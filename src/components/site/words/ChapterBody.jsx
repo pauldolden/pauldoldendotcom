@@ -16,19 +16,14 @@ import { useNavigate } from '@tanstack/react-router';
 import { PullQuote, SkillCard, SystemMessage } from '../../ds/index.js';
 import { EntityHoverCard } from './world/EntityHoverCard.jsx';
 
-const dropCapStyle = {
-  fontFamily: 'var(--font-display)', fontWeight: 800, float: 'left',
-  fontSize: '3.4em', lineHeight: 0.86, padding: '0.04em 0.12em 0 0',
-  background: 'var(--grad-text)', WebkitBackgroundClip: 'text',
-  backgroundClip: 'text', WebkitTextFillColor: 'transparent',
-};
+const DROP_CAP = 'pd-grad-text float-left pr-[0.12em] pt-[0.04em] font-heading text-[3.4em] font-bold leading-[0.86]';
 
 function Block({ b }) {
   switch (b.type) {
     case 'p':
       return (
-        <p style={{ margin: '0 0 1.35em' }}>
-          {b.dropcap && <span data-dropcap="1" style={dropCapStyle}>{b.dropLetter}</span>}
+        <p className="mb-[1.35em]">
+          {b.dropcap && <span data-dropcap="1" className={DROP_CAP}>{b.dropLetter}</span>}
           <span dangerouslySetInnerHTML={{ __html: b.html }} />
         </p>
       );
@@ -42,7 +37,7 @@ function Block({ b }) {
       return <PullQuote cite={b.cite}>{b.text}</PullQuote>;
     case 'skill':
       return (
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '2em 0' }}>
+        <div className="my-[2em] flex justify-center">
           <SkillCard name={b.name} type={b.kind} rarity={b.rarity} tier={b.tier} description={b.description} cost={b.cost} cooldown={b.cooldown} />
         </div>
       );
@@ -172,7 +167,7 @@ export function ChapterBody({ blocks = [], fontSize, world = null, storyId }) {
   }, [bySlug, storyId, navigate]);
 
   return (
-    <div ref={ref} style={{ fontFamily: 'var(--font-prose)', fontSize, lineHeight: 1.72, color: 'var(--text-prose)' }}>
+    <div ref={ref} className="font-serif leading-[1.72] text-prose" style={{ fontSize }}>
       {blocks.map((b, i) => <Block key={i} b={b} />)}
       <EntityHoverCard entity={card?.ent} rect={card?.rect} />
     </div>

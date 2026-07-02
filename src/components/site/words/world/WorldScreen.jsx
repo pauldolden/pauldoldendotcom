@@ -7,11 +7,11 @@ import { words } from '../../../../content/words'
 
 function Empty({ story, message }) {
   return (
-    <div style={{ maxWidth: 'var(--width-prose)', margin: '0 auto', padding: '72px 28px', textAlign: 'center' }}>
-      <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 34, color: 'var(--text-strong)', margin: 0 }}>{story.title}</h1>
-      <p style={{ marginTop: 12, fontFamily: 'var(--font-prose)', fontSize: 18, color: 'var(--text-muted)' }}>{message}</p>
-      <div style={{ marginTop: 24 }}>
-        <Link to="/words/$storyId/cast" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', textDecoration: 'none' }}>
+    <div className="mx-auto max-w-prose px-7 py-[72px] text-center">
+      <h1 className="m-0 font-heading text-[34px] text-strong">{story.title}</h1>
+      <p className="mt-3 font-serif text-[18px] text-muted">{message}</p>
+      <div className="mt-6">
+        <Link to="/words/$storyId/cast" params={{ storyId: story.id }} className="font-sans text-cyan-400 no-underline">
           {words.world.backToCast}
         </Link>
       </div>
@@ -29,26 +29,26 @@ export function WorldScreen({ story, world }) {
   const hasSpoilers = hasEdges || world.entities.some((e) => e.spoiler)
 
   return (
-    <div style={{ maxWidth: 'var(--width-content)', margin: '0 auto', padding: '48px 28px 0' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+    <div className="mx-auto max-w-content px-7 pt-12">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.08em', color: 'var(--accent)', textTransform: 'uppercase' }}>{c.mapEyebrow}</div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 44, color: 'var(--text-strong)', margin: '6px 0 0', lineHeight: 1 }}>{story.title}</h1>
-          <p style={{ margin: '12px 0 0', maxWidth: 560, fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.55, color: 'var(--text-muted)' }}>{c.mapIntro}</p>
+          <div className="font-code text-[13px] uppercase tracking-[0.08em] text-accent">{c.mapEyebrow}</div>
+          <h1 className="mb-0 mt-1.5 font-heading text-[44px] font-bold leading-none text-strong">{story.title}</h1>
+          <p className="mb-0 mt-3 max-w-[560px] font-serif text-[17px] leading-[1.55] text-muted">{c.mapIntro}</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
+        <div className="flex flex-col items-end gap-3">
           {hasSpoilers && <SpoilerToggle />}
-          <Link to="/words/$storyId/cast" params={{ storyId: story.id }} style={{ color: 'var(--cyan-400)', fontFamily: 'var(--font-ui)', fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+          <Link to="/words/$storyId/cast" params={{ storyId: story.id }} className="font-sans text-sm text-cyan-400 no-underline whitespace-nowrap">
             {c.backToCast}
           </Link>
         </div>
       </div>
 
-      <div style={{ marginTop: 32 }}>
+      <div className="mt-8">
         {hasEdges ? (
           <RelationshipGraph storyId={story.id} world={world} />
         ) : (
-          <p style={{ fontFamily: 'var(--font-ui)', color: 'var(--text-faint)', textAlign: 'center', padding: '40px 0' }}>{c.mapEmpty}</p>
+          <p className="py-10 text-center font-sans text-faint">{c.mapEmpty}</p>
         )}
       </div>
     </div>

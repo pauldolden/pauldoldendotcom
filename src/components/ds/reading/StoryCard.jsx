@@ -28,35 +28,25 @@ export function StoryCard({
   return (
     <article
       onClick={onClick}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'var(--bg-raised)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
-        overflow: 'hidden',
-        boxShadow: 'var(--shadow-md), var(--edge-light)',
-        cursor: onClick ? 'pointer' : 'default',
-        transition: 'var(--t-control)',
-      }}
+      className={`flex flex-col overflow-hidden rounded-lg border border-line bg-raised shadow-[var(--shadow-md),var(--edge-light)] transition-control ${onClick ? 'cursor-pointer' : 'cursor-default'}`}
     >
-      <div style={{ position: 'relative', aspectRatio: '3 / 2', background: 'var(--night-800)' }}>
+      <div className="relative aspect-[3/2] bg-night-800">
         {cover || <StoryCover coverStyle={coverStyle} id={id} title={title} tags={tags} coverColor={coverColor} status={status} />}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 45%, rgba(7,5,14,0.78) 100%)' }} />
-        <div style={{ position: 'absolute', top: 12, left: 12 }}>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,5,14,0)_45%,rgba(7,5,14,0.78)_100%)]" />
+        <div className="absolute left-3 top-3">
           <Badge tone={statusTone} dot overlay>{statusText}</Badge>
         </div>
       </div>
-      <div style={{ padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xl)', color: 'var(--text-heading)', lineHeight: 1.15, margin: 0 }}>{title}</h3>
-        {blurb && <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.55, fontFamily: 'var(--font-ui)' }}>{blurb}</p>}
+      <div className="flex flex-col gap-2.5 p-5">
+        <h3 className="m-0 font-heading text-xl font-bold leading-[1.15] text-heading">{title}</h3>
+        {blurb && <p className="m-0 font-sans text-sm leading-[1.55] text-muted">{blurb}</p>}
         {tags.length > 0 && (
-          <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginTop: 2 }}>
+          <div className="mt-0.5 flex flex-wrap gap-[7px]">
             {tags.slice(0, 3).map((t) => <Tag key={t}>{t}</Tag>)}
           </div>
         )}
         {meta && (
-          <div style={{ marginTop: 4, paddingTop: 12, borderTop: '1px solid var(--border-faint)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.04em', color: 'var(--text-faint)', textTransform: 'uppercase' }}>{meta}</div>
+          <div className="mt-1 border-t border-line-faint pt-3 font-code text-xs uppercase tracking-wide text-faint">{meta}</div>
         )}
       </div>
     </article>

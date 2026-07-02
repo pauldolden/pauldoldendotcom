@@ -15,32 +15,15 @@ export function FollowSignup({
   return (
     <form
       onSubmit={(e) => { e.preventDefault(); onSubmit && onSubmit(); }}
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'var(--glass)',
-        border: '1px solid var(--glass-border)',
-        backdropFilter: 'blur(var(--blur-md))',
-        WebkitBackdropFilter: 'blur(var(--blur-md))',
-        borderRadius: 'var(--r-xl)',
-        padding: 'var(--space-8)',
-      }}
+      className="relative overflow-hidden rounded-xl border border-glass-line bg-glass p-10 backdrop-blur-[var(--blur-md)]"
     >
-      <div style={{ position: 'absolute', inset: 0, background: 'var(--grad-glow)', pointerEvents: 'none' }} />
-      <div style={{ position: 'relative', maxWidth: 460 }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
-          letterSpacing: 'var(--tracking-wider)', textTransform: 'uppercase',
-          color: 'var(--cyan-400)', marginBottom: 12,
-        }}>§ Follow the work</div>
-        <h3 style={{
-          fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-black)',
-          fontSize: 'var(--text-3xl)', lineHeight: 1.1, color: 'var(--text-strong)',
-          margin: '0 0 10px', letterSpacing: 'var(--tracking-tight)',
-        }}>{title}</h3>
-        <p style={{ margin: '0 0 22px', color: 'var(--text-muted)', fontSize: 'var(--text-md)', lineHeight: 1.55, fontFamily: 'var(--font-ui)' }}>{blurb}</p>
-        <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          <div style={{ flex: '1 1 220px' }}>
+      <div className="pointer-events-none absolute inset-0 bg-grad-glow" />
+      <div className="relative max-w-[460px]">
+        <div className="mb-3 font-code text-xs uppercase tracking-wider text-cyan-400">§ Follow the work</div>
+        <h3 className="m-0 mb-2.5 font-heading text-3xl font-bold leading-[1.1] tracking-tight text-strong">{title}</h3>
+        <p className="m-0 mb-[22px] font-sans text-md leading-[1.55] text-muted">{blurb}</p>
+        <div className="flex flex-wrap items-start gap-2.5">
+          <div className="flex-[1_1_220px]">
             <Input placeholder="you@domain.com" type="email" required iconLeft={<span aria-hidden>✉</span>} />
           </div>
           <Button variant="neon" type="submit">{cta}</Button>

@@ -25,35 +25,20 @@ export function MobileDrawer({ open, onClose, label = 'Menu', children }) {
   return (
     <div
       onClick={onClose}
-      className="pd-drawer-backdrop"
-      style={{
-        position: 'fixed', inset: 0, zIndex: 60,
-        background: 'var(--bg-overlay)',
-        backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
-        display: 'flex', justifyContent: 'flex-end',
-      }}
+      className="pd-drawer-backdrop fixed inset-0 z-[60] flex justify-end bg-overlay backdrop-blur-[6px]"
     >
       <nav
         onClick={(e) => e.stopPropagation()}
-        className="pd-drawer-panel"
+        className="pd-drawer-panel flex h-full w-[min(320px,82vw)] flex-col gap-1 overflow-y-auto border-l border-glass-line bg-surface pt-[18px] px-4 pb-[calc(env(safe-area-inset-bottom,0px)+20px)] shadow-xl"
         aria-label={label}
-        style={{
-          width: 'min(320px, 82vw)', height: '100%',
-          display: 'flex', flexDirection: 'column', gap: 4,
-          padding: '18px 16px calc(env(safe-area-inset-bottom, 0px) + 20px)',
-          background: 'var(--bg-surface)',
-          borderLeft: '1px solid var(--glass-border)',
-          boxShadow: 'var(--shadow-xl)',
-          overflowY: 'auto',
-        }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{label}</span>
+        <div className="mb-2 flex items-center justify-between">
+          <span className="font-code text-[11px] uppercase tracking-[0.16em] text-faint">{label}</span>
           <button
             onClick={onClose}
             title="Close menu"
             aria-label="Close menu"
-            style={{ width: 38, height: 38, display: 'grid', placeItems: 'center', borderRadius: 'var(--r-sm)', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer' }}
+            className="grid h-[38px] w-[38px] place-items-center rounded-sm border border-line bg-transparent cursor-pointer"
           >
             <Icon name="x" size={18} color="var(--text-muted)" />
           </button>

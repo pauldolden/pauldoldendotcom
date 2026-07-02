@@ -15,28 +15,14 @@ export function EntityHoverCard({ entity, rect }) {
   return (
     <div
       role="tooltip"
-      style={{
-        position: 'fixed',
-        top,
-        left,
-        zIndex: 60,
-        width,
-        maxWidth: 'calc(100vw - 24px)',
-        pointerEvents: 'none',
-        background: 'var(--bg-raised)',
-        border: '1px solid var(--border-strong)',
-        borderRadius: 'var(--r-lg)',
-        boxShadow: 'var(--shadow-xl)',
-        padding: 14,
-        display: 'flex',
-        gap: 12,
-      }}
+      className="pointer-events-none fixed z-[60] flex max-w-[calc(100vw-24px)] gap-3 rounded-lg border border-line-strong bg-raised p-3.5 shadow-xl"
+      style={{ top, left, width }}
     >
       <EntityAvatar entity={entity} size={46} radius={isPerson ? '50%' : 'var(--r-sm)'} />
-      <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16, color: 'var(--text-strong)', lineHeight: 1.1 }}>{entity.name}</div>
+      <div className="min-w-0">
+        <div className="font-heading text-base font-bold leading-[1.1] text-strong">{entity.name}</div>
         {entity.description && (
-          <p style={{ margin: '7px 0 0', fontFamily: 'var(--font-prose)', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{entity.description}</p>
+          <p className="mb-0 mt-[7px] line-clamp-3 font-serif text-[13px] leading-[1.45] text-muted">{entity.description}</p>
         )}
       </div>
     </div>

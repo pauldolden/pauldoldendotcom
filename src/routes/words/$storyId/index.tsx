@@ -29,9 +29,9 @@ function StoryRoute() {
 function NotFound() {
   const { storyId } = Route.useParams()
   return (
-    <div style={{ maxWidth: 'var(--width-prose)', margin: '0 auto', padding: '80px 28px', textAlign: 'center' }}>
-      <h1 style={{ fontFamily: 'var(--font-display)', color: 'var(--text-strong)' }}>{words.notFound.storyTitle}</h1>
-      <p style={{ fontFamily: 'var(--font-ui)', color: 'var(--text-muted)' }}>{words.notFound.storyBody(storyId)}</p>
+    <div className="mx-auto max-w-prose px-7 py-20 text-center">
+      <h1 className="font-heading text-strong">{words.notFound.storyTitle}</h1>
+      <p className="font-sans text-muted">{words.notFound.storyBody(storyId)}</p>
     </div>
   )
 }
