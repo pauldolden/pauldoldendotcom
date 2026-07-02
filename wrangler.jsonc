@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "pauldolden",
+  "name": "pauldoldendotcom",
   "compatibility_date": "2025-09-23",
   // nodejs_compat lets server functions read process.env per-request and use
   // Node built-ins. Required by TanStack Start on Workers.
