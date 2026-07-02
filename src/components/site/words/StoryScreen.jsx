@@ -22,7 +22,7 @@ export function StoryScreen({ story, chapters = [], world = null }) {
   return (
     <div>
       {/* COVER HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden' }}>
+      <section style={{ position: 'relative', overflow: 'hidden', marginBottom: 2 }}>
         <div style={{ position: 'absolute', inset: 0, background: story.coverColor, opacity: 0.32 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(11,8,23,0.5), var(--bg-base) 92%)' }} />
         <div className="story-hero" style={{ position: 'relative', maxWidth: 'var(--width-content)', margin: '0 auto', padding: '64px 28px 0', display: 'grid', gridTemplateColumns: '300px 1fr', gap: 40 }}>
