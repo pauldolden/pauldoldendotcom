@@ -25,6 +25,7 @@ function Half({ data, variant }: { data: (typeof split.halves)['code']; variant:
         </h1>
         <p className="line">
           {data.line}{' '}
+          <br />
           <b style={{ color: data.highlightColor }}>{data.highlight}</b>
           {data.lineEnd}
         </p>
