@@ -48,13 +48,15 @@ export function HomeScreen({ stories }) {
           <section style={{ paddingTop: 'var(--space-11)' }}>
             <SectionHead eyebrow={c.featured.eyebrow} title={c.featured.title} />
             <div className="words-featured" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 28, alignItems: 'center', marginTop: 28 }}>
-              <article style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)' }}>
-                <div style={{ height: 260, background: 'var(--night-800)', position: 'relative', overflow: 'hidden' }}>
-                  <StoryCover coverStyle={featured.coverStyle} id={featured.id} title={featured.title} tags={featured.tags} coverColor={featured.coverColor} status={featured.status} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 40%, rgba(7,5,14,0.7))' }} />
-                  <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot overlay>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
-                </div>
-              </article>
+              <Link to="/words/$storyId" params={{ storyId: featured.id }} aria-label={featured.title} style={{ display: 'block' }}>
+                <article style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', cursor: 'pointer' }}>
+                  <div style={{ height: 260, background: 'var(--night-800)', position: 'relative', overflow: 'hidden' }}>
+                    <StoryCover coverStyle={featured.coverStyle} id={featured.id} title={featured.title} tags={featured.tags} coverColor={featured.coverColor} status={featured.status} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(7,5,14,0) 40%, rgba(7,5,14,0.7))' }} />
+                    <div style={{ position: 'absolute', left: 18, top: 18 }}><Badge tone={STATUS_TONE[featured.status] || 'neutral'} dot overlay>{STATUS_LABEL[featured.status] || featured.status}</Badge></div>
+                  </div>
+                </article>
+              </Link>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 40, letterSpacing: '0', color: 'var(--text-strong)', margin: 0 }}>{featured.title}</h3>
                 <p style={{ marginTop: 14, fontFamily: 'var(--font-prose)', fontSize: 19, lineHeight: 1.6, color: 'var(--text-prose)' }}>{featured.blurb}</p>
