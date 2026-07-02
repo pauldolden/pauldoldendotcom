@@ -2,6 +2,7 @@
 // All copy/data comes from src/content/code.ts (the in-code CMS).
 import React from 'react';
 import { Badge, Button, Icon } from '../../ds/index.js';
+import { MobileDrawer } from '../MobileDrawer.jsx';
 import { code } from '../../../content/code';
 
 const HubIcon = Icon;
@@ -16,6 +17,7 @@ function SectionTitle({ children }) {
 
 export function HubLanding() {
   const { brand, nav, wordsLink, resume, dev, socials, emailLabel, hero, about, experience, work, skills, contact, footer } = code;
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
     <div style={{ minHeight: '100%', background: 'var(--bg-base)', display: 'flex', flexDirection: 'column' }}>
@@ -37,7 +39,7 @@ export function HubLanding() {
             <a key={id} href={`#${id}`} style={{ fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 500, padding: '8px 11px', borderRadius: 'var(--r-sm)', color: 'var(--text-muted)', textDecoration: 'none' }}>{label}</a>
           ))}
         </nav>
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div className="hub-actions" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
           <a href={wordsLink.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
             <HubIcon name="feather" size={14} color="var(--text-muted)" /> {wordsLink.label}
           </a>
@@ -45,7 +47,30 @@ export function HubLanding() {
             <HubIcon name="download" size={15} color="#1a0a14" /> {resume.label}
           </a>
         </div>
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMenuOpen(true)}
+          title="Menu"
+          aria-label="Open menu"
+          aria-expanded={menuOpen}
+          style={{ width: 38, height: 38, display: 'none', placeItems: 'center', borderRadius: 'var(--r-sm)', border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}
+        >
+          <HubIcon name="menu" color="var(--text-strong)" />
+        </button>
       </header>
+
+      <MobileDrawer open={menuOpen} onClose={() => setMenuOpen(false)} label="Menu">
+        {nav.map(([label, id]) => (
+          <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} style={hubDrawerRow}>{label}</a>
+        ))}
+        <span style={{ height: 1, background: 'var(--border-faint)', margin: '8px 4px' }} />
+        <a href={wordsLink.href} style={hubDrawerRow}>
+          <HubIcon name="feather" size={17} color="var(--text-muted)" /> {wordsLink.label}
+        </a>
+        <a href={resume.href} onClick={() => setMenuOpen(false)} style={{ ...hubDrawerRow, color: 'var(--magenta-300)' }}>
+          <HubIcon name="download" size={17} color="var(--magenta-400)" /> {resume.label}
+        </a>
+      </MobileDrawer>
 
       <main id="top" style={{ position: 'relative', zIndex: 1, flex: 1 }}>
         {/* HERO */}
@@ -239,4 +264,10 @@ function ProjectCard({ p, sourceLabel, visitLabel }) {
 }
 
 const sectionStyle = { paddingTop: 'var(--space-11)', scrollMarginTop: '80px' };
+const hubDrawerRow = {
+  display: 'flex', alignItems: 'center', gap: 11,
+  padding: '13px 12px', borderRadius: 'var(--r-md)',
+  fontFamily: 'var(--font-ui)', fontSize: 16, fontWeight: 500,
+  color: 'var(--text-body)', textDecoration: 'none',
+};
 const chip = { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--mist-300)', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)', padding: '4px 10px', whiteSpace: 'nowrap' };

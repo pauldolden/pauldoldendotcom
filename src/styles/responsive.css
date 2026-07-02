@@ -32,30 +32,33 @@ html { overflow-x: hidden; }
 }
 
 /* Narrow screens: the header has too many items for one fixed-height row
-   (logo + wordmark + nav + /words|/code + CV). It was wrapping to ~190px tall
-   AND staying sticky, so the hero scrolled up underneath it. Collapse earlier
-   (<=900, where the single row stops fitting), let it wrap, and drop sticky so
-   the header scrolls away instead of overlapping the hero. */
+   (logo + wordmark + nav + /words|/code + CV). Rather than wrap to a ~190px
+   tall bar, collapse the inline nav + action cluster into a slide-in drawer
+   (see components/site/MobileDrawer.jsx). The header stays a single sticky row:
+   just the wordmark + a hamburger. */
+.mobile-menu-btn { display: none; }
+
 @media (max-width: 900px) {
-  .hub-header,
-  .words-header {
-    position: static !important;
-    height: auto !important;
-    flex-wrap: wrap !important;
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-    row-gap: 10px !important;
-  }
   .hub-nav,
-  .words-nav {
-    order: 3;
-    width: 100%;
-    margin-left: 0 !important;
-    flex-wrap: wrap;
+  .words-nav,
+  .hub-actions,
+  .words-actions {
+    display: none !important;
   }
-  /* keep labels intact — no mid-word wrapping when space is tight */
-  .hub-nav a,
-  .words-nav a {
-    white-space: nowrap;
+  .mobile-menu-btn {
+    display: grid !important;
+    place-items: center;
+    margin-left: auto;
   }
+}
+
+/* Drawer entrance — slide the panel in from the right, fade the backdrop.
+   Panel/backdrop only mount on open, so the animation runs on mount. */
+@keyframes pdDrawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes pdDrawerFade { from { opacity: 0; } to { opacity: 1; } }
+.pd-drawer-backdrop { animation: pdDrawerFade 160ms ease; }
+.pd-drawer-panel { animation: pdDrawerIn 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) {
+  .pd-drawer-backdrop,
+  .pd-drawer-panel { animation: none; }
 }

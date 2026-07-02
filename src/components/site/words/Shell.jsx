@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Icon } from '../../ds/index.js';
 import { SearchOverlay } from './SearchOverlay.jsx';
+import { MobileDrawer } from '../MobileDrawer.jsx';
 import { SpoilerProvider } from './world/Spoiler.jsx';
 import { words } from '../../../content/words';
 
@@ -38,6 +39,7 @@ function NavLink({ to, params, exact, children }) {
 export function Shell({ children, isAdmin = false }) {
   const { shell, author } = words;
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="theme-ember words-app" style={{ minHeight: '100%', background: 'var(--bg-base)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ position: 'fixed', inset: 0, background: 'var(--grad-glow)', pointerEvents: 'none', zIndex: 0 }} />
@@ -64,7 +66,7 @@ export function Shell({ children, isAdmin = false }) {
             <NavLink key={n.label} to={n.to} params={n.params} exact={n.exact}>{n.label}</NavLink>
           ))}
         </nav>
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="words-actions" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button title="Search" onClick={() => setSearchOpen(true)} style={iconBtn}><Icon name="search" color="var(--text-muted)" /></button>
           <a href="/words/rss.xml" title="RSS feed" style={{ ...iconBtn, textDecoration: 'none' }}><Icon name="rss" color="var(--text-muted)" /></a>
           <Link to="/words/library" style={{
@@ -76,7 +78,46 @@ export function Shell({ children, isAdmin = false }) {
             <Icon name="heart" size={15} color="var(--magenta-400)" /> {shell.follow}
           </Link>
         </div>
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMenuOpen(true)}
+          title="Menu"
+          aria-label="Open menu"
+          aria-expanded={menuOpen}
+          style={{ ...iconBtn, display: 'none' }}
+        >
+          <Icon name="menu" color="var(--text-strong)" />
+        </button>
       </header>
+
+      <MobileDrawer open={menuOpen} onClose={() => setMenuOpen(false)} label="Menu">
+        {shell.nav.map((n) => (
+          <Link
+            key={n.label}
+            to={n.to}
+            params={n.params}
+            activeOptions={n.exact ? { exact: true } : undefined}
+            onClick={() => setMenuOpen(false)}
+            style={drawerRow}
+            activeProps={{ style: { ...drawerRow, color: 'var(--text-strong)', background: 'var(--bg-raised)' } }}
+          >
+            {n.label}
+          </Link>
+        ))}
+        <span style={drawerDivider} />
+        <button
+          onClick={() => { setMenuOpen(false); setSearchOpen(true); }}
+          style={{ ...drawerRow, width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}
+        >
+          <Icon name="search" size={17} color="var(--text-muted)" /> {shell.search?.label ?? 'Search'}
+        </button>
+        <a href="/words/rss.xml" style={drawerRow}>
+          <Icon name="rss" size={17} color="var(--text-muted)" /> RSS feed
+        </a>
+        <Link to="/words/library" onClick={() => setMenuOpen(false)} style={{ ...drawerRow, color: 'var(--magenta-300)' }}>
+          <Icon name="heart" size={17} color="var(--magenta-400)" /> {shell.follow}
+        </Link>
+      </MobileDrawer>
 
       <main style={{ position: 'relative', zIndex: 1, flex: 1 }}>
         <SpoilerProvider>{children}</SpoilerProvider>
@@ -119,3 +160,11 @@ const iconBtn = {
   borderRadius: 'var(--r-sm)', border: '1px solid transparent',
   background: 'transparent', cursor: 'pointer',
 };
+
+const drawerRow = {
+  display: 'flex', alignItems: 'center', gap: 11,
+  padding: '13px 12px', borderRadius: 'var(--r-md)',
+  fontFamily: 'var(--font-ui)', fontSize: 16, fontWeight: 500,
+  color: 'var(--text-body)', textDecoration: 'none',
+};
+const drawerDivider = { height: 1, background: 'var(--border-faint)', margin: '8px 4px' };

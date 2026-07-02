@@ -63,10 +63,10 @@ export function AdminStoryList({ catalog }) {
           const chapters = (s.toc ?? []).length;
           const live = (s.toc ?? []).filter((c) => c.published).length;
           return (
-            <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 16, border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', background: 'var(--bg-raised)', padding: '16px 18px' }}>
+            <div key={s.id} style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16, border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', background: 'var(--bg-raised)', padding: '16px 18px' }}>
               <div style={{ width: 8, height: 44, borderRadius: 4, background: s.coverColor, flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
                   <Link to="/words/admin/$storyId" params={{ storyId: s.id }} style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700, color: 'var(--text-strong)', textDecoration: 'none' }}>{s.title || s.id}</Link>
                   <Badge tone={s.published ? 'ongoing' : 'neutral'} dot>{s.published ? 'Published' : 'Draft'}</Badge>
                 </div>

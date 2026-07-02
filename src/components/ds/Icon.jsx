@@ -18,11 +18,13 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  Menu,
   Moon,
   Rss,
   Search,
   Sun,
   Twitter,
+  X,
 } from 'lucide-react';
 
 /**
@@ -50,11 +52,13 @@ const ICONS = {
   linkedin: Linkedin,
   mail: Mail,
   'map-pin': MapPin,
+  menu: Menu,
   moon: Moon,
   rss: Rss,
   search: Search,
   sun: Sun,
   twitter: Twitter,
+  x: X,
 };
 
 export function Icon({ name, size = 18, color = 'currentColor', strokeWidth = 1.75, style }) {

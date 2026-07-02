@@ -24,6 +24,12 @@ const control = {
   border: '1px solid var(--border)', borderRadius: 'var(--r-md)',
   fontFamily: 'var(--font-ui)', fontSize: 15,
 };
+// Auto-collapse to a single column on narrow screens. `min(100%, 200px)` keeps
+// the minimum from ever exceeding the container, so fields never overflow.
+const responsiveGrid = {
+  display: 'grid', gap: 14,
+  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
+};
 
 function slugify(s) {
   return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -67,7 +73,7 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
 
   return (
     <div style={{ display: 'grid', gap: 18, maxWidth: 720 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+      <div style={responsiveGrid}>
         <Input label="Title" value={f.title} onChange={set('title')} placeholder="Circus Murder" />
         <div>
           <span style={label}>Story id (URL slug)</span>
@@ -92,7 +98,7 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
         <textarea style={{ ...control, minHeight: 110, resize: 'vertical', lineHeight: 1.55 }} value={f.blurb} onChange={set('blurb')} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
+      <div style={responsiveGrid}>
         <div>
           <span style={label}>Status</span>
           <select style={control} value={f.status} onChange={set('status')}>
@@ -103,7 +109,7 @@ export function StoryMetaForm({ initial, mode = 'edit', onSave, onCancel, busy }
         <Input label="Progress line" value={f.progress} onChange={set('progress')} placeholder="Drafting · Act II" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 14 }}>
+      <div style={responsiveGrid}>
         <Input label="Tags (comma-separated)" value={f.tags} onChange={set('tags')} placeholder="Mystery, Fantasy" />
         <div>
           <span style={label}>Cover colour</span>
