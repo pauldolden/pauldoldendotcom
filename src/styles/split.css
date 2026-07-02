@@ -145,10 +145,24 @@ body:has(.split-screen) { background: #000; overflow: hidden; }
 }
 
 @media (max-width: 760px) {
-  .split { flex-direction: column; height: auto; }
-  .half { flex: 1 1 50vh; min-height: 50vh; }
+  /* let the door scroll on mobile instead of clipping */
+  html:has(.split-screen), body:has(.split-screen) { height: auto; overflow: auto; }
+  .split { flex-direction: column; height: auto; min-height: 100vh; }
+  .half { flex: none; min-height: 44vh; padding: 52px 0; }
   .code .content, .words .content { text-align: left; margin: 0 auto; }
-  .divider { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,46,151,0.5), transparent); }
+
+  /* brand becomes an in-flow divider chip between the two stacked halves,
+     so it can never overlap either half's content */
+  .brand {
+    position: static; transform: none; width: 100%;
+    flex-direction: row; justify-content: center; gap: 12px; padding: 20px 0;
+  }
+  .brand img { width: 40px; height: 40px; }
+  .brand .name { padding: 7px 16px; }
+  .brand .name .b-code { font-size: 20px; }
+  .brand .name .b-words { font-size: 25px; }
+  .brand .hint { display: none; }
+  .divider { display: none; }
+
   .split:has(.code:hover) .words, .split:has(.words:hover) .code { flex-grow: 1; }
 }

@@ -24,7 +24,7 @@ function Half({ data, variant }: { data: (typeof split.halves)['code']; variant:
           <span className="grad">{data.titleAccent}</span>
         </h1>
         <p className="line">
-          {data.line}
+          {data.line}{' '}
           <b style={{ color: data.highlightColor }}>{data.highlight}</b>
           {data.lineEnd}
         </p>
@@ -39,9 +39,9 @@ function SplitFrontDoor() {
   return (
     <div className="split split-screen">
       <Half data={halves.code} variant="code" />
-      <Half data={halves.words} variant="words" />
 
-      <div className="divider" />
+      {/* Between the halves in the DOM so it can flow as an in-flow divider
+          chip on mobile; on desktop it's absolutely centred (order ignored). */}
       <div className="brand">
         <img src={brand.logo} alt="" />
         <div className="name">
@@ -50,6 +50,9 @@ function SplitFrontDoor() {
         </div>
         <div className="hint">{brand.hint}</div>
       </div>
+
+      <Half data={halves.words} variant="words" />
+      <div className="divider" />
     </div>
   )
 }
